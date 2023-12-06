@@ -50,7 +50,7 @@ root.render(
         id: 'Temperature',
         type: 'linear',
         scaleLabel: {
-          labelString: 'Temperature (ºC)',
+          labelString: 'Temperature (C)',
           display: true,
         },
         position: 'left',
