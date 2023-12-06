@@ -40,8 +40,6 @@ const App = ({ signOut }) => {
     const data = {
       name: form.get("name"),
       description: form.get("description"),
-      send_cnt: form.get("send_cnt"),
-      magx: form.get("magx"),
     };
 //    await API.graphql({
     await client.graphql({
@@ -83,22 +81,6 @@ const App = ({ signOut }) => {
             variation="quiet"
             required
           />
-          <TextField
-            name="send_cnt"
-            placeholder="send_cnt"
-            label="send_cnt"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="magx"
-            placeholder="magx"
-            label="magx"
-            labelHidden
-            variation="quiet"
-            required
-          />
           <Button type="submit" variation="primary">
             Create Note
           </Button>
@@ -117,8 +99,6 @@ const App = ({ signOut }) => {
               {note.name}
             </Text>
             <Text as="span">{note.description}</Text>
-            <Text as="span">{note.send_cnt}</Text>
-            <Text as="span">{note.magx}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete note
             </Button>
