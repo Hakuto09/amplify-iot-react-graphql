@@ -1,6 +1,6 @@
 {
   "auth": {
-    "amplifyiotreactgraph20da2efc": {
+    "amplifyiotreactgraph1bee2578": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -16,7 +16,9 @@
           "EMAIL"
         ],
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
