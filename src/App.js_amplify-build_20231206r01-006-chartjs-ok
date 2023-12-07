@@ -125,8 +125,6 @@ const App = ({ signOut }) => {
   // Hakuto about "Line"
   return (
     <View className="App">
-      <Line options={options} data={data} />
-    
       <Heading level={1}>My Notes App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
@@ -189,6 +187,8 @@ const App = ({ signOut }) => {
         ))}
       </View>
       <Button onClick={signOut}>Sign Out</Button>
+      
+      <Line options={options} data={data} />
     </View>
   );
 };
