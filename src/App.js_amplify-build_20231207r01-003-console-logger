@@ -83,21 +83,14 @@ const App = ({ signOut }) => {
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
-      nickname: form.get("nickname"),
-      date: form.get("date"),
+      name: form.get("name"),
+      description: form.get("description"),
       send_cnt: form.get("send_cnt"),
       magx: form.get("magx"),
-      magy: form.get("magy"),
-      magz: form.get("magz"),
-      degree: form.get("degree"),
-      distance: form.get("distance"),
-      pres: form.get("pres"),
-      temp: form.get("temp"),
-      humi: form.get("humi"),
     };
 //    await API.graphql({
     await client.graphql({
-      query: createNoteMutation,
+        query: createNoteMutation,
       variables: { input: data },
     });
     fetchNotes();
@@ -109,7 +102,7 @@ const App = ({ signOut }) => {
     setNotes(newNotes);
 //    await API.graphql({
     await client.graphql({
-      query: deleteNoteMutation,
+        query: deleteNoteMutation,
       variables: { input: { id } },
     });
   }
@@ -177,17 +170,17 @@ const App = ({ signOut }) => {
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <TextField
-            name="nickname"
-            placeholder="Note NickName"
-            label="Note NickName"
+            name="name"
+            placeholder="Note Name"
+            label="Note Name"
             labelHidden
             variation="quiet"
             required
           />
           <TextField
-            name="date"
-            placeholder="Note Date"
-            label="Note Date"
+            name="description"
+            placeholder="Note Description"
+            label="Note Description"
             labelHidden
             variation="quiet"
             required
@@ -208,62 +201,6 @@ const App = ({ signOut }) => {
             variation="quiet"
             required
           />
-          <TextField
-            name="magy"
-            placeholder="magy"
-            label="magy"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="magz"
-            placeholder="magz"
-            label="magz"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="degree"
-            placeholder="degree"
-            label="degree"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="distance"
-            placeholder="distance"
-            label="distance"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="pres"
-            placeholder="pres"
-            label="pres"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="temp"
-            placeholder="temp"
-            label="temp"
-            labelHidden
-            variation="quiet"
-            required
-          />
-          <TextField
-            name="humi"
-            placeholder="humi"
-            label="humi"
-            labelHidden
-            variation="quiet"
-            required
-          />
           <Button type="submit" variation="primary">
             Create Note
           </Button>
@@ -273,25 +210,17 @@ const App = ({ signOut }) => {
       <View margin="3rem 0">
         {notes.map((note) => (
           <Flex
-//            key={note.id || note.name}
-            key={!!note.id}
+            key={note.id || note.name}
             direction="row"
             justifyContent="center"
             alignItems="center"
           >
             <Text as="strong" fontWeight={700}>
-              {note.nickname}
+              {note.name}
             </Text>
-            <Text as="span">{note.date}</Text>
+            <Text as="span">{note.description}</Text>
             <Text as="span">{note.send_cnt}</Text>
             <Text as="span">{note.magx}</Text>
-            <Text as="span">{note.magy}</Text>
-            <Text as="span">{note.magz}</Text>
-            <Text as="span">{note.degree}</Text>
-            <Text as="span">{note.distance}</Text>
-            <Text as="span">{note.pres}</Text>
-            <Text as="span">{note.temp}</Text>
-            <Text as="span">{note.humi}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete note
             </Button>

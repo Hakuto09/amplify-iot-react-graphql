@@ -1,9 +1,7 @@
 type Note @model @auth(rules: [ { allow: public } ] ){
   id: ID!
-  name: String
+  name: String!
   description: String
-  nickname: String
-  date: String
   send_cnt: Int
   magx: Float
   magy: Float

@@ -27,6 +27,8 @@ export default function NoteUpdateForm(props) {
   const initialValues = {
     name: "",
     description: "",
+    nickname: "",
+    date: "",
     send_cnt: "",
     magx: "",
     magy: "",
@@ -41,6 +43,8 @@ export default function NoteUpdateForm(props) {
   const [description, setDescription] = React.useState(
     initialValues.description
   );
+  const [nickname, setNickname] = React.useState(initialValues.nickname);
+  const [date, setDate] = React.useState(initialValues.date);
   const [send_cnt, setSend_cnt] = React.useState(initialValues.send_cnt);
   const [magx, setMagx] = React.useState(initialValues.magx);
   const [magy, setMagy] = React.useState(initialValues.magy);
@@ -57,6 +61,8 @@ export default function NoteUpdateForm(props) {
       : initialValues;
     setName(cleanValues.name);
     setDescription(cleanValues.description);
+    setNickname(cleanValues.nickname);
+    setDate(cleanValues.date);
     setSend_cnt(cleanValues.send_cnt);
     setMagx(cleanValues.magx);
     setMagy(cleanValues.magy);
@@ -85,8 +91,10 @@ export default function NoteUpdateForm(props) {
   }, [idProp, noteModelProp]);
   React.useEffect(resetStateValues, [noteRecord]);
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
     description: [],
+    nickname: [],
+    date: [],
     send_cnt: [],
     magx: [],
     magy: [],
@@ -123,8 +131,10 @@ export default function NoteUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
+          name: name ?? null,
           description: description ?? null,
+          nickname: nickname ?? null,
+          date: date ?? null,
           send_cnt: send_cnt ?? null,
           magx: magx ?? null,
           magy: magy ?? null,
@@ -187,7 +197,7 @@ export default function NoteUpdateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
@@ -196,6 +206,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name: value,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -230,6 +242,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description: value,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -254,6 +268,78 @@ export default function NoteUpdateForm(props) {
         {...getOverrideProps(overrides, "description")}
       ></TextField>
       <TextField
+        label="Nickname"
+        isRequired={false}
+        isReadOnly={false}
+        value={nickname}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname: value,
+              date,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+            };
+            const result = onChange(modelFields);
+            value = result?.nickname ?? value;
+          }
+          if (errors.nickname?.hasError) {
+            runValidationTasks("nickname", value);
+          }
+          setNickname(value);
+        }}
+        onBlur={() => runValidationTasks("nickname", nickname)}
+        errorMessage={errors.nickname?.errorMessage}
+        hasError={errors.nickname?.hasError}
+        {...getOverrideProps(overrides, "nickname")}
+      ></TextField>
+      <TextField
+        label="Date"
+        isRequired={false}
+        isReadOnly={false}
+        value={date}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date: value,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+            };
+            const result = onChange(modelFields);
+            value = result?.date ?? value;
+          }
+          if (errors.date?.hasError) {
+            runValidationTasks("date", value);
+          }
+          setDate(value);
+        }}
+        onBlur={() => runValidationTasks("date", date)}
+        errorMessage={errors.date?.errorMessage}
+        hasError={errors.date?.hasError}
+        {...getOverrideProps(overrides, "date")}
+      ></TextField>
+      <TextField
         label="Send cnt"
         isRequired={false}
         isReadOnly={false}
@@ -268,6 +354,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt: value,
               magx,
               magy,
@@ -306,6 +394,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx: value,
               magy,
@@ -344,6 +434,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy: value,
@@ -382,6 +474,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -420,6 +514,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -458,6 +554,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -496,6 +594,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -534,6 +634,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
@@ -572,6 +674,8 @@ export default function NoteUpdateForm(props) {
             const modelFields = {
               name,
               description,
+              nickname,
+              date,
               send_cnt,
               magx,
               magy,
