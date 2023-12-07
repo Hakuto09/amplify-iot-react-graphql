@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-// Hakuto start
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+// Hakuto
 import { Line } from "react-chartjs-2";
-// Hakuto end
 
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
@@ -78,48 +67,36 @@ const App = ({ signOut }) => {
   }
 
   // Hakuto start
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-  
-//  const Graph: React.FC = () => {
-    const options = {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: "グラフタイトル",
-        },
+  const labels = ["1 月", "2 月", "3 月", "4 月", "5 月", "6 月"];
+  const graphData = {
+    labels: labels,
+    datasets: [
+      {
+        label: "A社",
+        data: [65, 59, 60, 81, 56, 55],
+        borderColor: "rgb(75, 192, 192)",
       },
-    };
-  
-    const labels = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-    ];
-  
-    const data = {
-      labels,
-      datasets: [
-        {
-          label: "データ1",
-          data: [10, 40, 30, 40, 50, 80, 120],
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-        },
-      ],
-    };
+      {
+        label: "B社",
+        data: [60, 55, 57, 61, 75, 50],
+        borderColor: "rgb(75, 100, 192)",
+      },
+    ],
+  };
+
+  //const options: {} = {
+  const options = {
+    maintainAspectRatio: false,
+  };
+
+  /*
+  const divStyle: React.CSSProperties = {
+    marginLeft: "auto",
+    marginRight: "auto",
+    margin: "10px",
+    width: "500px",
+  };
+  */
   // Hakuto end
 
   // Hakuto about "Line"
@@ -188,7 +165,13 @@ const App = ({ signOut }) => {
       </View>
       <Button onClick={signOut}>Sign Out</Button>
       
-      <Line options={options} data={data} />
+      <Line
+        height={300}
+        width={300}
+        data={graphData}
+        options={options}
+        id="chart-key"
+      />
     </View>
   );
 };
