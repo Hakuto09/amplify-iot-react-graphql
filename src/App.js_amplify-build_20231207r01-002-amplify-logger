@@ -34,11 +34,10 @@ import {
 } from "./graphql/mutations";
 
 // Hakuto start
-//import { Amplify, Logger, AWSCloudWatchProvider} from 'aws-amplify'
-import { Amplify, AWSCloudWatchProvider} from 'aws-amplify'
-import { ConsoleLogger } from 'aws-amplify/utils';
+import { Amplify, Logger, AWSCloudWatchProvider} from 'aws-amplify'
 
-//import { Authenticator } from '@aws-amplify/ui-react'
+import { Authenticator } from '@aws-amplify/ui-react'
+import '@aws-amplify/ui-react/styles.css'
 
 import awsExports from './aws-exports'
 
@@ -56,11 +55,9 @@ Amplify.configure({
 
 const LOG_LEVEL = 'INFO' //どのレベルのログまでロギングするか
 
-//const logger = new Logger('TestLogger', LOG_LEVEL)
-//Amplify.register(logger)
-//logger.addPluggable(new AWSCloudWatchProvider())
-
-const console_logger = new ConsoleLogger('foo');
+const logger = new Logger('TestLogger', LOG_LEVEL)
+Amplify.register(logger)
+logger.addPluggable(new AWSCloudWatchProvider())
 // Hakuto end
 
 const client = generateClient();
@@ -108,14 +105,10 @@ const App = ({ signOut }) => {
   }
 
   // Hakuto start
-  //logger.error(username, 'test error')
-  console_logger.error('test error')
-  //logger.warn(username, 'test warn')
-  console_logger.warn('test warn')
-  //logger.info(username, 'test info')
-  console_logger.info('test info')
-  //logger.debug(username, 'test debug')
-  console_logger.debug('test debug')
+  logger.error(username, 'test error')
+  logger.warn(username, 'test warn')
+  logger.info(username, 'test info')
+  logger.debug(username, 'test debug')
 
   ChartJS.register(
     CategoryScale,
