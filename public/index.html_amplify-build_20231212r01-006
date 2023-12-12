@@ -43,15 +43,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <!-- Hakuto start -->
-    <h1 class="flexHeader">
-      <span>
-        <span id="deviceCount">0 devices</span>
-        <select id="listOfDevices" class="select_box"></select>
-      </span>
-      <span>Temperature & Humidity Real-time Data</span>
-    </h1>
-    <!-- Hakuto end -->
+    <!-- Hakuto-->
     <div>
       <canvas id="iotChart"></canvas>
     </div>

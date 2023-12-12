@@ -242,7 +242,11 @@ const App = ({ signOut }) => {
   // based on selection
   let needsAutoSelect = true;
   const deviceCount = document.getElementById('deviceCount');
+  console_logger.info('deviceCount -->')
+  console_logger.info(deviceCount)
   const listOfDevices = document.getElementById('listOfDevices');
+  console_logger.info('listOfDevices -->')
+  console_logger.info(listOfDevices)
   function OnSelectionChange() {
     const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     chartData.labels = device.timeData;
