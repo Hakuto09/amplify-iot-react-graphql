@@ -355,7 +355,7 @@ const App = ({ signOut }) => {
             label="NickName"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="date"
@@ -363,7 +363,7 @@ const App = ({ signOut }) => {
             label="Date"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="send_cnt"
@@ -371,7 +371,7 @@ const App = ({ signOut }) => {
             label="send_cnt"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="magx"
@@ -379,7 +379,7 @@ const App = ({ signOut }) => {
             label="magx"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="magy"
@@ -387,7 +387,7 @@ const App = ({ signOut }) => {
             label="magy"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="magz"
@@ -395,7 +395,7 @@ const App = ({ signOut }) => {
             label="magz"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="degree"
@@ -403,7 +403,7 @@ const App = ({ signOut }) => {
             label="degree"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="distance"
@@ -411,7 +411,7 @@ const App = ({ signOut }) => {
             label="distance"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="pres"
@@ -419,7 +419,7 @@ const App = ({ signOut }) => {
             label="pres"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="temp"
@@ -427,7 +427,7 @@ const App = ({ signOut }) => {
             label="temp"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <TextField
             name="humi"
@@ -435,7 +435,7 @@ const App = ({ signOut }) => {
             label="humi"
             labelHidden
             variation="quiet"
-            //required  // Hakuto
+            required
           />
           <Button type="submit" variation="primary">
             Create Note
