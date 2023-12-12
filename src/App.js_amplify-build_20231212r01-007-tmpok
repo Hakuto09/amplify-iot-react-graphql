@@ -73,16 +73,14 @@ const App = ({ signOut }) => {
   }, []);
 
   async function fetchNotes() {
-    console_logger.info('fetchNotes(): In')  // Hakuto
 //    const apiData = await API.graphql({ query: listNotes });
     const apiData = await client.graphql({ query: listNotes });
-    console_logger.info('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
     const notesFromAPI = apiData.data.listNotes.items;
-    console_logger.info('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
-    console_logger.info(notesFromAPI)
     setNotes(notesFromAPI);
+  
     // Hakuto start
-    console_logger.info('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
+    console_logger.info('notesFromAPI -->')
+    console_logger.info(notesFromAPI)
     //onMessage();
     // Hakuto end
   }
@@ -132,7 +130,7 @@ const App = ({ signOut }) => {
     Tooltip,
     Legend
   );
-
+  
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
