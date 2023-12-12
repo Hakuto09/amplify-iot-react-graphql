@@ -121,6 +121,16 @@ const App = ({ signOut }) => {
   }
 
   // Hakuto start
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+  
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
