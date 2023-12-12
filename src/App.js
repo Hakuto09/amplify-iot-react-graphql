@@ -258,7 +258,7 @@ const App = ({ signOut }) => {
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  function onMessage(message) {
+  function onMessage(nickname, date, temp, humi) {
     try {
       //const messageData = JSON.parse(message.data);
       //console.log(messageData);
