@@ -99,6 +99,7 @@ const App = ({ signOut }) => {
   }
 
   async function createNote(event) {
+    /* Hakuto
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
@@ -119,6 +120,7 @@ const App = ({ signOut }) => {
       query: createNoteMutation,
       variables: { input: data },
     });
+    */
     fetchNotes();
     event.target.reset();
   }
