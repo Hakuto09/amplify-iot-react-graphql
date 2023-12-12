@@ -306,15 +306,6 @@ const App = ({ signOut }) => {
   // Hakuto about "Line"
   return (
     <View className="App">
-      <View as="span" margin="3rem 0">
-        <Flex direction="row" justifyContent="center" id="deviceCount">
-          0 devices
-        </Flex>
-      </View>
-      <View as="select" margin="3rem 0">
-        <Flex direction="row" justifyContent="center" id="listOfDevices" class="select_box">
-        </Flex>
-      </View>
       <Line options={chartOptions} data={chartData} />
     
       <Heading level={1}>My Notes App</Heading>
