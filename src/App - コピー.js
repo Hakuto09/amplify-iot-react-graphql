@@ -336,29 +336,22 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): numOfNotes ', numOfNotes);
 
     for(let i = 0; i < numOfSeparator; ++i) {
-      const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
-      trackedDevices.devices.push(newDeviceData);
-      console_logger.warn('onMessage(): newDeviceData ', newDeviceData);
-    
-      // add device to the UI list
-      const node = document.createElement('option');
-      const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
-      node.appendChild(nodeText);
-      listOfDevices.appendChild(node);
+      trackedDevices.findDevice(notesFromAPI[separatorOfNotes[i]].id)
     }
 
-    const numDevices = trackedDevices.getDevicesCount();
-    console_logger.warn('onMessage(): numDevices ', numDevices);
-    
-    deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
-    console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
-    
-    let k = 0;
-    for(let i = 0; i < numOfSeparator; ++i) {     // Loop for Devices.
-      for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
-        trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
-        console_logger.warn('onMessage(): Loop of k.  k ', k);
-        k++;
+    for(let i = 0; i < numOfSeparator; ++i) {
+      for(let j = 0; j < numOfNotes[i]; ++j) {
+        const newDeviceData = new DeviceData(notesFromAPI[0].id);
+        trackedDevices.devices.push(newDeviceData);
+        const numDevices = trackedDevices.getDevicesCount();
+        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
+        newDeviceData.addData(notesFromAPI[0].date, notesFromAPI[0].temp, notesFromAPI[0].humi);
+
+        // add device to the UI list
+        const node = document.createElement('option');
+        const nodeText = document.createTextNode(notesFromAPI[0].id);
+        node.appendChild(nodeText);
+        listOfDevices.appendChild(node);
       }
     }
 
@@ -369,47 +362,47 @@ const App = ({ signOut }) => {
       OnSelectionChange();
     }
 
-//    try {
-//      //const messageData = JSON.parse(message.data);
-//      //console.log(messageData);
-//
-//      //// time and either temperature or humidity are required
-//      //if (!messageData.MessageDate || (!messageData.IotData.temperature && !messageData.IotData.humidity)) {
-//      //  return;
-//      //}
-//
-//      // find or add device to list of tracked devices
-//      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
-//
-//      if (existingDeviceData) {
-//        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
-//      }
-//      else {
-//        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
-//        trackedDevices.devices.push(newDeviceData);
-//        const numDevices = trackedDevices.getDevicesCount();
-//        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
-//        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
-//
-//        // add device to the UI list
-//        const node = document.createElement('option');
-//        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
-//        node.appendChild(nodeText);
-//        listOfDevices.appendChild(node);
-//
-//        // if this is the first device being discovered, auto-select it
-//        if (needsAutoSelect) {
-//          needsAutoSelect = false;
-//          listOfDevices.selectedIndex = 0;
-//          OnSelectionChange();
-//        }
-//      }
-//
-//      //myLineChart.update();
-//    }
-//    catch (err) {
-//      console.error(err);
-//    }
+    try {
+      //const messageData = JSON.parse(message.data);
+      //console.log(messageData);
+
+      //// time and either temperature or humidity are required
+      //if (!messageData.MessageDate || (!messageData.IotData.temperature && !messageData.IotData.humidity)) {
+      //  return;
+      //}
+
+      // find or add device to list of tracked devices
+      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
+
+      if (existingDeviceData) {
+        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+      }
+      else {
+        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
+        trackedDevices.devices.push(newDeviceData);
+        const numDevices = trackedDevices.getDevicesCount();
+        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
+        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+
+        // add device to the UI list
+        const node = document.createElement('option');
+        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
+        node.appendChild(nodeText);
+        listOfDevices.appendChild(node);
+
+        // if this is the first device being discovered, auto-select it
+        if (needsAutoSelect) {
+          needsAutoSelect = false;
+          listOfDevices.selectedIndex = 0;
+          OnSelectionChange();
+        }
+      }
+
+      //myLineChart.update();
+    }
+    catch (err) {
+      console.error(err);
+    }
   };
   // Hakuto end
 
