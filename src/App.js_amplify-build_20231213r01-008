@@ -318,7 +318,7 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): separatorOfNotes.length ', separatorOfNotes.length);
 
     for(let i = 0; i < separatorOfNotes.length; ++i) {
-      console_logger.warn('onMessage(): Loop of separatorOfNotes.length  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], 'notesFromAPI[separatorOfNotes[i]].id ', notesFromAPI[separatorOfNotes[i]].id);
+      console_logger.warn('onMessage(): Loop of separatorOfNotes.length  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], , 'notesFromAPI[separatorOfNotes[i]].id ', notesFromAPI[separatorOfNotes[i]].id);
     }
 
     try {
