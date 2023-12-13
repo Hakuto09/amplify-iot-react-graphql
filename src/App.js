@@ -357,9 +357,10 @@ const App = ({ signOut }) => {
     for(let i = 0; i < numOfSeparator; ++i) {     // Loop for Devices.
       for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
         trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
-        console_logger.warn('onMessage(): Loop of k.  k ', k);
+        console_logger.warn('onMessage(): Loop of k.  k ', k, ' date ', notesFromAPI[k].date, ' temp ', notesFromAPI[k].temp, ' humi ', notesFromAPI[k].humi);
         k++;
       }
+      console_logger.warn('onMessage(): Loop of i.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);
     }
 
     // if this is the first device being discovered, auto-select it
