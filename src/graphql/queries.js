@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const getNote = /* GraphQL */ `
-  query GetNote($id: ID!) {
-    getNote(id: $id) {
+  query GetNote($id: ID!, $date: String!) {
+    getNote(id: $id, date: $date) {
       id
       name
       description
@@ -18,6 +18,7 @@ export const getNote = /* GraphQL */ `
       pres
       temp
       humi
+      postType
       createdAt
       updatedAt
       __typename
@@ -26,11 +27,21 @@ export const getNote = /* GraphQL */ `
 `;
 export const listNotes = /* GraphQL */ `
   query ListNotes(
+    $id: ID
+    $date: ModelStringKeyConditionInput
     $filter: ModelNoteFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listNotes(
+      id: $id
+      date: $date
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         name
@@ -46,6 +57,7 @@ export const listNotes = /* GraphQL */ `
         pres
         temp
         humi
+        postType
         createdAt
         updatedAt
         __typename

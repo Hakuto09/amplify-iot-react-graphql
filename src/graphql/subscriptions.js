@@ -18,6 +18,7 @@ export const onCreateNote = /* GraphQL */ `
       pres
       temp
       humi
+      postType
       createdAt
       updatedAt
       __typename
@@ -41,6 +42,7 @@ export const onUpdateNote = /* GraphQL */ `
       pres
       temp
       humi
+      postType
       createdAt
       updatedAt
       __typename
@@ -64,6 +66,7 @@ export const onDeleteNote = /* GraphQL */ `
       pres
       temp
       humi
+      postType
       createdAt
       updatedAt
       __typename

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SelectField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getNote } from "../graphql/queries";
@@ -38,6 +44,7 @@ export default function NoteUpdateForm(props) {
     pres: "",
     temp: "",
     humi: "",
+    postType: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -54,6 +61,7 @@ export default function NoteUpdateForm(props) {
   const [pres, setPres] = React.useState(initialValues.pres);
   const [temp, setTemp] = React.useState(initialValues.temp);
   const [humi, setHumi] = React.useState(initialValues.humi);
+  const [postType, setPostType] = React.useState(initialValues.postType);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = noteRecord
@@ -72,6 +80,7 @@ export default function NoteUpdateForm(props) {
     setPres(cleanValues.pres);
     setTemp(cleanValues.temp);
     setHumi(cleanValues.humi);
+    setPostType(cleanValues.postType);
     setErrors({});
   };
   const [noteRecord, setNoteRecord] = React.useState(noteModelProp);
@@ -81,7 +90,7 @@ export default function NoteUpdateForm(props) {
         ? (
             await client.graphql({
               query: getNote.replaceAll("__typename", ""),
-              variables: { id: idProp },
+              variables: { ...idProp },
             })
           )?.data?.getNote
         : noteModelProp;
@@ -94,7 +103,7 @@ export default function NoteUpdateForm(props) {
     name: [],
     description: [],
     nickname: [],
-    date: [],
+    date: [{ type: "Required" }],
     send_cnt: [],
     magx: [],
     magy: [],
@@ -104,6 +113,7 @@ export default function NoteUpdateForm(props) {
     pres: [],
     temp: [],
     humi: [],
+    postType: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -134,7 +144,7 @@ export default function NoteUpdateForm(props) {
           name: name ?? null,
           description: description ?? null,
           nickname: nickname ?? null,
-          date: date ?? null,
+          date,
           send_cnt: send_cnt ?? null,
           magx: magx ?? null,
           magy: magy ?? null,
@@ -144,6 +154,7 @@ export default function NoteUpdateForm(props) {
           pres: pres ?? null,
           temp: temp ?? null,
           humi: humi ?? null,
+          postType,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -178,6 +189,7 @@ export default function NoteUpdateForm(props) {
             variables: {
               input: {
                 id: noteRecord.id,
+                date: noteRecord.date,
                 ...modelFields,
               },
             },
@@ -217,6 +229,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -253,6 +266,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -289,6 +303,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.nickname ?? value;
@@ -305,8 +320,8 @@ export default function NoteUpdateForm(props) {
       ></TextField>
       <TextField
         label="Date"
-        isRequired={false}
-        isReadOnly={false}
+        isRequired={true}
+        isReadOnly={true}
         value={date}
         onChange={(e) => {
           let { value } = e.target;
@@ -325,6 +340,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -365,6 +381,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.send_cnt ?? value;
@@ -405,6 +422,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.magx ?? value;
@@ -445,6 +463,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.magy ?? value;
@@ -485,6 +504,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.magz ?? value;
@@ -525,6 +545,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.degree ?? value;
@@ -565,6 +586,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.distance ?? value;
@@ -605,6 +627,7 @@ export default function NoteUpdateForm(props) {
               pres: value,
               temp,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.pres ?? value;
@@ -645,6 +668,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp: value,
               humi,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.temp ?? value;
@@ -685,6 +709,7 @@ export default function NoteUpdateForm(props) {
               pres,
               temp,
               humi: value,
+              postType,
             };
             const result = onChange(modelFields);
             value = result?.humi ?? value;
@@ -699,6 +724,54 @@ export default function NoteUpdateForm(props) {
         hasError={errors.humi?.hasError}
         {...getOverrideProps(overrides, "humi")}
       ></TextField>
+      <SelectField
+        label="Post type"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={postType}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+              postType: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.postType ?? value;
+          }
+          if (errors.postType?.hasError) {
+            runValidationTasks("postType", value);
+          }
+          setPostType(value);
+        }}
+        onBlur={() => runValidationTasks("postType", postType)}
+        errorMessage={errors.postType?.errorMessage}
+        hasError={errors.postType?.hasError}
+        {...getOverrideProps(overrides, "postType")}
+      >
+        <option
+          children="Open"
+          value="OPEN"
+          {...getOverrideProps(overrides, "postTypeoption0")}
+        ></option>
+        <option
+          children="Secret"
+          value="SECRET"
+          {...getOverrideProps(overrides, "postTypeoption1")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

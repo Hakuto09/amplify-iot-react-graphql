@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -35,6 +35,7 @@ export declare type NoteUpdateFormInputValues = {
     pres?: number;
     temp?: number;
     humi?: number;
+    postType?: string;
 };
 export declare type NoteUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -50,6 +51,7 @@ export declare type NoteUpdateFormValidationValues = {
     pres?: ValidationFunction<number>;
     temp?: ValidationFunction<number>;
     humi?: ValidationFunction<number>;
+    postType?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NoteUpdateFormOverridesProps = {
@@ -67,11 +69,15 @@ export declare type NoteUpdateFormOverridesProps = {
     pres?: PrimitiveOverrideProps<TextFieldProps>;
     temp?: PrimitiveOverrideProps<TextFieldProps>;
     humi?: PrimitiveOverrideProps<TextFieldProps>;
+    postType?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type NoteUpdateFormProps = React.PropsWithChildren<{
     overrides?: NoteUpdateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
+    id?: {
+        id: string;
+        date: string;
+    };
     note?: any;
     onSubmit?: (fields: NoteUpdateFormInputValues) => NoteUpdateFormInputValues;
     onSuccess?: (fields: NoteUpdateFormInputValues) => void;

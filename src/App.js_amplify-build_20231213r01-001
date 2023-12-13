@@ -72,42 +72,34 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
-  // Hakuto start
-  async function fetchNote(id) {
-    console_logger.warn('fetchNote(): In')  // Hakuto
-
-    const apiDataOfGet = await client.graphql({
-      query: getNote,
-      variables: { input: { id } },
-    });
-
-    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
-
-    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
-    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
-  }
-  // Hakuto end
-
   async function fetchNotes() {
+    console_logger.error('fetchNotes(): In')  // Hakuto
     console_logger.warn('fetchNotes(): In')  // Hakuto
+    console_logger.info('fetchNotes(): In')  // Hakuto
+    console_logger.debug('fetchNotes(): In')  // Hakuto
 //    const apiData = await API.graphql({ query: listNotes });
-
     const apiData = await client.graphql({ query: listNotes });
+    console_logger.error('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
     console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
-
+    console_logger.info('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
+    console_logger.debug('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
     const notesFromAPI = apiData.data.listNotes.items;
+    console_logger.error('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
     console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
-
+    console_logger.info('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
+    console_logger.debug('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
     setNotes(notesFromAPI);
     // Hakuto start
+    console_logger.error('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
-
-    onMessage(notesFromAPI);
+    console_logger.info('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
+    console_logger.debug('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
+    //onMessage();
     // Hakuto end
   }
 
   async function createNote(event) {
-    /* Hakuto --- Need check!!
+    /* Hakuto
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
@@ -295,10 +287,7 @@ const App = ({ signOut }) => {
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  function onMessage(notesFromAPI) {
-
-    fetchNote('dummy001');  // want to get data for each ID.
-
+  function onMessage(nickname, date, temp, humi) {
     try {
       //const messageData = JSON.parse(message.data);
       //console.log(messageData);
@@ -360,10 +349,11 @@ const App = ({ signOut }) => {
       <Heading level={1}>My Notes App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
+          /*
           <TextField
-            name="id"
-            placeholder="Id"
-            label="Id"
+            name="nickname"
+            placeholder="NickName"
+            label="NickName"
             labelHidden
             variation="quiet"
             //required  // Hakuto
@@ -448,7 +438,7 @@ const App = ({ signOut }) => {
             variation="quiet"
             //required  // Hakuto
           />
-          
+          */
           <Button type="submit" variation="primary">
             Create Note
           </Button>
@@ -464,7 +454,9 @@ const App = ({ signOut }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Text as="strong" fontWeight={700}>{note.id}</Text>
+            <Text as="strong" fontWeight={700}>
+              {note.nickname}
+            </Text>
             <Text as="span">{note.date}</Text>
             <Text as="span">{note.send_cnt}</Text>
             <Text as="span">{note.magx}</Text>
