@@ -319,7 +319,7 @@ const App = ({ signOut }) => {
 
     const numOfSeparator = separatorOfNotes.length
     console_logger.warn('onMessage(): numOfSeparator ', numOfSeparator);
-    for(let i = 0; i < numOfseparator; ++i) {
+    for(let i = 0; i < numOfSeparator; ++i) {
       console_logger.warn('onMessage(): Loop of numOfSeparator for id  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], 'notesFromAPI[separatorOfNotes[i]].id ', notesFromAPI[separatorOfNotes[i]].id);
     }
 
