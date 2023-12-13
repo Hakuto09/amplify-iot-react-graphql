@@ -349,7 +349,6 @@ const App = ({ signOut }) => {
       <Heading level={1}>My Notes App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          /*
           <TextField
             name="nickname"
             placeholder="NickName"
@@ -438,7 +437,6 @@ const App = ({ signOut }) => {
             variation="quiet"
             //required  // Hakuto
           />
-          */
           <Button type="submit" variation="primary">
             Create Note
           </Button>
