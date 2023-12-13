@@ -302,13 +302,9 @@ const App = ({ signOut }) => {
     const numOfNotes = notesFromAPI.length;
     console_logger.warn('onMessage(): numOfNotes ', numOfNotes);
 
-    console_logger.warn('onMessage(): id0 ', notesFromAPI[0].id);
-    console_logger.warn('onMessage(): id1 ', notesFromAPI[15].id);
-    console_logger.warn('onMessage(): id2 ', notesFromAPI[41].id);
-
     var separatorOfNotes = [];
 
-    for (let i = 0; i < numOfNotes; ++i) {
+    for(let i = 0; i < numOfNotes; ++i) {
       if(i == 0) {
         separatorOfNotes.push(0);
         continue;
@@ -319,6 +315,11 @@ const App = ({ signOut }) => {
     }
 
     console_logger.warn('onMessage(): separatorOfNotes ', separatorOfNotes);
+    console_logger.warn('onMessage(): separatorOfNotes.length ', separatorOfNotes.length);
+
+    for(let i = 0; i < separatorOfNotes.length; ++i) {
+      console_logger.warn('onMessage(): Loop of separatorOfNotes.length  i ', i, 'id[i] ', notesFromAPI[i].id);
+    }
 
     try {
       //const messageData = JSON.parse(message.data);
