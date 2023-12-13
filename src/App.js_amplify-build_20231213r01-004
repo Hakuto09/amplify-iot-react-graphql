@@ -299,8 +299,8 @@ const App = ({ signOut }) => {
 
 //    fetchNote('dummy001');  // want to get data for each ID.
 
-    const numOfNotes = notesFromAPI.length;
-    console_logger.warn('onMessage(): numOfNotes ', numOfNotes);
+    nomOfNotes = notesFromAPI.length;
+    console_logger.warn('onMessage(): nomOfNotes ', nomOfNotes);
 
     console_logger.warn('onMessage(): id0 ', notesFromAPI[0].id);
     console_logger.warn('onMessage(): id1 ', notesFromAPI[15].id);
@@ -316,21 +316,21 @@ const App = ({ signOut }) => {
       //}
 
       // find or add device to list of tracked devices
-      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
+      const existingDeviceData = trackedDevices.findDevice(nickname/*messageData.DeviceId*/);
 
       if (existingDeviceData) {
-        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+        existingDeviceData.addData(date/*messageData.MessageDate*/, temp/*messageData.IotData.temperature*/, humi/*messageData.IotData.humidity*/);
       }
       else {
-        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
+        const newDeviceData = new DeviceData(nickname/*messageData.DeviceId*/);
         trackedDevices.devices.push(newDeviceData);
         const numDevices = trackedDevices.getDevicesCount();
         deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
-        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+        newDeviceData.addData(date/*messageData.MessageDate*/, temp/*messageData.IotData.temperature*/, humi/*messageData.IotData.humidity*/);
 
         // add device to the UI list
         const node = document.createElement('option');
-        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
+        const nodeText = document.createTextNode(nickname/*messageData.DeviceId*/);
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
 
