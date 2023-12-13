@@ -72,21 +72,21 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
-//  // Hakuto start
-//    async function fetchNote(id) {
-//    console_logger.warn('fetchNote(): In')  // Hakuto
-//
-//    const apiDataOfGet = await client.graphql({
-//      query: getNote,
-//      variables: { input: { id } },
-//    });
-//  
-//    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
-//
-//    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
-//    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
-//  }
-//  // Hakuto end
+  // Hakuto start
+  async function fetchNote(id) {
+    console_logger.warn('fetchNote(): In')  // Hakuto
+
+    const apiDataOfGet = await client.graphql({
+      query: getNote,
+      variables: { input: { id } },
+    });
+
+    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
+
+    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
+    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
+  }
+  // Hakuto end
 
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
@@ -297,14 +297,7 @@ const App = ({ signOut }) => {
   // 5. Update the chart UI
   function onMessage(notesFromAPI) {
 
-//    fetchNote('dummy001');  // want to get data for each ID.
-
-    nomOfNotes = notesFromAPI.length;
-    console_logger.warn('onMessage(): nomOfNotes ', nomOfNotes);
-
-    console_logger.warn('onMessage(): id0 ', notesFromAPI[0].id);
-    console_logger.warn('onMessage(): id1 ', notesFromAPI[15].id);
-    console_logger.warn('onMessage(): id2 ', notesFromAPI[41].id);
+    fetchNote('dummy001');  // want to get data for each ID.
 
     try {
       //const messageData = JSON.parse(message.data);
