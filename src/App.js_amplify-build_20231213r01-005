@@ -306,20 +306,6 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): id1 ', notesFromAPI[15].id);
     console_logger.warn('onMessage(): id2 ', notesFromAPI[41].id);
 
-    var separatorOfNotes = [];
-
-    for (let i = 0; i < numOfNotes; ++i) {
-      if(i == 0) {
-        separatorOfNotes.push(0);
-        continue;
-      }
-      if(notesFromAPI[i].id !== notesFromAPI[i - 1].id) {
-        separatorOfNotes.push(i);
-      }
-    }
-
-    console_logger.warn('onMessage(): separatorOfNotes ', separatorOfNotes);
-
     try {
       //const messageData = JSON.parse(message.data);
       //console.log(messageData);
@@ -482,8 +468,7 @@ const App = ({ signOut }) => {
 //            key={note.id || note.name}
             key={!!note.id}
             direction="row"
-//            justifyContent="center"
-            justifyContent="flex-start"
+            justifyContent="center"
             alignItems="center"
           >
             <Text as="strong" fontWeight={700}>{note.id}</Text>
