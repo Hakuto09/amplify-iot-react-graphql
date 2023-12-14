@@ -65,6 +65,8 @@ const console_logger = new ConsoleLogger('foo');
 
 const client = generateClient();
 
+var g_devices = [];
+
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
 
@@ -502,13 +504,15 @@ const App = ({ signOut }) => {
     let k = 0;
     for(let i = 0; i < numOfSeparator; ++i) {     // Loop for Devices.
       trackedDevices.devices[i].resetData();
+      g_devices[i] = trackedDevices.devices[i];
       for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
         trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
         //console_logger.warn('onMessage(): Loop of k.  k ', k, ' id ', notesFromAPI[k].id, ' date ', notesFromAPI[k].date, ' temp ', notesFromAPI[k].temp, ' humi ', notesFromAPI[k].humi);
         k++;
       }
-      console_logger.warn('onMessage(): Loop of i.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);
+      console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
     }
+    console_logger.warn('onMessage(): g_devices ', g_devices);
 
     // if this is the first device being discovered, auto-select it
     if(needsAutoSelect) {
@@ -583,6 +587,7 @@ const App = ({ signOut }) => {
 
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
+  console_logger.warn('before App rutern. 0: g_devices ', g_devices);
 
   labels = [3, 4, 5];
   data0s = [23, 13, 3];
