@@ -212,6 +212,7 @@ const App = ({ signOut }) => {
 
   // Define the chart axes
   const chartData = {
+    labels: labels,
     datasets: [
       {
         fill: false,
@@ -240,6 +241,22 @@ const App = ({ signOut }) => {
 
   const chartOptions = {
     options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Min and Max Settings'
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 200,
+        }
+      }
+    }
+    /*
+    options: {
       scales: {
         'Temperature': {
           type: 'linear',
@@ -255,6 +272,7 @@ const App = ({ signOut }) => {
         }
       }
     }
+    */
     /*
     options: {
       scales: {
