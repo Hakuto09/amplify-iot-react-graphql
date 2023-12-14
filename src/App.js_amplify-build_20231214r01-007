@@ -259,8 +259,6 @@ const App = ({ signOut }) => {
             display: true,
             labelString: "Value"
           }
-          suggestedMin: 0,
-          suggestedMax: 100
         }
       }
     }
