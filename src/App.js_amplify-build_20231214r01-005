@@ -211,6 +211,7 @@ const App = ({ signOut }) => {
 
   // Define the chart axes
   const chartData = {
+    labels,
     datasets: [
       {
         fill: false,
