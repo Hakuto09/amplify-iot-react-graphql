@@ -66,10 +66,6 @@ const console_logger = new ConsoleLogger('foo');
 const client = generateClient();
 
 var g_devices = [];
-var maxLen = 50;
-var labels = new Array(maxLen);
-var data0s = new Array(maxLen);
-var data1s = new Array(maxLen);
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
@@ -216,12 +212,10 @@ const App = ({ signOut }) => {
 
   const trackedDevices = new TrackedDevices();
 
-  /*
   var maxLen = 50;
   var labels = new Array(maxLen);
   var data0s = new Array(maxLen);
   var data1s = new Array(maxLen);
-  */
 
   labels = [0, 1, 2];
   data0s = [3, 13, 23];
