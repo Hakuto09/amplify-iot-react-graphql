@@ -258,7 +258,7 @@ const App = ({ signOut }) => {
           scaleLabel: {
             display: true,
             labelString: "Value"
-          },
+          }
           suggestedMin: 0,
           suggestedMax: 100
         }
