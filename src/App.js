@@ -573,21 +573,19 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
 
-  /*
-  const device = g_devices[0];
-  console_logger.warn('before App rutern. 0: device ', device);
+  const device2 = g_devices[0];
+  console_logger.warn('before App rutern. 0: device2 ', device2, ' needsAutoSelect ', needsAutoSelect);
   if(!needsAutoSelect) {
-    device = g_devices[listOfDevices.selectedIndex];
+    device2 = g_devices[listOfDevices.selectedIndex];
   }
-  console_logger.warn('before App rutern. 0b: device ', device);
+  console_logger.warn('before App rutern. 0b: device2 ', device2);
   
-  labels = structuredClone(device.timeData);
-  console_logger.warn('before App rutern. 0b: device.timeData ', device.timeData);
-  data0s = structuredClone(device.temperatureData);
-  console_logger.warn('before App rutern. 0b: device.temperatureData ', device.temperatureData);
-  data1s = structuredClone(device.humidityData);
-  console_logger.warn('before App rutern. 0b: device.humidityData ', device.humidityData);
-  */
+  labels = structuredClone(device2.timeData);
+  console_logger.warn('before App rutern. 0b: device2.timeData ', device2.timeData);
+  data0s = structuredClone(device2.temperatureData);
+  console_logger.warn('before App rutern. 0b: device2.temperatureData ', device2.temperatureData);
+  data1s = structuredClone(device2.humidityData);
+  console_logger.warn('before App rutern. 0b: device2.humidityData ', device2.humidityData);
 
   //labels = [3, 4, 5];
   //data0s = [23, 13, 3];
