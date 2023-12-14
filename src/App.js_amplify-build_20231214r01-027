@@ -581,7 +581,7 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern: device.humidityData ', device.humidityData);
   */
 
-  //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
+  console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
 
   labels = [3, 4, 5];
