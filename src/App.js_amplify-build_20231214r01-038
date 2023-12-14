@@ -411,8 +411,7 @@ const App = ({ signOut }) => {
   console_logger.info('listOfDevices -->')
   console_logger.info(listOfDevices)
   function OnSelectionChange() {
-    console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
-    console_logger.warn('OnSelectionChange(): In.  trackedDevices.devices ', trackedDevices.devices);
+    console_logger.warn('OnSelectionChange(): In ');
     //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     const device = trackedDevices.devices[listOfDevices.selectedIndex];
     console_logger.warn('OnSelectionChange(): device ', device);
