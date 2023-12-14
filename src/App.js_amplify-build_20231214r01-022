@@ -216,7 +216,6 @@ const App = ({ signOut }) => {
   var data1s = new Array(maxLen);
 
   // Define the chart axes
-  /*
   const chartData = {
     labels: labels,
     datasets: [
@@ -246,7 +245,6 @@ const App = ({ signOut }) => {
       }
     ]
   };
-  */
 
   const chartOptions = {
     options: {
@@ -575,37 +573,6 @@ const App = ({ signOut }) => {
   chartData.datasets[1].data = structuredClone(device.humidityData);
   console_logger.warn('before App rutern: device.humidityData ', device.humidityData);
   */
-
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        //fill: false,
-        label: 'Temperature',
-        //yAxisID: 'Temperature',
-        borderColor: 'rgba(255, 204, 0, 1)',
-        //pointBoarderColor: 'rgba(255, 204, 0, 1)',
-        backgroundColor: 'rgba(255, 204, 0, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
-        //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
-        //spanGaps: true,
-        data: data0s
-      },
-      {
-        //fill: false,
-        label: 'Humidity',
-        //yAxisID: 'Humidity',
-        borderColor: 'rgba(24, 120, 240, 1)',
-        //pointBoarderColor: 'rgba(24, 120, 240, 1)',
-        backgroundColor: 'rgba(24, 120, 240, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
-        //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
-        //spanGaps: true,
-        data: data1s
-      }
-    ]
-  };
-  
   console_logger.warn('before App rutern: chartOptions ', chartOptions, ' chartData ', chartData);
   // Hakuto end
   
