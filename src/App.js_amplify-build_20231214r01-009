@@ -241,41 +241,6 @@ const App = ({ signOut }) => {
   const chartOptions = {
     options: {
       scales: {
-        yAxis: [
-          {
-            id: 'Temperature',
-            type: 'linear',
-            scaleLabel: {
-              labelString: 'Temperature (C)',
-              display: true,
-            },
-            position: 'left',
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              beginAtZero: true
-            }
-          },
-          {
-            id: 'Humidity',
-            type: 'linear',
-            scaleLabel: {
-              labelString: 'Humidity (%)',
-              display: true,
-            },
-            position: 'right',
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              beginAtZero: true
-            }
-          }
-        ]
-      }
-    }
-    /*
-    options: {
-      scales: {
         x: {
           type: "time",
           ticks: {
@@ -299,7 +264,6 @@ const App = ({ signOut }) => {
         }
       }
     }
-    */
     /*
     scales: {
       yAxes: [{
