@@ -215,10 +215,6 @@ const App = ({ signOut }) => {
   var data0s = new Array(maxLen);
   var data1s = new Array(maxLen);
 
-  labels = [0, 1, 2];
-  data0s = [3, 13, 23];
-  data1s = [7, 17, 27];
-
   // Define the chart axes
   /*
   const chartData = {
@@ -609,7 +605,7 @@ const App = ({ signOut }) => {
       }
     ]
   };
-
+  
   console_logger.warn('before App rutern: chartOptions ', chartOptions, ' chartData ', chartData);
   // Hakuto end
   
