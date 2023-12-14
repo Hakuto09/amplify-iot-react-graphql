@@ -568,30 +568,30 @@ const App = ({ signOut }) => {
   // Hakuto end
 
   // Hakuto start
+  /*
+  console_logger.warn('before App rutern.');
+  const device = trackedDevices.devices[0];
+  console_logger.warn('before App rutern. 0: device ', device);
+  if(!needsAutoSelect) {
+    device = trackedDevices.devices[listOfDevices.selectedIndex];
+  }
+  console_logger.warn('before App rutern. 1: device ', device);
+  
+  chartData.labels = structuredClone(device.timeData);
+  console_logger.warn('before App rutern: device.timeData ', device.timeData);
+  chartData.datasets[0].data = structuredClone(device.temperatureData);
+  console_logger.warn('before App rutern: device.temperatureData ', device.temperatureData);
+  chartData.datasets[1].data = structuredClone(device.humidityData);
+  console_logger.warn('before App rutern: device.humidityData ', device.humidityData);
+  */
 
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
 
-  const device = g_devices[0];
-  console_logger.warn('before App rutern. 0: device ', device);
-  if(!needsAutoSelect) {
-    device = g_devices[listOfDevices.selectedIndex];
-  }
-  console_logger.warn('before App rutern. 0b: device ', device);
-  
-  labels = structuredClone(device.timeData);
-  console_logger.warn('before App rutern. 0b: device.timeData ', device.timeData);
-  data0s = structuredClone(device.temperatureData);
-  console_logger.warn('before App rutern. 0b: device.temperatureData ', device.temperatureData);
-  data1s = structuredClone(device.humidityData);
-  console_logger.warn('before App rutern. 0b: device.humidityData ', device.humidityData);
-  
-  //labels = [3, 4, 5];
-  //data0s = [23, 13, 3];
-  //data1s = [27, 17, 27];
-
-  console_logger.warn('before App rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
+  labels = [3, 4, 5];
+  data0s = [23, 13, 3];
+  data1s = [27, 17, 27];
 
   const chartData = {
     labels: labels,
