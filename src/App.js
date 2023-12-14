@@ -210,9 +210,14 @@ const App = ({ signOut }) => {
 
   const trackedDevices = new TrackedDevices();
 
+  maxLen = 50;
+  labels = new Array(maxLen);
+  data0s = new Array(maxLen);
+  data1s = new Array(maxLen);
+
   // Define the chart axes
   const chartData = {
-    //labels: labels,
+    labels: labels,
     datasets: [
       {
         //fill: false,
@@ -224,6 +229,7 @@ const App = ({ signOut }) => {
         //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
         //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
         //spanGaps: true,
+        data: data0s
       },
       {
         //fill: false,
@@ -235,6 +241,7 @@ const App = ({ signOut }) => {
         //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
         //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
         //spanGaps: true,
+        data: data1s
       }
     ]
   };
@@ -396,10 +403,13 @@ const App = ({ signOut }) => {
     console_logger.warn('OnSelectionChange(): device ', device);
     chartData.labels = device.timeData;
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
+    console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
     chartData.datasets[0].data = device.temperatureData;
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
+    console_logger.warn('OnSelectionChange(): chartData.datasets[0].data ', chartData.datasets[0].data);
     chartData.datasets[1].data = device.humidityData;
     console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
+    console_logger.warn('OnSelectionChange(): chartData.datasets[1].data ', chartData.datasets[1].data);
     //myLineChart.update();
   }
   listOfDevices.addEventListener('change', OnSelectionChange, false);
