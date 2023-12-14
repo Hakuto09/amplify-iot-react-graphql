@@ -498,7 +498,6 @@ const App = ({ signOut }) => {
     }
 
     // if this is the first device being discovered, auto-select it
-    /*
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
@@ -506,7 +505,6 @@ const App = ({ signOut }) => {
       OnSelectionChange();
       console_logger.warn('onMessage(): after OnSelectionChange()');
     }
-    */
 
 //    try {
 //      //const messageData = JSON.parse(message.data);
@@ -554,13 +552,8 @@ const App = ({ signOut }) => {
 
   // Hakuto start
   console_logger.warn('before App rutern.');
-  const device = trackedDevices.devices[0];
-  console_logger.warn('before App rutern. 0: device ', device);
-  if(!needsAutoSelect) {
-    device = trackedDevices.devices[listOfDevices.selectedIndex];
-  }
-  console_logger.warn('before App rutern. 1: device ', device);
-  
+  const device = trackedDevices.devices[listOfDevices.selectedIndex];
+  console_logger.warn('before App rutern: device ', device);
   chartData.labels = structuredClone(device.timeData);
   console_logger.warn('before App rutern: device.timeData ', device.timeData);
   chartData.datasets[0].data = structuredClone(device.temperatureData);
