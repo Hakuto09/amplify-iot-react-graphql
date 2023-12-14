@@ -163,6 +163,12 @@ const App = ({ signOut }) => {
       this.humidityData = new Array(this.maxLen);
     }
 
+    resetData() {
+      this.timeData.length = 0;
+      this.temperatureData.length = 0;
+      this.humidityData.length = 0;
+    }
+
     addData(time, temperature, humidity) {
       this.timeData.push(time);
       this.temperatureData.push(temperature);
@@ -355,6 +361,7 @@ const App = ({ signOut }) => {
     
     let k = 0;
     for(let i = 0; i < numOfSeparator; ++i) {     // Loop for Devices.
+      trackedDevices.devices[i].resetData();
       for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
         trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
         console_logger.warn('onMessage(): Loop of k.  k ', k, ' id ', notesFromAPI[k].id, ' date ', notesFromAPI[k].date, ' temp ', notesFromAPI[k].temp, ' humi ', notesFromAPI[k].humi);
@@ -364,10 +371,12 @@ const App = ({ signOut }) => {
     }
 
     // if this is the first device being discovered, auto-select it
-    if (needsAutoSelect) {
+    if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
+      console_logger.warn('onMessage(): before OnSelectionChange()');
       OnSelectionChange();
+      console_logger.warn('onMessage(): after OnSelectionChange()');
     }
 
 //    try {
