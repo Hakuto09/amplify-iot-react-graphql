@@ -243,14 +243,10 @@ const App = ({ signOut }) => {
       scales: {
         'Temperature': {
           type: 'linear',
-          min: 0,
-          max: 100,
           position: 'left'
         },
         'Humidity': {
           type: 'linear',
-          min: 0,
-          max: 200,
           position: 'right'
         }
       }
@@ -529,7 +525,7 @@ const App = ({ signOut }) => {
       </View>
       <Line options={chartOptions} data={chartData} />
     
-      <Heading level={1}>My Notes App 20231214r01-013</Heading>
+      <Heading level={1}>My Notes App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <TextField
