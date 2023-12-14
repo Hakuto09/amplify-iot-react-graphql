@@ -573,6 +573,7 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
 
+  /*
   const device = g_devices[0];
   console_logger.warn('before App rutern. 0: device ', device);
   if(!needsAutoSelect) {
@@ -586,7 +587,8 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern. 0b: device.temperatureData ', device.temperatureData);
   data1s = structuredClone(device.humidityData);
   console_logger.warn('before App rutern. 0b: device.humidityData ', device.humidityData);
-  
+  */
+
   //labels = [3, 4, 5];
   //data0s = [23, 13, 3];
   //data1s = [27, 17, 27];
