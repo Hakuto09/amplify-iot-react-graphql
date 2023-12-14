@@ -210,10 +210,10 @@ const App = ({ signOut }) => {
 
   const trackedDevices = new TrackedDevices();
 
-  maxLen = 50;
-  labels = new Array(maxLen);
-  data0s = new Array(maxLen);
-  data1s = new Array(maxLen);
+  var maxLen = 50;
+  var labels = new Array(maxLen);
+  var data0s = new Array(maxLen);
+  var data1s = new Array(maxLen);
 
   // Define the chart axes
   const chartData = {
@@ -557,7 +557,7 @@ const App = ({ signOut }) => {
       </View>
       <Line options={chartOptions} data={chartData} />
     
-      <Heading level={1}>My Notes App 20231214r01-013</Heading>
+      <Heading level={1}>My Notes App</Heading>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           <TextField
