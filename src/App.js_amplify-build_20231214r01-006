@@ -191,7 +191,6 @@ const App = ({ signOut }) => {
     // Find a device based on its Id
     findDevice(deviceId) {
       console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
-      console_logger.warn('TrackedDevices.findDevice(): this.devices ', this.devices);
       for (let i = 0; i < this.devices.length; ++i) {
         console_logger.warn('TrackedDevices.findDevice(): this.devices.length ', this.devices.length, ' i ', i);
         if (this.devices[i].deviceId === deviceId) {
@@ -317,8 +316,7 @@ const App = ({ signOut }) => {
   console_logger.info(listOfDevices)
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In ');
-    //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
-    const device = trackedDevices.devices[listOfDevices.selectedIndex];
+    const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     console_logger.warn('OnSelectionChange(): device ', device);
     chartData.labels = device.timeData;
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
@@ -379,7 +377,7 @@ const App = ({ signOut }) => {
     for(let i = 0; i < numOfSeparator; ++i) {
       const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
       trackedDevices.devices.push(newDeviceData);
-      console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
+      console_logger.warn('onMessage(): newDeviceData ', newDeviceData);
     
       // add device to the UI list
       const node = document.createElement('option');
