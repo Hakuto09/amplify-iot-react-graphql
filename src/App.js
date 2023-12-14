@@ -401,13 +401,13 @@ const App = ({ signOut }) => {
     //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     const device = trackedDevices.devices[listOfDevices.selectedIndex];
     console_logger.warn('OnSelectionChange(): device ', device);
-    chartData.labels = device.timeData;
+    chartData.labels = structuredClone(device.timeData);
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
     console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
-    chartData.datasets[0].data = device.temperatureData;
+    chartData.datasets[0].data = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
     console_logger.warn('OnSelectionChange(): chartData.datasets[0].data ', chartData.datasets[0].data);
-    chartData.datasets[1].data = device.humidityData;
+    chartData.datasets[1].data = structuredClone(device.humidityData);
     console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
     console_logger.warn('OnSelectionChange(): chartData.datasets[1].data ', chartData.datasets[1].data);
     //myLineChart.update();
