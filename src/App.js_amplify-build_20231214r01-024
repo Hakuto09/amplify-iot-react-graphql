@@ -610,13 +610,7 @@ const App = ({ signOut }) => {
     ]
   };
 
-  console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
-  
-  labels = [3, 4, 5];
-  data0s = [23, 13, 3];
-  data1s = [27, 17, 27];
-  
-  console_logger.warn('before App rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
+  console_logger.warn('before App rutern: chartOptions ', chartOptions, ' chartData ', chartData);
   // Hakuto end
   
   // Hakuto about "Line"
