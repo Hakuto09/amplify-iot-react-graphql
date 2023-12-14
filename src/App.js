@@ -241,6 +241,19 @@ const App = ({ signOut }) => {
   const chartOptions = {
     options: {
       scales: {
+        'Temperature': {
+          type: 'linear',
+          position: 'left'
+        },
+        'Humidity': {
+          type: 'linear',
+          position: 'right'
+        }
+      }
+    }
+    /*
+    options: {
+      scales: {
         yAxes: [
           {
             id: 'Temperature',
@@ -273,6 +286,7 @@ const App = ({ signOut }) => {
         ]
       }
     }
+    */
     /*
     options: {
       scales: {
