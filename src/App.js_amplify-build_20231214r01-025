@@ -580,10 +580,6 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern: device.humidityData ', device.humidityData);
   */
 
-  labels = [3, 4, 5];
-  data0s = [23, 13, 3];
-  data1s = [27, 17, 27];
-
   const chartData = {
     labels: labels,
     datasets: [
@@ -616,9 +612,9 @@ const App = ({ signOut }) => {
 
   console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   
-  labels = [6, 7, 8];
-  data0s = [53, 13, 93];
-  data1s = [87, 17, 47];
+  labels = [3, 4, 5];
+  data0s = [23, 13, 3];
+  data1s = [27, 17, 27];
   
   console_logger.warn('before App rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
   // Hakuto end
