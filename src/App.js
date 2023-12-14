@@ -401,19 +401,19 @@ const App = ({ signOut }) => {
     //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     const device = trackedDevices.devices[listOfDevices.selectedIndex];
     console_logger.warn('OnSelectionChange(): device ', device);
-    /*
     chartData.labels = structuredClone(device.timeData);
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
     chartData.datasets[0].data = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
     chartData.datasets[1].data = structuredClone(device.humidityData);
     console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
-    */
+    /*
     for(let i = 0; i < maxLen; ++i) {
       chartData.labels[i] = device.timeData[i];
       chartData.datasets[0].data[i] = device.temperatureData[i];
       chartData.datasets[1].data[i] = device.humidityData[i];
     }
+    */
     console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
     console_logger.warn('OnSelectionChange(): chartData.datasets[0].data ', chartData.datasets[0].data);
     console_logger.warn('OnSelectionChange(): chartData.datasets[1].data ', chartData.datasets[1].data);
@@ -550,8 +550,20 @@ const App = ({ signOut }) => {
   };
   // Hakuto end
 
+  // Hakuto start
+  console_logger.warn('before App rutern.');
+  const device = trackedDevices.devices[listOfDevices.selectedIndex];
+  console_logger.warn('before App rutern: device ', device);
+  chartData.labels = structuredClone(device.timeData);
+  console_logger.warn('before App rutern: device.timeData ', device.timeData);
+  chartData.datasets[0].data = structuredClone(device.temperatureData);
+  console_logger.warn('before App rutern: device.temperatureData ', device.temperatureData);
+  chartData.datasets[1].data = structuredClone(device.humidityData);
+  console_logger.warn('before App rutern: device.humidityData ', device.humidityData);
+  console_logger.warn('before App rutern: chartOptions ', chartOptions, ' chartData ', chartData);
+  // Hakuto end
+  
   // Hakuto about "Line"
-  console_logger.warn('before App rutern. chartOptions ', chartOptions, ' chartData ', chartData);
   return (
     <View className="App">
       <View as="span" margin="3rem 0">
