@@ -595,7 +595,7 @@ const App = ({ signOut }) => {
   console_logger.warn('before App rutern. 0b: device2.humidityData ', device2.humidityData);
   */
 
-  if(g_devices[0].length) {
+  if(g_devices.length) {
     labels = structuredClone(g_devices[0].timeData);
     console_logger.warn('before App rutern. 0b: g_devices[0].timeData ', g_devices[0].timeData);
     data0s = structuredClone(g_devices[0].temperatureData);
