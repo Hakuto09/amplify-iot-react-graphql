@@ -101,7 +101,6 @@ class TrackedDevices {
 const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
-var g_selectedIndex = 0;
   
 
 const App = ({ signOut }) => {
@@ -448,8 +447,6 @@ const App = ({ signOut }) => {
   console_logger.info(listOfDevices)
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
-    g_selectedIndex = listOfDevices.selectedIndex;
-    console_logger.warn('OnSelectionChange(): In.  g_selectedIndex ', g_selectedIndex);
     console_logger.warn('OnSelectionChange(): In.  trackedDevices.devices ', trackedDevices.devices);
     //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
     const device = trackedDevices.devices[listOfDevices.selectedIndex];
@@ -626,9 +623,7 @@ const App = ({ signOut }) => {
     const device2 = g_devices[0];
     console_logger.warn('before App rutern. 0: device2 ', device2, ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
     if(!needsAutoSelect) {
-//      device2 = g_devices[listOfDevices.selectedIndex];
-      console_logger.warn('before App rutern. 0: g_selectedIndex ', g_selectedIndex);
-      device2 = g_devices[g_selectedIndex];
+      device2 = g_devices[listOfDevices.selectedIndex];
     }
     console_logger.warn('before App rutern. 0b: device2 ', device2);
   
