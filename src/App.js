@@ -99,7 +99,7 @@ class TrackedDevices {
 }
 
 const trackedDevices = new TrackedDevices();
-
+var numOfCreatedDevices = 0;
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
@@ -523,15 +523,19 @@ const App = ({ signOut }) => {
 
     console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
     for(let i = 0; i < numOfSeparator; ++i) {
-      const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
-      trackedDevices.devices.push(newDeviceData);
-      console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
+      if(i >= numOfCreatedDevices) {
+        const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
+        trackedDevices.devices.push(newDeviceData);
+        console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
     
-      // add device to the UI list
-      const node = document.createElement('option');
-      const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
-      node.appendChild(nodeText);
-      listOfDevices.appendChild(node);
+        // add device to the UI list
+        const node = document.createElement('option');
+        const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
+        node.appendChild(nodeText);
+        listOfDevices.appendChild(node);
+
+        numOfCreatedDevices++;
+      }
     }
 
     const numDevices = trackedDevices.getDevicesCount();
