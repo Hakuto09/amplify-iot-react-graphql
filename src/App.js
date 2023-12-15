@@ -481,7 +481,9 @@ const App = ({ signOut }) => {
     
     //myLineChart.update();
   }
-  listOfDevices.addEventListener('change', OnSelectionChange, false);
+
+//  listOfDevices.addEventListener('change', OnSelectionChange, false);
+  listOfDevices.addEventListener('change', fetchNotes, false);
 
   // When a web socket message arrives:
   // 1. Unpack it
@@ -569,10 +571,14 @@ const App = ({ signOut }) => {
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
+      /*
       console_logger.warn('onMessage(): before OnSelectionChange()');
       OnSelectionChange();
       console_logger.warn('onMessage(): after OnSelectionChange()');
+      */
     }
+
+    OnSelectionChange();
 
 //    try {
 //      //const messageData = JSON.parse(message.data);
