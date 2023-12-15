@@ -71,6 +71,9 @@ var labels = new Array(maxLen);
 var data0s = new Array(maxLen);
 var data1s = new Array(maxLen);
 
+const trackedDevices = new TrackedDevices();
+
+
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
 
@@ -214,7 +217,7 @@ const App = ({ signOut }) => {
     }
   }
 
-  const trackedDevices = new TrackedDevices();
+  //const trackedDevices = new TrackedDevices();
 
   /*
   var maxLen = 50;
