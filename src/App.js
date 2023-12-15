@@ -621,7 +621,7 @@ const App = ({ signOut }) => {
 
   if(g_devices.length) {
     const device2 = g_devices[0];
-    console_logger.warn('before App rutern. 0: device2 ', device2, ' needsAutoSelect ', needsAutoSelect);
+    console_logger.warn('before App rutern. 0: device2 ', device2, ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
     if(!needsAutoSelect) {
       device2 = g_devices[listOfDevices.selectedIndex];
     }
