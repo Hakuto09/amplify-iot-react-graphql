@@ -102,9 +102,7 @@ const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = 0;
-
-
-console_logger.warn('Before App.')  // Hakuto
+  
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
