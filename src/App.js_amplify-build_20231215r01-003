@@ -100,8 +100,6 @@ class TrackedDevices {
 
 const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
-let needsAutoSelect = true;
-  
 
 const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
@@ -437,8 +435,7 @@ const App = ({ signOut }) => {
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
-
-  //let needsAutoSelect = true;
+  let needsAutoSelect = true;
   const deviceCount = document.getElementById('deviceCount');
   console_logger.info('deviceCount -->')
   console_logger.info(deviceCount)
