@@ -548,7 +548,7 @@ const App = ({ signOut }) => {
         listOfDevices.appendChild(node);
 
         const apiData2 = await client.graphql({
-            query: listNotes,
+          query: listNotes,
           variables: { input: { id } },
         });   // Hakuto. for debug only.
         console_logger.warn('fetchNotes(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
