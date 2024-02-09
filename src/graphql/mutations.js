@@ -12,6 +12,8 @@ export const createNote = /* GraphQL */ `
       description
       nickname
       date
+      createdAt
+      updatedAt
       send_cnt
       magx
       magy
@@ -21,9 +23,9 @@ export const createNote = /* GraphQL */ `
       pres
       temp
       humi
+      general_data00
+      general_data01
       postType
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -39,6 +41,8 @@ export const updateNote = /* GraphQL */ `
       description
       nickname
       date
+      createdAt
+      updatedAt
       send_cnt
       magx
       magy
@@ -48,9 +52,9 @@ export const updateNote = /* GraphQL */ `
       pres
       temp
       humi
+      general_data00
+      general_data01
       postType
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -66,6 +70,8 @@ export const deleteNote = /* GraphQL */ `
       description
       nickname
       date
+      createdAt
+      updatedAt
       send_cnt
       magx
       magy
@@ -75,9 +81,9 @@ export const deleteNote = /* GraphQL */ `
       pres
       temp
       humi
+      general_data00
+      general_data01
       postType
-      createdAt
-      updatedAt
       __typename
     }
   }

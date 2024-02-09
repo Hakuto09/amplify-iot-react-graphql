@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "amplifyiotreactgraph",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2024-02-05T09:06:04.010Z"
 }

@@ -6,7 +6,7 @@ type Note
 	name: String
 	description: String
 	nickname: String
-	date: AWSDateTime!
+	date: String!
 	createdAt: AWSDateTime
 	updatedAt: AWSDateTime
 	send_cnt: Int

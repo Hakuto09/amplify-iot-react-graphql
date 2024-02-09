@@ -33,6 +33,8 @@ export default function NoteCreateForm(props) {
     description: "",
     nickname: "",
     date: "",
+    createdAt: "",
+    updatedAt: "",
     send_cnt: "",
     magx: "",
     magy: "",
@@ -42,6 +44,8 @@ export default function NoteCreateForm(props) {
     pres: "",
     temp: "",
     humi: "",
+    general_data00: "",
+    general_data01: "",
     postType: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -50,6 +54,8 @@ export default function NoteCreateForm(props) {
   );
   const [nickname, setNickname] = React.useState(initialValues.nickname);
   const [date, setDate] = React.useState(initialValues.date);
+  const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
+  const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [send_cnt, setSend_cnt] = React.useState(initialValues.send_cnt);
   const [magx, setMagx] = React.useState(initialValues.magx);
   const [magy, setMagy] = React.useState(initialValues.magy);
@@ -59,6 +65,12 @@ export default function NoteCreateForm(props) {
   const [pres, setPres] = React.useState(initialValues.pres);
   const [temp, setTemp] = React.useState(initialValues.temp);
   const [humi, setHumi] = React.useState(initialValues.humi);
+  const [general_data00, setGeneral_data00] = React.useState(
+    initialValues.general_data00
+  );
+  const [general_data01, setGeneral_data01] = React.useState(
+    initialValues.general_data01
+  );
   const [postType, setPostType] = React.useState(initialValues.postType);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -66,6 +78,8 @@ export default function NoteCreateForm(props) {
     setDescription(initialValues.description);
     setNickname(initialValues.nickname);
     setDate(initialValues.date);
+    setCreatedAt(initialValues.createdAt);
+    setUpdatedAt(initialValues.updatedAt);
     setSend_cnt(initialValues.send_cnt);
     setMagx(initialValues.magx);
     setMagy(initialValues.magy);
@@ -75,6 +89,8 @@ export default function NoteCreateForm(props) {
     setPres(initialValues.pres);
     setTemp(initialValues.temp);
     setHumi(initialValues.humi);
+    setGeneral_data00(initialValues.general_data00);
+    setGeneral_data01(initialValues.general_data01);
     setPostType(initialValues.postType);
     setErrors({});
   };
@@ -83,6 +99,8 @@ export default function NoteCreateForm(props) {
     description: [],
     nickname: [],
     date: [{ type: "Required" }],
+    createdAt: [],
+    updatedAt: [],
     send_cnt: [],
     magx: [],
     magy: [],
@@ -92,6 +110,8 @@ export default function NoteCreateForm(props) {
     pres: [],
     temp: [],
     humi: [],
+    general_data00: [],
+    general_data01: [],
     postType: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -111,6 +131,23 @@ export default function NoteCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -124,6 +161,8 @@ export default function NoteCreateForm(props) {
           description,
           nickname,
           date,
+          createdAt,
+          updatedAt,
           send_cnt,
           magx,
           magy,
@@ -133,6 +172,8 @@ export default function NoteCreateForm(props) {
           pres,
           temp,
           humi,
+          general_data00,
+          general_data01,
           postType,
         };
         const validationResponses = await Promise.all(
@@ -200,6 +241,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -209,6 +252,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -237,6 +282,8 @@ export default function NoteCreateForm(props) {
               description: value,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -246,6 +293,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -274,6 +323,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname: value,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -283,6 +334,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -302,15 +355,19 @@ export default function NoteCreateForm(props) {
         label="Date"
         isRequired={true}
         isReadOnly={false}
-        value={date}
+        type="datetime-local"
+        value={date && convertToLocal(new Date(date))}
         onChange={(e) => {
-          let { value } = e.target;
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
               name,
               description,
               nickname,
               date: value,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -320,6 +377,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -334,6 +393,92 @@ export default function NoteCreateForm(props) {
         errorMessage={errors.date?.errorMessage}
         hasError={errors.date?.hasError}
         {...getOverrideProps(overrides, "date")}
+      ></TextField>
+      <TextField
+        label="Created at"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={createdAt && convertToLocal(new Date(createdAt))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date,
+              createdAt: value,
+              updatedAt,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+              general_data00,
+              general_data01,
+              postType,
+            };
+            const result = onChange(modelFields);
+            value = result?.createdAt ?? value;
+          }
+          if (errors.createdAt?.hasError) {
+            runValidationTasks("createdAt", value);
+          }
+          setCreatedAt(value);
+        }}
+        onBlur={() => runValidationTasks("createdAt", createdAt)}
+        errorMessage={errors.createdAt?.errorMessage}
+        hasError={errors.createdAt?.hasError}
+        {...getOverrideProps(overrides, "createdAt")}
+      ></TextField>
+      <TextField
+        label="Updated at"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={updatedAt && convertToLocal(new Date(updatedAt))}
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date,
+              createdAt,
+              updatedAt: value,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+              general_data00,
+              general_data01,
+              postType,
+            };
+            const result = onChange(modelFields);
+            value = result?.updatedAt ?? value;
+          }
+          if (errors.updatedAt?.hasError) {
+            runValidationTasks("updatedAt", value);
+          }
+          setUpdatedAt(value);
+        }}
+        onBlur={() => runValidationTasks("updatedAt", updatedAt)}
+        errorMessage={errors.updatedAt?.errorMessage}
+        hasError={errors.updatedAt?.hasError}
+        {...getOverrideProps(overrides, "updatedAt")}
       ></TextField>
       <TextField
         label="Send cnt"
@@ -352,6 +497,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt: value,
               magx,
               magy,
@@ -361,6 +508,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -393,6 +542,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx: value,
               magy,
@@ -402,6 +553,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -434,6 +587,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy: value,
@@ -443,6 +598,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -475,6 +632,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -484,6 +643,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -516,6 +677,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -525,6 +688,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -557,6 +722,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -566,6 +733,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -598,6 +767,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -607,6 +778,8 @@ export default function NoteCreateForm(props) {
               pres: value,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -639,6 +812,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -648,6 +823,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp: value,
               humi,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -680,6 +857,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -689,6 +868,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi: value,
+              general_data00,
+              general_data01,
               postType,
             };
             const result = onChange(modelFields);
@@ -704,6 +885,96 @@ export default function NoteCreateForm(props) {
         hasError={errors.humi?.hasError}
         {...getOverrideProps(overrides, "humi")}
       ></TextField>
+      <TextField
+        label="General data00"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={general_data00}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date,
+              createdAt,
+              updatedAt,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+              general_data00: value,
+              general_data01,
+              postType,
+            };
+            const result = onChange(modelFields);
+            value = result?.general_data00 ?? value;
+          }
+          if (errors.general_data00?.hasError) {
+            runValidationTasks("general_data00", value);
+          }
+          setGeneral_data00(value);
+        }}
+        onBlur={() => runValidationTasks("general_data00", general_data00)}
+        errorMessage={errors.general_data00?.errorMessage}
+        hasError={errors.general_data00?.hasError}
+        {...getOverrideProps(overrides, "general_data00")}
+      ></TextField>
+      <TextField
+        label="General data01"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={general_data01}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              nickname,
+              date,
+              createdAt,
+              updatedAt,
+              send_cnt,
+              magx,
+              magy,
+              magz,
+              degree,
+              distance,
+              pres,
+              temp,
+              humi,
+              general_data00,
+              general_data01: value,
+              postType,
+            };
+            const result = onChange(modelFields);
+            value = result?.general_data01 ?? value;
+          }
+          if (errors.general_data01?.hasError) {
+            runValidationTasks("general_data01", value);
+          }
+          setGeneral_data01(value);
+        }}
+        onBlur={() => runValidationTasks("general_data01", general_data01)}
+        errorMessage={errors.general_data01?.errorMessage}
+        hasError={errors.general_data01?.hasError}
+        {...getOverrideProps(overrides, "general_data01")}
+      ></TextField>
       <SelectField
         label="Post type"
         placeholder="Please select an option"
@@ -717,6 +988,8 @@ export default function NoteCreateForm(props) {
               description,
               nickname,
               date,
+              createdAt,
+              updatedAt,
               send_cnt,
               magx,
               magy,
@@ -726,6 +999,8 @@ export default function NoteCreateForm(props) {
               pres,
               temp,
               humi,
+              general_data00,
+              general_data01,
               postType: value,
             };
             const result = onChange(modelFields);

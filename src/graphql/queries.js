@@ -2,13 +2,15 @@
 // this is an auto generated file. This will be overwritten
 
 export const getNote = /* GraphQL */ `
-  query GetNote($id: ID!, $date: String!) {
+  query GetNote($id: ID!, $date: AWSDateTime!) {
     getNote(id: $id, date: $date) {
       id
       name
       description
       nickname
       date
+      createdAt
+      updatedAt
       send_cnt
       magx
       magy
@@ -18,9 +20,9 @@ export const getNote = /* GraphQL */ `
       pres
       temp
       humi
+      general_data00
+      general_data01
       postType
-      createdAt
-      updatedAt
       __typename
     }
   }
@@ -48,6 +50,8 @@ export const listNotes = /* GraphQL */ `
         description
         nickname
         date
+        createdAt
+        updatedAt
         send_cnt
         magx
         magy
@@ -57,9 +61,9 @@ export const listNotes = /* GraphQL */ `
         pres
         temp
         humi
+        general_data00
+        general_data01
         postType
-        createdAt
-        updatedAt
         __typename
       }
       nextToken

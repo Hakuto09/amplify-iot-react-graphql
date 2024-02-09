@@ -26,6 +26,8 @@ export declare type NoteUpdateFormInputValues = {
     description?: string;
     nickname?: string;
     date?: string;
+    createdAt?: string;
+    updatedAt?: string;
     send_cnt?: number;
     magx?: number;
     magy?: number;
@@ -35,6 +37,8 @@ export declare type NoteUpdateFormInputValues = {
     pres?: number;
     temp?: number;
     humi?: number;
+    general_data00?: number;
+    general_data01?: number;
     postType?: string;
 };
 export declare type NoteUpdateFormValidationValues = {
@@ -42,6 +46,8 @@ export declare type NoteUpdateFormValidationValues = {
     description?: ValidationFunction<string>;
     nickname?: ValidationFunction<string>;
     date?: ValidationFunction<string>;
+    createdAt?: ValidationFunction<string>;
+    updatedAt?: ValidationFunction<string>;
     send_cnt?: ValidationFunction<number>;
     magx?: ValidationFunction<number>;
     magy?: ValidationFunction<number>;
@@ -51,6 +57,8 @@ export declare type NoteUpdateFormValidationValues = {
     pres?: ValidationFunction<number>;
     temp?: ValidationFunction<number>;
     humi?: ValidationFunction<number>;
+    general_data00?: ValidationFunction<number>;
+    general_data01?: ValidationFunction<number>;
     postType?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -60,6 +68,8 @@ export declare type NoteUpdateFormOverridesProps = {
     description?: PrimitiveOverrideProps<TextFieldProps>;
     nickname?: PrimitiveOverrideProps<TextFieldProps>;
     date?: PrimitiveOverrideProps<TextFieldProps>;
+    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
+    updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
     send_cnt?: PrimitiveOverrideProps<TextFieldProps>;
     magx?: PrimitiveOverrideProps<TextFieldProps>;
     magy?: PrimitiveOverrideProps<TextFieldProps>;
@@ -69,6 +79,8 @@ export declare type NoteUpdateFormOverridesProps = {
     pres?: PrimitiveOverrideProps<TextFieldProps>;
     temp?: PrimitiveOverrideProps<TextFieldProps>;
     humi?: PrimitiveOverrideProps<TextFieldProps>;
+    general_data00?: PrimitiveOverrideProps<TextFieldProps>;
+    general_data01?: PrimitiveOverrideProps<TextFieldProps>;
     postType?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type NoteUpdateFormProps = React.PropsWithChildren<{
