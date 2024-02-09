@@ -547,14 +547,9 @@ const App = ({ signOut }) => {
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
 
-        let filter = {    // Hakuto. for debug only.
-          date: { between: ["2024-02-07", "2024-02-09"] },
-        }
-
         const apiData2 = await client.graphql({
           query: listNotes,
-//          variables: { input: { id } },
-          variables: { filter: { filter } },
+          variables: { input: { id } },
         });   // Hakuto. for debug only.
         console_logger.warn('fetchNotes(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
     
