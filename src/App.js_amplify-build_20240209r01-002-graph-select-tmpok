@@ -131,8 +131,8 @@ const App = ({ signOut }) => {
 
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
-
 //    const apiData = await API.graphql({ query: listNotes });
+
     const apiData = await client.graphql({ query: listNotes });
     console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
 
@@ -492,8 +492,7 @@ const App = ({ signOut }) => {
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  async function onMessage(notesFromAPI) {
-//  function onMessage(notesFromAPI) {
+  function onMessage(notesFromAPI) {
 
 //    fetchNote('dummy001');  // want to get data for each ID.
 
@@ -536,23 +535,16 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
     for(let i = 0; i < numOfSeparator; ++i) {
       if(i >= numOfCreatedDevices) {
-        var id = notesFromAPI[separatorOfNotes[i]].id;
-        const newDeviceData = new DeviceData(id);
+        const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
         trackedDevices.devices.push(newDeviceData);
         console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
     
         // add device to the UI list
         const node = document.createElement('option');
-        const nodeText = document.createTextNode(id);
+        const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
 
-        const apiData2 = await client.graphql({
-            query: listNotes,
-          variables: { input: { id } },
-        });   // Hakuto. for debug only.
-        console_logger.warn('fetchNotes(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
-    
         numOfCreatedDevices++;
       }
     }
