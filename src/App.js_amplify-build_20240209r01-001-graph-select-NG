@@ -483,8 +483,8 @@ const App = ({ signOut }) => {
   }
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
-  listOfDevices.addEventListener('change', fetchNotes, false);
-//  listOfDevices.addEventListener('change', setNotes, false);
+//  listOfDevices.addEventListener('change', fetchNotes, false);
+  listOfDevices.addEventListener('change', setNotes, false);
 
   // When a web socket message arrives:
   // 1. Unpack it
