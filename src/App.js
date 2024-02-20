@@ -548,8 +548,8 @@ const App = ({ signOut }) => {
         listOfDevices.appendChild(node);
 
         let filter = {    // Hakuto. for debug only.
-          id: { eq: ["dummy2"] },
-//          date: { between: ["2024-02-07", "2024-02-09"] },
+//          id: { eq: ["dummy2"] },
+          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
         }
 
         const apiData2 = await client.graphql({
