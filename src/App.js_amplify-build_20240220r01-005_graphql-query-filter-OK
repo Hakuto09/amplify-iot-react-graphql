@@ -559,17 +559,10 @@ const App = ({ signOut }) => {
           query: listNotes,
 //          variables: { input: { id } },
 //          variables: { filter: { filter } },
-// OK          variables: { filter: filter },
-          variables: { filter: filter, sortDirection: "ASC" },
+          variables: { filter: filter },
         });   // Hakuto. for debug only.
         console_logger.warn('onMessage(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
-
-        const apiData3 = await client.graphql({
-          query: listNotes,
-          variables: { filter: filter, sortDirection: "DESC" },
-        });   // Hakuto. for debug only.
-        console_logger.warn('onMessage(): After client.graphql() apiData3 --> ', apiData3);  // Hakuto. for debug only.
-
+    
         numOfCreatedDevices++;
       }
     }
