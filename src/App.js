@@ -551,8 +551,8 @@ const App = ({ signOut }) => {
 // NG          id: { not: "dummy2" },
 // NG          id: { not: ["dummy2"] },
 // NG          id: { eq: ["dummy2"] },
-          date: "2024-02-06T06:40:44.254Z",
-// NG          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
+// NG          date: "2024-02-06T06:40:44.254Z",
+          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
         }
 
         const apiData2 = await client.graphql({
