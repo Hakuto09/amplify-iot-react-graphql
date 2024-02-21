@@ -142,26 +142,6 @@ const App = ({ signOut }) => {
     const notesFromAPI = apiData.data.listNotes.items;
     console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
 
-//-------------------
-/*
-let sampleList = [];
-const fetchList = async (token) => {
-  const appSyncParams = {
-    filter: {
-      条件を記載
-    },
-    limit: 999999999
-  };
-  if (token) appSyncParams.nextToken = token;
-  const res = await API.graphql(graphqlOperation(queries.listTests, appSyncParams));
-  Array.prototype.push.apply(sampleList, res.data.listTests.items);
-  if (!res.data.listTests.nextToken) return;
-  await fetchList(res.data.listTests.nextToken);
-}
-await fetchList('');
-*/
-//-------------------
-
     setNotes(notesFromAPI);
     // Hakuto start
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
@@ -590,7 +570,7 @@ await fetchList('');
 //          variables: { filter: filter },
 // NG          variables: { filter: filter, sortDirection: "ASC" },
 // OK          variables: { id: "multi001", sortDirection: "ASC" },
-          variables: { limit: 1000 },
+          variables: { limit: 10 },
         });   // Hakuto. for debug only.
         console_logger.warn('onMessage(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
 
