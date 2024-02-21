@@ -66,8 +66,8 @@ const console_logger = new ConsoleLogger('foo');
 const client = generateClient();
 
 var g_devices = [];
-//var maxLen = 1000;
-var maxLen = 50;
+var maxLen = 1000;
+//var maxLen = 50;
 var labels = new Array(maxLen);
 var data0s = new Array(maxLen);
 var data1s = new Array(maxLen);
@@ -201,8 +201,7 @@ const App = ({ signOut }) => {
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = maxLen;
-//      this.maxLen = 50;
+      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
       this.humidityData = new Array(this.maxLen);
@@ -569,8 +568,7 @@ const App = ({ signOut }) => {
 //          variables: { filter: { filter } },
 //          variables: { filter: filter },
 // NG          variables: { filter: filter, sortDirection: "ASC" },
-// OK          variables: { id: "multi001", sortDirection: "ASC" },
-          variables: { limit: 10 },
+          variables: { id: "multi001", sortDirection: "ASC" },
         });   // Hakuto. for debug only.
         console_logger.warn('onMessage(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
 
@@ -720,8 +718,7 @@ const App = ({ signOut }) => {
       },
       {
         //fill: false,
-        // label: 'Humidity',
-        label: 'General data',
+        label: 'Humidity',
         //yAxisID: 'Humidity',
         borderColor: 'rgba(24, 120, 240, 1)',
         //pointBoarderColor: 'rgba(24, 120, 240, 1)',
