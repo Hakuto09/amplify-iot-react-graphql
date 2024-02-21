@@ -66,11 +66,11 @@ const console_logger = new ConsoleLogger('foo');
 const client = generateClient();
 
 var g_devices = [];
-var maxLenList = 1000;
-var maxLenDisplay = 50;
-var labels = new Array(maxLenDisplay);
-var data0s = new Array(maxLenDisplay);
-var data1s = new Array(maxLenDisplay);
+//var maxLen = 1000;
+var maxLen = 50;
+var labels = new Array(maxLen);
+var data0s = new Array(maxLen);
+var data1s = new Array(maxLen);
 
 
 // All the devices in the list (those that have been sending telemetry)
@@ -135,33 +135,12 @@ const App = ({ signOut }) => {
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
 
-//#if 0
-/*
 //    const apiData = await API.graphql({ query: listNotes });
     const apiData = await client.graphql({ query: listNotes });
     console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
 
     const notesFromAPI = apiData.data.listNotes.items;
     console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
-*/
-//#else
-    var notesFromAPI = [];
-    var nextToken = null;
-    var limit = 200;
-
-    while(1) {
-      const apiData = await client.graphql({
-        query: listNotes,
-        variables: { limit: limit, nextToken: nextToken },
-      });
-      console_logger.warn('onMessage(): After client.graphql() apiData --> ', apiData);
-
-      Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
-      nextToken = apiData.data.listNotes.nextToken;
-      if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
-    }
-
-    console_logger.warn('fetchNotes(): After while loop of client.graphql() notesFromAPI --> ', notesFromAPI)
 
 //-------------------
 /*
@@ -242,7 +221,7 @@ await fetchList('');
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = maxLenDisplay;
+      this.maxLen = maxLen;
 //      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
