@@ -555,8 +555,7 @@ const App = ({ signOut }) => {
 // OK          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
 //          date: { ge: "2024-02-20T08:58:26.505Z" },
 // OK          temp: { ge: 60.0 },
-// OK          createdAt: { ge: "2024-02-21T04:20:43.031Z" },
-          nickname: { eq: "neqto-disco2" },
+          createdAt: { ge: "2024-02-21T04:20:43.031Z" },
         }
 
         const apiData2 = await client.graphql({
