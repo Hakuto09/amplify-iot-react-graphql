@@ -66,8 +66,7 @@ const console_logger = new ConsoleLogger('foo');
 const client = generateClient();
 
 var g_devices = [];
-var maxLen = 1000;
-//var maxLen = 50;
+var maxLen = 50;
 var labels = new Array(maxLen);
 var data0s = new Array(maxLen);
 var data1s = new Array(maxLen);
@@ -79,7 +78,6 @@ class TrackedDevices {
     this.devices = [];
   }
 
-/*
   // Find a device based on its Id
   findDevice(deviceId) {
     console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
@@ -94,7 +92,6 @@ class TrackedDevices {
 
     return undefined;
   }
-*/
 
   getDevicesCount() {
     return this.devices.length;
