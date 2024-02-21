@@ -146,15 +146,13 @@ const App = ({ signOut }) => {
 */
 //#else
     var notesFromAPI = [];
-    var idForSort = "multi001";
     var nextToken = null;
     var limit = 200;
 
     while(1) {
       const apiData = await client.graphql({
         query: listNotes,
-//        variables: { limit: limit, nextToken: nextToken },
-        variables: { id: idForSort, sortDirection: "DESC", limit: limit, nextToken: nextToken },
+        variables: { limit: limit, nextToken: nextToken },
       });
       console_logger.warn('onMessage(): After client.graphql() apiData --> ', apiData);
 
