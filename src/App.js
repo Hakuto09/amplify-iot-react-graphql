@@ -826,7 +826,7 @@ await fetchList('');
             variation="quiet"
             //required  // Hakuto
           />
-          <!--
+          /*
           <TextField
             //name="magx"
             //placeholder="magx"
@@ -835,7 +835,7 @@ await fetchList('');
             //variation="quiet"
             //required  // Hakuto
           />
-          -->
+          */
           <TextField
             name="magy"
             placeholder="magy"
