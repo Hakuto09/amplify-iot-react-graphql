@@ -819,11 +819,11 @@ await fetchList('');
             //required  // Hakuto
           />
           <TextField
-            //name="magx"
-            //placeholder="magx"
-            //label="magx"
-            //labelHidden
-            //variation="quiet"
+            name="magx"
+            placeholder="magx"
+            label="magx"
+            labelHidden
+            variation="quiet"
             //required  // Hakuto
           />
           <TextField
