@@ -194,40 +194,36 @@ await fetchList('');
   }
 
   async function createNote(event) {
+    /* Hakuto --- Need check!!
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
-      id: form.get("id"),
-      date: form.get("date"),
       nickname: form.get("nickname"),
-//      send_cnt: form.get("send_cnt"),
-//      magx: form.get("magx"),
-//      magy: form.get("magy"),
-//      magz: form.get("magz"),
-//      degree: form.get("degree"),
-//      distance: form.get("distance"),
-//      pres: form.get("pres"),
-//      temp: form.get("temp"),
-//      humi: form.get("humi"),
+      date: form.get("date"),
+      send_cnt: form.get("send_cnt"),
+      magx: form.get("magx"),
+      magy: form.get("magy"),
+      magz: form.get("magz"),
+      degree: form.get("degree"),
+      distance: form.get("distance"),
+      pres: form.get("pres"),
+      temp: form.get("temp"),
+      humi: form.get("humi"),
     };
 //    await API.graphql({
     await client.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
-
+    */
     fetchNotes();
     event.target.reset();
   }
 
   async function deleteNote({ id }) {
-    console_logger.warn('deleteNote(): Before notes.filter() id ', id)
     const newNotes = notes.filter((note) => note.id !== id);
-    console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
-
     setNotes(newNotes);
-
-    //    await API.graphql({
+//    await API.graphql({
     await client.graphql({
       query: deleteNoteMutation,
       variables: { input: { id } },
@@ -816,102 +812,86 @@ await fetchList('');
           />
           <TextField
             name="nickname"
-            placeholder="Nickname"
-            label="Nickname"
+            placeholder="nickname"
+            label="nickname"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          {/*
           <TextField
             name="send_cnt"
-            placeholder="Send_cnt"
-            label="Send_cnt"
+            placeholder="send_cnt"
+            label="send_cnt"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
           {/*
           <TextField
             //name="magx"
-            //placeholder="Magx"
-            //label="Magx"
+            //placeholder="magx"
+            //label="magx"
             //labelHidden
             //variation="quiet"
             //required  // Hakuto
           />
           */}
-          {/*
           <TextField
             name="magy"
-            placeholder="Magy"
-            label="Magy"
+            placeholder="magy"
+            label="magy"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="magz"
-            placeholder="Magz"
-            label="Magz"
+            placeholder="magz"
+            label="magz"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="degree"
-            placeholder="Degree"
-            label="Degree"
+            placeholder="degree"
+            label="degree"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="distance"
-            placeholder="Distance"
-            label="Distance"
+            placeholder="distance"
+            label="distance"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="pres"
-            placeholder="Pres"
-            label="Pres"
+            placeholder="pres"
+            label="pres"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="temp"
-            placeholder="Temp"
-            label="Temp"
+            placeholder="temp"
+            label="temp"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="humi"
-            placeholder="Humi"
-            label="Humi"
+            placeholder="humi"
+            label="humi"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
           
           <Button type="submit" variation="primary">
             Create Note
