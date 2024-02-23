@@ -811,6 +811,14 @@ await fetchList('');
             //required  // Hakuto
           />
           <TextField
+            name="nickname"
+            placeholder="nickname"
+            label="nickname"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          <TextField
             name="send_cnt"
             placeholder="send_cnt"
             label="send_cnt"
@@ -818,6 +826,7 @@ await fetchList('');
             variation="quiet"
             //required  // Hakuto
           />
+          <!--
           <TextField
             //name="magx"
             //placeholder="magx"
@@ -826,6 +835,7 @@ await fetchList('');
             //variation="quiet"
             //required  // Hakuto
           />
+          -->
           <TextField
             name="magy"
             placeholder="magy"
