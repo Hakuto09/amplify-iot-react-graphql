@@ -209,6 +209,7 @@ await fetchList('');
 //      pres: form.get("pres"),
 //      temp: form.get("temp"),
 //      humi: form.get("humi"),
+      postType: 'OPEN',
     };
 //    await API.graphql({
     await client.graphql({
