@@ -939,7 +939,7 @@ await fetchList('');
             <Text as="span">{note.distance}</Text>
             <Text as="span">{note.pres}</Text>
             <Text as="span">{note.temp}</Text>
-            <Text as="span">{note.humi}</Text>
+            {/*<Text as="span">{note.humi}</Text>*/}
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete note
             </Button>
