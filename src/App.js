@@ -222,10 +222,10 @@ await fetchList('');
   }
 
   async function deleteNote({ id }) {
-    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' note ', note)
+    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
     const newNotes = notes.filter((note) => note.id !== id);
     console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
-    
+
 
     setNotes(newNotes);
 
