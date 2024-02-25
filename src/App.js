@@ -265,24 +265,24 @@ await fetchList('');
 //      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
-      this.humidityData = new Array(this.maxLen);
+      this.generalData00 = new Array(this.maxLen);
     }
 
     resetData() {
       this.timeData.length = 0;
       this.temperatureData.length = 0;
-      this.humidityData.length = 0;
+      this.generalData00.length = 0;
     }
 
     addData(time, temperature, humidity) {
       this.timeData.push(time);
       this.temperatureData.push(temperature);
-      this.humidityData.push(humidity || null);
+      this.generalData00.push(humidity || null);
 
-      if (this.timeData.length > this.maxLen) {
+      if(this.timeData.length > this.maxLen) {
         this.timeData.shift();
         this.temperatureData.shift();
-        this.humidityData.shift();
+        this.generalData00.shift();
       }
     }
   }
@@ -526,14 +526,14 @@ await fetchList('');
     //chartData.datasets[0].data = structuredClone(device.temperatureData);
     data0s = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
-    //chartData.datasets[1].data = structuredClone(device.humidityData);
-    data1s = structuredClone(device.humidityData);
-    console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
+    //chartData.datasets[1].data = structuredClone(device.generalData00);
+    data1s = structuredClone(device.generalData00);
+    console_logger.warn('OnSelectionChange(): device.generalData00 ', device.generalData00);
     /*
     for(let i = 0; i < maxLen; ++i) {
       chartData.labels[i] = device.timeData[i];
       chartData.datasets[0].data[i] = device.temperatureData[i];
-      chartData.datasets[1].data[i] = device.humidityData[i];
+      chartData.datasets[1].data[i] = device.generalData00[i];
     }
     */
     //console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
@@ -742,8 +742,8 @@ await fetchList('');
     console_logger.warn('before App rutern. 0b: device2.timeData ', device2.timeData);
     data0s = structuredClone(device2.temperatureData);
     console_logger.warn('before App rutern. 0b: device2.temperatureData ', device2.temperatureData);
-    data1s = structuredClone(device2.humidityData);
-    console_logger.warn('before App rutern. 0b: device2.humidityData ', device2.humidityData);
+    data1s = structuredClone(device2.generalData00);
+    console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
   }
 
   /*
@@ -752,8 +752,8 @@ await fetchList('');
     console_logger.warn('before App rutern. 0b: g_devices[0].timeData ', g_devices[0].timeData);
     data0s = structuredClone(g_devices[0].temperatureData);
     console_logger.warn('before App rutern. 0b: g_devices[0].temperatureData ', g_devices[0].temperatureData);
-    data1s = structuredClone(g_devices[0].humidityData);
-    console_logger.warn('before App rutern. 0b: g_devices[0].humidityData ', g_devices[0].humidityData);
+    data1s = structuredClone(g_devices[0].generalData00);
+    console_logger.warn('before App rutern. 0b: g_devices[0].generalData00 ', g_devices[0].generalData00);
   }
   */
 
@@ -953,7 +953,7 @@ await fetchList('');
             {/*<Text as="span">{note.distance}</Text>*/}
             {/*<Text as="span">{note.pres}</Text>*/}
             <Text as="span">{note.temp}</Text>
-            {/*<Text as="span">{note.humi}</Text>*/}*/}
+            {/*<Text as="span">{note.humi}</Text>*/}
             <Text as="span">{note.general_data00}</Text>
             {/*<Text as="span">{note.postType}</Text>*/}
             <Button variation="link" onClick={() => deleteNote(note)}>
