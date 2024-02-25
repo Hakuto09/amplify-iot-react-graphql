@@ -227,8 +227,6 @@ await fetchList('');
     console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' date ', date, ' notes ', notes)
     const newNotes = notes.filter((note) => note.id !== id);
     console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
-    const newNotes2 = notes.filter((note) => note.date !== date);
-    console_logger.warn('deleteNote(): After notes.filter() newNotes2 --> ', newNotes2)
 
     setNotes(newNotes);
 
