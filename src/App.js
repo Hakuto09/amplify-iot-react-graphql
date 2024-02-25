@@ -186,11 +186,10 @@ await fetchList('');
 //-------------------
 
     setNotes(notesFromAPI);
-    // Hakuto start
+
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
 
     onMessage(notesFromAPI);
-    // Hakuto end
   }
 
   async function createNote(event) {
