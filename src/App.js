@@ -116,6 +116,22 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
+//  // Hakuto start
+//    async function fetchNote(id) {
+//    console_logger.warn('fetchNote(): In')  // Hakuto
+//
+//    const apiDataOfGet = await client.graphql({
+//      query: getNote,
+//      variables: { input: { id } },
+//    });
+//  
+//    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
+//
+//    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
+//    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
+//  }
+//  // Hakuto end
+
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
 
@@ -147,7 +163,7 @@ const App = ({ signOut }) => {
       if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
     }
 
-    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) /*notesFromAPI*/notes --> ', /*notesFromAPI*/notes)
+    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) notesFromAPI --> ', notesFromAPI)
 
 //-------------------
 /*
@@ -169,13 +185,11 @@ await fetchList('');
 */
 //-------------------
 
-    console_logger.warn('fetchNotes(): Before setNotes() notes --> ', notes)
     setNotes(notesFromAPI);
     // Hakuto start
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
-    console_logger.warn('fetchNotes(): After setNotes() notes --> ', notes)
 
-    onMessage(/*notesFromAPI*/);
+    onMessage(notesFromAPI);
     // Hakuto end
   }
 
@@ -542,12 +556,12 @@ await fetchList('');
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  async function onMessage(/*notesFromAPI*/) {
-//  function onMessage(/*notesFromAPI*/notes) {
+  async function onMessage(notesFromAPI) {
+//  function onMessage(notesFromAPI) {
 
 //    fetchNote('dummy001');  // want to get data for each ID.
 
-    const numOfNotesTotal = /*notesFromAPI*/notes.length;
+    const numOfNotesTotal = notesFromAPI.length;
     console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
 
     var separatorOfNotes = [];
@@ -557,7 +571,7 @@ await fetchList('');
         separatorOfNotes.push(0);
         continue;
       }
-      if(/*notesFromAPI*/notes[i].id !== /*notesFromAPI*/notes[i - 1].id) {
+      if(notesFromAPI[i].id !== notesFromAPI[i - 1].id) {
         separatorOfNotes.push(i);
       }
     }
@@ -568,7 +582,7 @@ await fetchList('');
     const numOfSeparator = separatorOfNotes.length
     console_logger.warn('onMessage(): numOfSeparator ', numOfSeparator);
     for(let i = 0; i < numOfSeparator; ++i) {
-      console_logger.warn('onMessage(): Loop of numOfSeparator for id  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], '/*notesFromAPI*/notes[separatorOfNotes[i]].id ', /*notesFromAPI*/notes[separatorOfNotes[i]].id);
+      console_logger.warn('onMessage(): Loop of numOfSeparator for id  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], 'notesFromAPI[separatorOfNotes[i]].id ', notesFromAPI[separatorOfNotes[i]].id);
     }
 
     var numOfNotes = [];
@@ -586,7 +600,7 @@ await fetchList('');
     console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
     for(let i = 0; i < numOfSeparator; ++i) {
       if(i >= numOfCreatedDevices) {
-        var id = /*notesFromAPI*/notes[separatorOfNotes[i]].id;
+        var id = notesFromAPI[separatorOfNotes[i]].id;
         const newDeviceData = new DeviceData(id);
         trackedDevices.devices.push(newDeviceData);
         console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
@@ -643,8 +657,8 @@ await fetchList('');
       trackedDevices.devices[i].resetData();
       g_devices[i] = trackedDevices.devices[i];
       for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
-        trackedDevices.devices[i].addData(/*notesFromAPI*/notes[k].date, /*notesFromAPI*/notes[k].temp, /*notesFromAPI*/notes[k].humi);
-        //console_logger.warn('onMessage(): Loop of k.  k ', k, ' id ', /*notesFromAPI*/notes[k].id, ' date ', /*notesFromAPI*/notes[k].date, ' temp ', /*notesFromAPI*/notes[k].temp, ' humi ', /*notesFromAPI*/notes[k].humi);
+        trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
+        //console_logger.warn('onMessage(): Loop of k.  k ', k, ' id ', notesFromAPI[k].id, ' date ', notesFromAPI[k].date, ' temp ', notesFromAPI[k].temp, ' humi ', notesFromAPI[k].humi);
         k++;
       }
       console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
@@ -674,21 +688,21 @@ await fetchList('');
 //      //}
 //
 //      // find or add device to list of tracked devices
-//      const existingDeviceData = trackedDevices.findDevice(/*notesFromAPI*/notes[0].id/*messageData.DeviceId*/);
+//      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
 //
 //      if (existingDeviceData) {
-//        existingDeviceData.addData(/*notesFromAPI*/notes[0].date/*messageData.MessageDate*/, /*notesFromAPI*/notes[0].temp/*messageData.IotData.temperature*/, /*notesFromAPI*/notes[0].humi/*messageData.IotData.humidity*/);
+//        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
 //      }
 //      else {
-//        const newDeviceData = new DeviceData(/*notesFromAPI*/notes[0].id/*messageData.DeviceId*/);
+//        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
 //        trackedDevices.devices.push(newDeviceData);
 //        const numDevices = trackedDevices.getDevicesCount();
 //        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
-//        newDeviceData.addData(/*notesFromAPI*/notes[0].date/*messageData.MessageDate*/, /*notesFromAPI*/notes[0].temp/*messageData.IotData.temperature*/, /*notesFromAPI*/notes[0].humi/*messageData.IotData.humidity*/);
+//        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
 //
 //        // add device to the UI list
 //        const node = document.createElement('option');
-//        const nodeText = document.createTextNode(/*notesFromAPI*/notes[0].id/*messageData.DeviceId*/);
+//        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
 //        node.appendChild(nodeText);
 //        listOfDevices.appendChild(node);
 //
