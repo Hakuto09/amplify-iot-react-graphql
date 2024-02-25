@@ -156,14 +156,14 @@ const App = ({ signOut }) => {
 //        variables: { limit: limit, nextToken: nextToken },
         variables: { id: idForSort, sortDirection: "DESC", limit: limit, nextToken: nextToken },
       });
-      console_logger.warn('onMessage(): After client.graphql() apiData --> ', apiData);
+      console_logger.warn('listNotes(): After client.graphql(listNotes) apiData --> ', apiData);
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
       if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
     }
 
-    console_logger.warn('fetchNotes(): After while loop of client.graphql() notesFromAPI --> ', notesFromAPI)
+    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) notesFromAPI --> ', notesFromAPI)
 
 //-------------------
 /*
@@ -226,14 +226,15 @@ await fetchList('');
     const newNotes = notes.filter((note) => note.id !== id);
     console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
 
-
     setNotes(newNotes);
 
     //    await API.graphql({
-    await client.graphql({
+    apiDataDelete = await client.graphql({
       query: deleteNoteMutation,
       variables: { input: { id } },
     });
+
+    console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
   }
 
   // Hakuto start
