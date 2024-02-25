@@ -229,7 +229,7 @@ await fetchList('');
     setNotes(newNotes);
 
     //    await API.graphql({
-    apiDataDelete = await client.graphql({
+    const apiDataDelete = await client.graphql({
       query: deleteNoteMutation,
       variables: { input: { id } },
     });
