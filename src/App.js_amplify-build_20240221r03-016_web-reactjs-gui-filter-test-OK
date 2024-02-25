@@ -944,18 +944,15 @@ await fetchList('');
           >
             <Text as="strong" fontWeight={700}>{note.id}</Text>
             <Text as="span">{note.date}</Text>
-            <Text as="span">{note.nickname}</Text>
             <Text as="span">{note.send_cnt}</Text>
-            {/*<Text as="span">{note.magx}</Text>*/}
-            {/*<Text as="span">{note.magy}</Text>*/}
-            {/*<Text as="span">{note.magz}</Text>*/}
-            {/*<Text as="span">{note.degree}</Text>*/}
-            {/*<Text as="span">{note.distance}</Text>*/}
-            {/*<Text as="span">{note.pres}</Text>*/}
+            <Text as="span">{note.magx}</Text>
+            <Text as="span">{note.magy}</Text>
+            <Text as="span">{note.magz}</Text>
+            <Text as="span">{note.degree}</Text>
+            <Text as="span">{note.distance}</Text>
+            <Text as="span">{note.pres}</Text>
             <Text as="span">{note.temp}</Text>
-            {/*<Text as="span">{note.humi}</Text>*/}*/}
-            <Text as="span">{note.general_data00}</Text>
-            {/*<Text as="span">{note.postType}</Text>*/}
+            {/*<Text as="span">{note.humi}</Text>*/}
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete note
             </Button>
