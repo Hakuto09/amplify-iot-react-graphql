@@ -221,10 +221,8 @@ await fetchList('');
     event.target.reset();
   }
 
-//  async function deleteNote({ id }) {
-  async function deleteNote({ id, date }) {
-//    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
-    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' date ', date, ' notes ', notes)
+  async function deleteNote({ id }) {
+    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
     const newNotes = notes.filter((note) => note.id !== id);
     console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
 
@@ -233,8 +231,7 @@ await fetchList('');
     //    await API.graphql({
     const apiDataDelete = await client.graphql({
       query: deleteNoteMutation,
-//      variables: { input: { id } },
-      variables: { input: { id, date } },
+      variables: { input: { id } },
     });
 
     console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
