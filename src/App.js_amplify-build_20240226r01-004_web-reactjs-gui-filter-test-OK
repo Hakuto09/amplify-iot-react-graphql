@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// Hakuto start
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+// Hakuto end
 
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
@@ -31,6 +33,7 @@ import {
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
 
+// Hakuto start
 //import { Amplify, Logger, AWSCloudWatchProvider} from 'aws-amplify'
 import { Amplify, AWSCloudWatchProvider} from 'aws-amplify'
 import { ConsoleLogger } from 'aws-amplify/utils';
@@ -58,6 +61,7 @@ const LOG_LEVEL = 'INFO' //どのレベルのログまでロギングするか
 //logger.addPluggable(new AWSCloudWatchProvider())
 
 const console_logger = new ConsoleLogger('foo');
+// Hakuto end
 
 const client = generateClient();
 
@@ -68,14 +72,29 @@ var labels = new Array(maxLenDisplay);
 var data0s = new Array(maxLenDisplay);
 var data1s = new Array(maxLenDisplay);
 
-let numOfDevices = 0;
-
 
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
   constructor() {
     this.devices = [];
   }
+
+/*
+  // Find a device based on its Id
+  findDevice(deviceId) {
+    console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
+    console_logger.warn('TrackedDevices.findDevice(): this.devices ', this.devices);
+    for (let i = 0; i < this.devices.length; ++i) {
+      console_logger.warn('TrackedDevices.findDevice(): this.devices.length ', this.devices.length, ' i ', i);
+      if (this.devices[i].deviceId === deviceId) {
+        console_logger.warn('TrackedDevices.findDevice(): before return. i ', i, ' this.devices[i] ', this.devices[i]);
+        return this.devices[i];
+      }
+    }
+
+    return undefined;
+  }
+*/
 
   getDevicesCount() {
     return this.devices.length;
@@ -99,9 +118,35 @@ const App = ({ signOut }) => {
     fetchNotes();
   }, []);
 
+//  // Hakuto start
+//    async function fetchNote(id) {
+//    console_logger.warn('fetchNote(): In')  // Hakuto
+//
+//    const apiDataOfGet = await client.graphql({
+//      query: getNote,
+//      variables: { input: { id } },
+//    });
+//  
+//    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
+//
+//    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
+//    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
+//  }
+//  // Hakuto end
+
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
 
+//#if 0
+/*
+//    const apiData = await API.graphql({ query: listNotes });
+    const apiData = await client.graphql({ query: listNotes });
+    console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
+
+    const notesFromAPI = apiData.data.listNotes.items;
+    console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
+*/
+//#else
     var notesFromAPI = [];
     var idForSort = "multi001";
     var nextToken = null;
@@ -127,6 +172,8 @@ const App = ({ signOut }) => {
 
     onMessage(notesFromAPI);
   }
+
+  let numOfDevices = 0;
 
   async function createNote(event) {
     event.preventDefault();
@@ -194,6 +241,7 @@ const App = ({ signOut }) => {
     console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
   }
 
+  // Hakuto start
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -233,9 +281,79 @@ const App = ({ signOut }) => {
     }
   }
 
+  // All the devices in the list (those that have been sending telemetry)
+  /*
+  class TrackedDevices {
+    constructor() {
+      this.devices = [];
+    }
+
+    // Find a device based on its Id
+    findDevice(deviceId) {
+      console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
+      console_logger.warn('TrackedDevices.findDevice(): this.devices ', this.devices);
+      for (let i = 0; i < this.devices.length; ++i) {
+        console_logger.warn('TrackedDevices.findDevice(): this.devices.length ', this.devices.length, ' i ', i);
+        if (this.devices[i].deviceId === deviceId) {
+          console_logger.warn('TrackedDevices.findDevice(): before return. i ', i, ' this.devices[i] ', this.devices[i]);
+          return this.devices[i];
+        }
+      }
+
+      return undefined;
+    }
+
+    getDevicesCount() {
+      return this.devices.length;
+    }
+  }
+  */
+
+  //const trackedDevices = new TrackedDevices();
+
+  /*
+  var maxLen = 50;
+  var labels = new Array(maxLen);
+  var data0s = new Array(maxLen);
+  var data1s = new Array(maxLen);
+  */
+
   labels = [0, 1, 2];
   data0s = [3, 13, 23];
   data1s = [7, 17, 27];
+
+  // Define the chart axes
+  /*
+  const chartData = {
+    labels: labels,
+    datasets: [
+      {
+        //fill: false,
+        label: 'Temperature',
+        //yAxisID: 'Temperature',
+        borderColor: 'rgba(255, 204, 0, 1)',
+        //pointBoarderColor: 'rgba(255, 204, 0, 1)',
+        backgroundColor: 'rgba(255, 204, 0, 0.4)',
+        //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
+        //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
+        //spanGaps: true,
+        data: data0s
+      },
+      {
+        //fill: false,
+        label: 'Humidity',
+        //yAxisID: 'Humidity',
+        borderColor: 'rgba(24, 120, 240, 1)',
+        //pointBoarderColor: 'rgba(24, 120, 240, 1)',
+        backgroundColor: 'rgba(24, 120, 240, 0.4)',
+        //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
+        //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
+        //spanGaps: true,
+        data: data1s
+      }
+    ]
+  };
+  */
 
   const chartOptions = {
     options: {
@@ -253,7 +371,130 @@ const App = ({ signOut }) => {
         }
       }
     }
+    /*
+    options: {
+      scales: {
+        'Temperature': {
+          type: 'linear',
+          min: 0,
+          max: 100,
+          position: 'left'
+        },
+        'Humidity': {
+          type: 'linear',
+          min: 0,
+          max: 200,
+          position: 'right'
+        }
+      }
+    }
+    */
+    /*
+    options: {
+      scales: {
+        yAxes: [
+          {
+            id: 'Temperature',
+            type: 'linear',
+            scaleLabel: {
+              labelString: 'Temperature (C)',
+              display: true,
+            },
+            position: 'left',
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              beginAtZero: true
+            }
+          },
+          {
+            id: 'Humidity',
+            type: 'linear',
+            scaleLabel: {
+              labelString: 'Humidity (%)',
+              display: true,
+            },
+            position: 'right',
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100,
+              beginAtZero: true
+            }
+          }
+        ]
+      }
+    }
+    */
+    /*
+    options: {
+      scales: {
+        x: {
+          type: "time",
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 20,
+          },
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: "Point"
+          }
+        },
+        y: {
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: "Value"
+          },
+          suggestedMin: 0,
+          suggestedMax: 100
+        }
+      }
+    }
+    */
+    /*
+    scales: {
+      yAxes: [{
+        id: 'Temperature',
+        type: 'linear',
+        scaleLabel: {
+          labelString: 'Temperature (C)',
+          display: true,
+        },
+        position: 'left',
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 100,
+          beginAtZero: true
+        }
+      },
+      {
+        id: 'Humidity',
+        type: 'linear',
+        scaleLabel: {
+          labelString: 'Humidity (%)',
+          display: true,
+        },
+        position: 'right',
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 100,
+          beginAtZero: true
+        }
+      }]
+    }
+    */
   };
+
+  //// Get the context of the canvas element we want to select
+  //const ctx = document.getElementById('iotChart').getContext('2d');
+  //const myLineChart = new Chart(
+  //  ctx,
+  //  {
+  //    type: 'line',
+  //    data: chartData,
+  //    options: chartOptions,
+  //  });
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
@@ -276,14 +517,24 @@ const App = ({ signOut }) => {
     //chartData.labels = structuredClone(device.timeData);
     labels = structuredClone(device.timeData);
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
-    console_logger.warn('OnSelectionChange():  ', labels);
     //chartData.datasets[0].data = structuredClone(device.temperatureData);
     data0s = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
-    console_logger.warn('OnSelectionChange(): data0s ', data0s);
     //chartData.datasets[1].data = structuredClone(device.generalData00);
     data1s = structuredClone(device.generalData00);
     console_logger.warn('OnSelectionChange(): device.generalData00 ', device.generalData00);
+    /*
+    for(let i = 0; i < maxLen; ++i) {
+      chartData.labels[i] = device.timeData[i];
+      chartData.datasets[0].data[i] = device.temperatureData[i];
+      chartData.datasets[1].data[i] = device.generalData00[i];
+    }
+    */
+    //console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
+    console_logger.warn('OnSelectionChange(): labels ', labels);
+    //console_logger.warn('OnSelectionChange(): chartData.datasets[0].data ', chartData.datasets[0].data);
+    console_logger.warn('OnSelectionChange(): data0s ', data0s);
+    //console_logger.warn('OnSelectionChange(): chartData.datasets[1].data ', chartData.datasets[1].data);
     console_logger.warn('OnSelectionChange(): data1s ', data1s);
     
     //myLineChart.update();
@@ -355,6 +606,10 @@ const App = ({ signOut }) => {
         listOfDevices.appendChild(node);
 
         let filter = {    // Hakuto. for debug only.
+// NG          id: { not: "dummy2" },
+// NG          id: { not: ["dummy2"] },
+// NG          id: { eq: ["dummy2"] },
+// NG          date: "2024-02-06T06:40:44.254Z",
 // OK          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
 //          date: { ge: "2024-02-20T08:58:26.505Z" },
 // OK          temp: { ge: 60.0 },
@@ -364,7 +619,10 @@ const App = ({ signOut }) => {
 
         const apiData2 = await client.graphql({
           query: listNotes,
+//          variables: { input: { id } },
+//          variables: { filter: { filter } },
 //          variables: { filter: filter },
+// NG          variables: { filter: filter, sortDirection: "ASC" },
 // OK          variables: { id: "multi001", sortDirection: "ASC" },
           variables: { limit: 1000 },
         });   // Hakuto. for debug only.
@@ -372,6 +630,7 @@ const App = ({ signOut }) => {
 
         const apiData3 = await client.graphql({
           query: listNotes,
+// NG          variables: { filter: filter, sortDirection: "DESC" },
 // OK          variables: { id: "multi001", sortDirection: "DESC" },
           variables: { id: "multi001", sortDirection: "DESC", filter: filter },
         });   // Hakuto. for debug only.
@@ -412,7 +671,52 @@ const App = ({ signOut }) => {
     }
 
     OnSelectionChange();
+
+//    try {
+//      //const messageData = JSON.parse(message.data);
+//      //console.log(messageData);
+//
+//      //// time and either temperature or humidity are required
+//      //if (!messageData.MessageDate || (!messageData.IotData.temperature && !messageData.IotData.humidity)) {
+//      //  return;
+//      //}
+//
+//      // find or add device to list of tracked devices
+//      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
+//
+//      if (existingDeviceData) {
+//        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+//      }
+//      else {
+//        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
+//        trackedDevices.devices.push(newDeviceData);
+//        const numDevices = trackedDevices.getDevicesCount();
+//        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
+//        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
+//
+//        // add device to the UI list
+//        const node = document.createElement('option');
+//        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
+//        node.appendChild(nodeText);
+//        listOfDevices.appendChild(node);
+//
+//        // if this is the first device being discovered, auto-select it
+//        if (needsAutoSelect) {
+//          needsAutoSelect = false;
+//          listOfDevices.selectedIndex = 0;
+//          OnSelectionChange();
+//        }
+//      }
+//
+//      //myLineChart.update();
+//    }
+//    catch (err) {
+//      console.error(err);
+//    }
   };
+  // Hakuto end
+
+  // Hakuto start
 
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
@@ -435,6 +739,21 @@ const App = ({ signOut }) => {
     data1s = structuredClone(device2.generalData00);
     console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
   }
+
+  /*
+  if(g_devices.length) {
+    labels = structuredClone(g_devices[0].timeData);
+    console_logger.warn('before App rutern. 0b: g_devices[0].timeData ', g_devices[0].timeData);
+    data0s = structuredClone(g_devices[0].temperatureData);
+    console_logger.warn('before App rutern. 0b: g_devices[0].temperatureData ', g_devices[0].temperatureData);
+    data1s = structuredClone(g_devices[0].generalData00);
+    console_logger.warn('before App rutern. 0b: g_devices[0].generalData00 ', g_devices[0].generalData00);
+  }
+  */
+
+  //labels = [3, 4, 5];
+  //data0s = [23, 13, 3];
+  //data1s = [27, 17, 27];
 
   console_logger.warn('before App rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
 
@@ -510,22 +829,97 @@ const App = ({ signOut }) => {
             variation="quiet"
             //required  // Hakuto
           />
-          {/*<TextField
+          {/*
+          <TextField
             name="send_cnt"
             placeholder="Send_cnt"
             label="Send_cnt"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />*/}
-          {/*<TextField
+          />
+          */}
+          {/*
+          <TextField
             //name="magx"
             //placeholder="Magx"
             //label="Magx"
             //labelHidden
             //variation="quiet"
             //required  // Hakuto
-          />*/}
+          />
+          */}
+          {/*
+          <TextField
+            name="magy"
+            placeholder="Magy"
+            label="Magy"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="magz"
+            placeholder="Magz"
+            label="Magz"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="degree"
+            placeholder="Degree"
+            label="Degree"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="distance"
+            placeholder="Distance"
+            label="Distance"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="pres"
+            placeholder="Pres"
+            label="Pres"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="temp"
+            placeholder="Temp"
+            label="Temp"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          {/*
+          <TextField
+            name="humi"
+            placeholder="Humi"
+            label="Humi"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          */}
+          
           <Button type="submit" variation="primary">
            {/*Create Note*/}Register
           </Button>
@@ -547,6 +941,11 @@ const App = ({ signOut }) => {
             <Text as="span">{note.nickname}</Text>
             <Text as="span">{note.send_cnt}</Text>
             {/*<Text as="span">{note.magx}</Text>*/}
+            {/*<Text as="span">{note.magy}</Text>*/}
+            {/*<Text as="span">{note.magz}</Text>*/}
+            {/*<Text as="span">{note.degree}</Text>*/}
+            {/*<Text as="span">{note.distance}</Text>*/}
+            {/*<Text as="span">{note.pres}</Text>*/}
             <Text as="span">{note.temp}</Text>
             {/*<Text as="span">{note.humi}</Text>*/}
             <Text as="span">{note.general_data00}</Text>
