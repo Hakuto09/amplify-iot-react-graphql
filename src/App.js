@@ -200,14 +200,15 @@ const App = ({ signOut }) => {
     };
 
     console_logger.warn('createNote(): Before graphql(query: createNoteMutation):  data ', data);
-
     //    await API.graphql({
-    await client.graphql({
+    const apiDataCreate = await client.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
+    console_logger.warn('createNote(): After graphql(query: createNoteMutation):  apiDataCreate ', apiDataCreate);
 
     fetchNotes();
+
     console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
     numOfDevices++;
     console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
