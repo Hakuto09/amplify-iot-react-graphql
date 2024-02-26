@@ -63,13 +63,14 @@ const client = generateClient();
 
 var g_devices = [];
 var maxLenList = 1000;
-var maxLenDisplay = 50;
-var labels = new Array(maxLenDisplay);
-var data0s = new Array(maxLenDisplay);
-var data1s = new Array(maxLenDisplay);
+var maxLenGraph = 50;
+var labels = new Array(maxLenGraph);
+var data0s = new Array(maxLenGraph);
+var data1s = new Array(maxLenGraph);
 
 let numOfDevices = 0;
 let displayRegisters = true;
+let deviceNames = [];
 
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
@@ -106,7 +107,7 @@ const App = ({ signOut }) => {
 
     var notesFromAPI = [];
     var idForSort = "";
-    let sortDirection = ""
+    let sortDirection = "";
     let filter = {};
     var nextToken = null;
     var limit = 200;
@@ -118,17 +119,15 @@ const App = ({ signOut }) => {
     else {
       idForSort = "multi001";
       sortDirection = "DESC";
-      filter = { nickname: { eq: "neqto-disco2" } };
+      filter = { nickname: { eq: deviceNames[listOfDevices.selectedIndex] } };
     }
 
     while(1) {
       console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limit ', limit);
       let apiData = [];
-      if(displayRegisters == true) {
-        apiData = await client.graphql({
+      apiData = await client.graphql({
         query: listNotes,
-//        variables: { limit: limit, nextToken: nextToken },
-        variables: { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken },
+        variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
       });
       console_logger.warn('fetchNotes(): After graphql(listNotes) apiData ', apiData);
 
@@ -227,7 +226,7 @@ const App = ({ signOut }) => {
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = maxLenDisplay;
+      this.maxLen = maxLenGraph;
 //      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
@@ -285,6 +284,7 @@ const App = ({ signOut }) => {
   const listOfDevices = document.getElementById('listOfDevices');
   console_logger.info('listOfDevices ', listOfDevices);
 
+/*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
     g_selectedIndex = listOfDevices.selectedIndex;
@@ -308,6 +308,7 @@ const App = ({ signOut }) => {
     
     //myLineChart.update();
   }
+*/
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
   listOfDevices.addEventListener('change', fetchNotes(false), false);
@@ -320,13 +321,38 @@ const App = ({ signOut }) => {
   // 4. Append the telemetry data
   // 5. Update the chart UI
   async function onMessage(notesFromAPI) {
-//  function onMessage(notesFromAPI) {
-
-//    fetchNote('dummy001');  // want to get data for each ID.
 
     const numOfNotesTotal = notesFromAPI.length;
+    if(displayRegisters == true) {
+      numOfDevices = numOfNotesTotal;
+
+      for(let i = 0; i < numOfDevices; ++i) {
+        var deviceName = notesFromAPI[i].nickname;
+
+        // add device name to the UI list.
+        const device = document.createElement('option');
+        const deviceText = document.createTextNode(deviceName);
+        device.appendChild(deviceText);
+        listOfDevices.appendChild(device);
+
+        // add device name to array.
+        deviceNames.push(deviceText);
+        console_logger.warn('onMessage(): After deviceNames.push():', ' i ', i, ' deviceText ', deviceText, ' deviceNames ', deviceNames);
+      }
+    }
     console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
 
+    for(let i = 0; i < numOfNotesTotal; ++i) {
+      var deviceName = notesFromAPI[i].nickname;
+
+      // add device to the UI list
+      const device = document.createElement('option');
+      const deviceText = document.createTextNode(deviceName);
+      device.appendChild(deviceText);
+      listOfDevices.appendChild(device);
+    }
+
+/*
     var separatorOfNotes = [];
 
     for(let i = 0; i < numOfNotesTotal; ++i) {
@@ -374,29 +400,6 @@ const App = ({ signOut }) => {
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
 
-        let filter = {    // Hakuto. for debug only.
-// OK          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
-//          date: { ge: "2024-02-20T08:58:26.505Z" },
-// OK          temp: { ge: 60.0 },
-// OK          createdAt: { ge: "2024-02-21T04:20:43.031Z" },
-          nickname: { eq: "neqto-disco2" },
-        }
-
-        const apiData2 = await client.graphql({
-          query: listNotes,
-//          variables: { filter: filter },
-// OK          variables: { id: "multi001", sortDirection: "ASC" },
-          variables: { limit: 1000 },
-        });   // Hakuto. for debug only.
-        console_logger.warn('onMessage(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
-
-        const apiData3 = await client.graphql({
-          query: listNotes,
-// OK          variables: { id: "multi001", sortDirection: "DESC" },
-          variables: { id: "multi001", sortDirection: "DESC", filter: filter },
-        });   // Hakuto. for debug only.
-        console_logger.warn('onMessage(): After client.graphql() apiData3 --> ', apiData3);  // Hakuto. for debug only.
-
         numOfCreatedDevices++;
       }
     }
@@ -419,21 +422,18 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
     }
     console_logger.warn('onMessage(): g_devices ', g_devices);
+*/
 
     // if this is the first device being discovered, auto-select it
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
-      /*
-      console_logger.warn('onMessage(): before OnSelectionChange()');
-      OnSelectionChange();
-      console_logger.warn('onMessage(): after OnSelectionChange()');
-      */
     }
 
-    OnSelectionChange();
+//    OnSelectionChange();
   };
 
+/*
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
@@ -455,6 +455,7 @@ const App = ({ signOut }) => {
     data1s = structuredClone(device2.generalData00);
     console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
   }
+*/
 
   console_logger.warn('before App rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
 

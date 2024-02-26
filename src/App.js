@@ -223,6 +223,7 @@ const App = ({ signOut }) => {
     Legend
   );
 
+/*
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
@@ -251,6 +252,7 @@ const App = ({ signOut }) => {
       }
     }
   }
+*/
 
   labels = [0, 1, 2];
   data0s = [3, 13, 23];
@@ -325,6 +327,8 @@ const App = ({ signOut }) => {
     const numOfNotesTotal = notesFromAPI.length;
     if(displayRegisters == true) {
       numOfDevices = numOfNotesTotal;
+      deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
+      console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
 
       for(let i = 0; i < numOfDevices; ++i) {
         var deviceName = notesFromAPI[i].nickname;
@@ -343,13 +347,9 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
 
     for(let i = 0; i < numOfNotesTotal; ++i) {
-      var deviceName = notesFromAPI[i].nickname;
-
-      // add device to the UI list
-      const device = document.createElement('option');
-      const deviceText = document.createTextNode(deviceName);
-      device.appendChild(deviceText);
-      listOfDevices.appendChild(device);
+      labels[i] = notesFromAPI[i].date;
+      data0s[i] = notesFromAPI[i].temp;
+      data1s[i] = notesFromAPI[i].general_data00;
     }
 
 /*
