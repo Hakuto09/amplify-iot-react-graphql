@@ -192,10 +192,12 @@ await fetchList('');
     onMessage(notesFromAPI);
   }
 
+  let numOfDevices = 0;
+
   async function createNote(event) {
     event.preventDefault();
     const form = new FormData(event.target);
-    const d = ('000' + numDevices).slice(-3);
+    const d = ('000' + numOfDevices).slice(-3);
     const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
     const data = {
 //      id: form.get("id"),
@@ -221,6 +223,9 @@ await fetchList('');
     });
 
     fetchNotes();
+    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices)
+    numOfDevices++;
+    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices)
     event.target.reset();
   }
 
