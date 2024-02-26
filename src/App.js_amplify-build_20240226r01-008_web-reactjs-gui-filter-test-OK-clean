@@ -69,7 +69,7 @@ var data0s = new Array(maxLenDisplay);
 var data1s = new Array(maxLenDisplay);
 
 let numOfDevices = 0;
-let displayRegisters = true;
+
 
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
@@ -96,33 +96,22 @@ const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    fetchNotes(true);
+    fetchNotes();
   }, []);
 
-  async function fetchNotes(dispReg) {
-    console_logger.warn('fetchNotes(): In: dispReg ', dispReg);
-
-    displayRegisters = dispReg;
+  async function fetchNotes() {
+    console_logger.warn('fetchNotes(): In')  // Hakuto
 
     var notesFromAPI = [];
-    var idForSort = "";
+    var idForSort = "multi001";
     var nextToken = null;
     var limit = 200;
-
-    if(displayRegisters == true) {
-      idForSort = "register";
-      sortDirection = "ASC";
-    }
-    else {
-      idForSort = "multi001";
-      sortDirection = "DESC";
-    }
 
     while(1) {
       const apiData = await client.graphql({
         query: listNotes,
 //        variables: { limit: limit, nextToken: nextToken },
-        variables: { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken },
+        variables: { id: idForSort, sortDirection: "DESC", limit: limit, nextToken: nextToken },
       });
       console_logger.warn('fetchNotes(): After client.graphql(listNotes) apiData --> ', apiData);
 
@@ -171,7 +160,7 @@ const App = ({ signOut }) => {
     });
     console_logger.warn('createNote(): After graphql(query: createNoteMutation):  apiDataCreate ', apiDataCreate);
 
-    fetchNotes(true);
+    fetchNotes();
 
     console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
     numOfDevices++;
@@ -203,9 +192,6 @@ const App = ({ signOut }) => {
     });
 
     console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
-
-    fetchNotes(false);
-    console_logger.warn('deleteNote(): After fetchNotes() ')
   }
 
   ChartJS.register(
@@ -304,7 +290,7 @@ const App = ({ signOut }) => {
   }
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
-  listOfDevices.addEventListener('change', fetchNotes(false), false);
+  listOfDevices.addEventListener('change', fetchNotes, false);
 //  listOfDevices.addEventListener('change', setNotes, false);
 
   // When a web socket message arrives:
