@@ -805,22 +805,22 @@ const App = ({ signOut }) => {
       {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          {/*<TextField
+          <TextField
             name="id"
             placeholder="Id"
             label="Id"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />*/}
-          {/*<TextField
+          />
+          <TextField
             name="date"
             placeholder="Date"
             label="Date"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />*/}
+          />
           <TextField
             name="nickname"
             placeholder="Nickname"
