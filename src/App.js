@@ -182,10 +182,10 @@ const App = ({ signOut }) => {
     const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
     console_logger.warn('createNote(): After newDateForResister:  d ', d, ' newDateForResister ', newDateForResister)
     const data = {
-      id: form.get("id"),
-//      id: "register",
-      date: form.get("date"),
-//      date: newDateForResister, 
+//      id: form.get("id"),
+      id: "register",
+//      date: form.get("date"),
+      date: newDateForResister, 
       nickname: form.get("nickname"),
 //      send_cnt: form.get("send_cnt"),
 //      magx: form.get("magx"),
@@ -805,22 +805,22 @@ const App = ({ signOut }) => {
       {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          <TextField
+          {/*<TextField
             name="id"
             placeholder="Id"
             label="Id"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />
-          <TextField
+          />*/}
+          {/*<TextField
             name="date"
             placeholder="Date"
             label="Date"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />
+          />*/}
           <TextField
             name="nickname"
             placeholder="Nickname"
