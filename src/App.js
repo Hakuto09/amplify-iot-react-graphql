@@ -103,6 +103,12 @@ const App = ({ signOut }) => {
   async function fetchNotes(dispReg) {
     console_logger.warn('fetchNotes(): In: dispReg ', dispReg);
 
+    let wait_ms = 5000;
+    setTimeout(
+      console_logger.warn('fetchNotes(): setTimeout(): wait_ms ', wait_ms),
+      wait_ms
+    );
+
     displayRegisters = dispReg;
 
     var notesFromAPI = [];
