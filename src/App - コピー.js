@@ -327,7 +327,7 @@ const App = ({ signOut }) => {
     const numOfNotesTotal = notesFromAPI.length;
     if(displayRegisters == true) {
       numOfDevices = numOfNotesTotal;
-      deviceCount.innerText = numOfDevices === 1 ? `${numOfDevices} device` : `${numOfDevices} devices`;
+      deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
       console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
 
       for(let i = 0; i < numOfDevices; ++i) {
