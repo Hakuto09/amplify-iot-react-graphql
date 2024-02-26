@@ -94,29 +94,6 @@ console_logger.warn('Before App.');  // Hakuto
 const App = ({ signOut }) => {
   console_logger.warn('App() In');  // Hakuto
 
-  // Manage a list of devices in the UI, and update which device data the chart is showing
-  // based on selection
-
-  //let needsAutoSelect = true;
-  const deviceCount = document.getElementById('deviceCount');
-  console_logger.warn('deviceCount ', deviceCount);
-
-  const listOfDevices = document.getElementById('listOfDevices');
-  console_logger.warn('listOfDevices ', listOfDevices);
-
-  if(needsAutoSelect) {
-    needsAutoSelect = false;
-    listOfDevices.selectedIndex = 0;
-    console_logger.warn('App(): After listOfDevices.selectedIndex = 0:', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
-
-    listOfDevices.addEventListener('change', fetchNotes(false), false);
-    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
-  }
-
-//  listOfDevices.addEventListener('change', OnSelectionChange, false);
-//  listOfDevices.addEventListener('change', setNotes, false);
-//  listOfDevices.addEventListener('change', fetchNotes(false), false);
-
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -148,8 +125,7 @@ const App = ({ signOut }) => {
     else {
       idForSort = "multi001";
       sortDirection = "DESC";
-      g_selectedIndex = listOfDevices.selectedIndex;
-      filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
+      filter = { nickname: { eq: deviceNames[listOfDevices.selectedIndex] } };
     }
 
     while(1) {
@@ -306,6 +282,16 @@ const App = ({ signOut }) => {
     }
   };
 
+  // Manage a list of devices in the UI, and update which device data the chart is showing
+  // based on selection
+
+  //let needsAutoSelect = true;
+  const deviceCount = document.getElementById('deviceCount');
+  console_logger.info('deviceCount ', deviceCount);
+
+  const listOfDevices = document.getElementById('listOfDevices');
+  console_logger.info('listOfDevices ', listOfDevices);
+
 /*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
@@ -332,6 +318,10 @@ const App = ({ signOut }) => {
   }
 */
 
+//  listOfDevices.addEventListener('change', OnSelectionChange, false);
+//  listOfDevices.addEventListener('change', setNotes, false);
+////  listOfDevices.addEventListener('change', fetchNotes(false), false);
+
   // When a web socket message arrives:
   // 1. Unpack it
   // 2. Validate it has date/time and temperature
@@ -354,7 +344,6 @@ const App = ({ signOut }) => {
         const deviceText = document.createTextNode(deviceName);
         device.appendChild(deviceText);
         listOfDevices.appendChild(device);
-        console_logger.warn('onMessage(): After listOfDevices.appendChild(device):');
 
         // add device name to array.
         deviceNames.push(deviceText);
@@ -442,12 +431,11 @@ const App = ({ signOut }) => {
 */
 
     // if this is the first device being discovered, auto-select it
-/*
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
     }
-*/
+
 //    OnSelectionChange();
   };
 
