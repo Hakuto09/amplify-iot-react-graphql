@@ -107,9 +107,11 @@ let needsAutoSelect = true;
 var g_selectedIndex = 0;
 
 
-console_logger.warn('Before App.')  // Hakuto
+console_logger.warn('Before App.');  // Hakuto
 
 const App = ({ signOut }) => {
+  console_logger.warn('App() In');  // Hakuto
+
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -156,7 +158,7 @@ const App = ({ signOut }) => {
 //        variables: { limit: limit, nextToken: nextToken },
         variables: { id: idForSort, sortDirection: "DESC", limit: limit, nextToken: nextToken },
       });
-      console_logger.warn('listNotes(): After client.graphql(listNotes) apiData --> ', apiData);
+      console_logger.warn('fetchNotes(): After client.graphql(listNotes) apiData --> ', apiData);
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
@@ -165,28 +167,7 @@ const App = ({ signOut }) => {
 
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) notesFromAPI --> ', notesFromAPI)
 
-//-------------------
-/*
-let sampleList = [];
-const fetchList = async (token) => {
-  const appSyncParams = {
-    filter: {
-      条件を記載
-    },
-    limit: 999999999
-  };
-  if (token) appSyncParams.nextToken = token;
-  const res = await API.graphql(graphqlOperation(queries.listTests, appSyncParams));
-  Array.prototype.push.apply(sampleList, res.data.listTests.items);
-  if (!res.data.listTests.nextToken) return;
-  await fetchList(res.data.listTests.nextToken);
-}
-await fetchList('');
-*/
-//-------------------
-
     setNotes(notesFromAPI);
-
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
 
     onMessage(notesFromAPI);
@@ -199,6 +180,7 @@ await fetchList('');
     const form = new FormData(event.target);
     const d = ('000' + numOfDevices).slice(-3);
     const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
+    console_logger.warn('createNote(): After newDateForResister:  d ', d, ' newDateForResister ', newDateForResister)
     const data = {
 //      id: form.get("id"),
       id: "register",
@@ -216,16 +198,19 @@ await fetchList('');
 //      humi: form.get("humi"),
       postType: 'OPEN',
     };
-//    await API.graphql({
+
+    console_logger.warn('createNote(): Before graphql(query: createNoteMutation):  data ', data);
+
+    //    await API.graphql({
     await client.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
 
     fetchNotes();
-    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices)
+    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
     numOfDevices++;
-    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices)
+    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
     event.target.reset();
   }
 
@@ -515,11 +500,11 @@ await fetchList('');
 
   //let needsAutoSelect = true;
   const deviceCount = document.getElementById('deviceCount');
-  console_logger.info('deviceCount -->')
-  console_logger.info(deviceCount)
+  console_logger.info('deviceCount ', deviceCount);
+
   const listOfDevices = document.getElementById('listOfDevices');
-  console_logger.info('listOfDevices -->')
-  console_logger.info(listOfDevices)
+  console_logger.info('listOfDevices ', listOfDevices);
+
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
     g_selectedIndex = listOfDevices.selectedIndex;

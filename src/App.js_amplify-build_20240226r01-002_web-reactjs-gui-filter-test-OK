@@ -192,6 +192,8 @@ await fetchList('');
     onMessage(notesFromAPI);
   }
 
+  let numOfDevices = 0;
+
   async function createNote(event) {
     event.preventDefault();
     const form = new FormData(event.target);
@@ -221,6 +223,9 @@ await fetchList('');
     });
 
     fetchNotes();
+    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices)
+    numOfDevices++;
+    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices)
     event.target.reset();
   }
 
@@ -649,7 +654,7 @@ await fetchList('');
       }
     }
 
-    const numDevices = trackedDevices.getDevicesCount();
+    let numDevices = trackedDevices.getDevicesCount();
     console_logger.warn('onMessage(): numDevices ', numDevices);
     
     deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
