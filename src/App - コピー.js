@@ -195,7 +195,7 @@ await fetchList('');
   async function createNote(event) {
     event.preventDefault();
     const form = new FormData(event.target);
-    const d = ('000' + numDevices).slice(-3);
+    const d = ('000' + numOfDevices).slice(-3);
     const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
     const data = {
 //      id: form.get("id"),
@@ -649,7 +649,7 @@ await fetchList('');
       }
     }
 
-    let numDevices = trackedDevices.getDevicesCount();
+    const numDevices = trackedDevices.getDevicesCount();
     console_logger.warn('onMessage(): numDevices ', numDevices);
     
     deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
