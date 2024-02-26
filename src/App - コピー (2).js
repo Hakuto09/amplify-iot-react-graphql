@@ -63,14 +63,13 @@ const client = generateClient();
 
 var g_devices = [];
 var maxLenList = 1000;
-var maxLenGraph = 50;
-var labels = new Array(maxLenGraph);
-var data0s = new Array(maxLenGraph);
-var data1s = new Array(maxLenGraph);
+var maxLenDisplay = 50;
+var labels = new Array(maxLenDisplay);
+var data0s = new Array(maxLenDisplay);
+var data1s = new Array(maxLenDisplay);
 
 let numOfDevices = 0;
 let displayRegisters = true;
-let deviceNames = [];
 
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
@@ -119,7 +118,7 @@ const App = ({ signOut }) => {
     else {
       idForSort = "multi001";
       sortDirection = "DESC";
-      filter = { nickname: { eq: deviceNames[listOfDevices.selectedIndex] } };
+      filter = { nickname: { eq: "neqto-disco2" } };
     }
 
     while(1) {
@@ -226,7 +225,7 @@ const App = ({ signOut }) => {
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = maxLenGraph;
+      this.maxLen = maxLenDisplay;
 //      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
@@ -284,7 +283,6 @@ const App = ({ signOut }) => {
   const listOfDevices = document.getElementById('listOfDevices');
   console_logger.info('listOfDevices ', listOfDevices);
 
-/*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
     g_selectedIndex = listOfDevices.selectedIndex;
@@ -308,7 +306,6 @@ const App = ({ signOut }) => {
     
     //myLineChart.update();
   }
-*/
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
   listOfDevices.addEventListener('change', fetchNotes(false), false);
@@ -324,35 +321,20 @@ const App = ({ signOut }) => {
 
     const numOfNotesTotal = notesFromAPI.length;
     if(displayRegisters == true) {
-      numOfDevices = numOfNotesTotal;
+      numOfDevices = notesFromAPI.length;
 
       for(let i = 0; i < numOfDevices; ++i) {
         var deviceName = notesFromAPI[i].nickname;
 
-        // add device name to the UI list.
+        // add device to the UI list
         const device = document.createElement('option');
         const deviceText = document.createTextNode(deviceName);
         device.appendChild(deviceText);
         listOfDevices.appendChild(device);
-
-        // add device name to array.
-        deviceNames.push(deviceText);
-        console_logger.warn('onMessage(): After deviceNames.push():', ' i ', i, ' deviceText ', deviceText, ' deviceNames ', deviceNames);
       }
     }
     console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
 
-    for(let i = 0; i < numOfNotesTotal; ++i) {
-      var deviceName = notesFromAPI[i].nickname;
-
-      // add device to the UI list
-      const device = document.createElement('option');
-      const deviceText = document.createTextNode(deviceName);
-      device.appendChild(deviceText);
-      listOfDevices.appendChild(device);
-    }
-
-/*
     var separatorOfNotes = [];
 
     for(let i = 0; i < numOfNotesTotal; ++i) {
@@ -422,18 +404,21 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
     }
     console_logger.warn('onMessage(): g_devices ', g_devices);
-*/
 
     // if this is the first device being discovered, auto-select it
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
+      /*
+      console_logger.warn('onMessage(): before OnSelectionChange()');
+      OnSelectionChange();
+      console_logger.warn('onMessage(): after OnSelectionChange()');
+      */
     }
 
-//    OnSelectionChange();
+    OnSelectionChange();
   };
 
-/*
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
@@ -455,7 +440,6 @@ const App = ({ signOut }) => {
     data1s = structuredClone(device2.generalData00);
     console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
   }
-*/
 
   console_logger.warn('before App rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
 
