@@ -142,7 +142,7 @@ const App = ({ signOut }) => {
         cnt_debug++;
       }
     }
-    console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug);
+    console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug, ' displayRegisters ', displayRegisters);
     */
 
     var notesFromAPI = [];
@@ -158,21 +158,21 @@ const App = ({ signOut }) => {
     }
     else {
       if(completeFetchReg == false) {
-        console_logger.warn('fetchNotes(): Before return by if(completeFetchReg == false):');
+        console_logger.warn('fetchNotes(): Before return by if(completeFetchReg == false):', ' displayRegisters ', displayRegisters);
         return;
       }
 
       if(g_selectedIndex === listOfDevices.selectedIndex) {
-        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):');
         // for debug only.
         let cnt_debug3 = 0;
-        console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3);
-        for(let j = 0; j < 30000; ++j) {
+        console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        for(let j = 0; j < 10000; ++j) {
           for(let i = 0; i < 1000000; ++i) {
             cnt_debug3++;
           }
         }
-        console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3);
+        console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):', ' displayRegisters ', displayRegisters);
         return;
       }
       else {
@@ -182,7 +182,7 @@ const App = ({ signOut }) => {
       idForSort = "multi001";
       sortDirection = "DESC";
       filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
-      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex);
+      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex, ' displayRegisters ', displayRegisters);
     }
 
     while(1) {
@@ -192,27 +192,27 @@ const App = ({ signOut }) => {
         query: listNotes,
         variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
       });
-      console_logger.warn('fetchNotes(): After graphql(listNotes) apiData ', apiData);
+      console_logger.warn('fetchNotes(): After graphql(listNotes):', ' displayRegisters ', displayRegisters, ' apiData ', apiData);
       
       // for debug only.
       let cnt_debug2 = 0;
-      console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2);
-      for(let j = 0; j < 30000; ++j) {
+      console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
+      for(let j = 0; j < 10000; ++j) {
         for(let i = 0; i < 1000000; ++i) {
           cnt_debug2++;
         }
       }
-      console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2);
+      console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
       if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
     }
 
-    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) notesFromAPI --> ', notesFromAPI)
+    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
     setNotes(notesFromAPI);
-    console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
+    console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
     onMessage(notesFromAPI, displayRegisters);
 
