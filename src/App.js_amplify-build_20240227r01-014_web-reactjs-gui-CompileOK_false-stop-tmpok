@@ -166,7 +166,6 @@ const App = ({ signOut }) => {
         console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):');
         // for debug only.
         let cnt_debug3 = 0;
-        console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3);
         for(let j = 0; j < 30000; ++j) {
           for(let i = 0; i < 1000000; ++i) {
             cnt_debug3++;
@@ -196,7 +195,6 @@ const App = ({ signOut }) => {
       
       // for debug only.
       let cnt_debug2 = 0;
-      console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2);
       for(let j = 0; j < 30000; ++j) {
         for(let i = 0; i < 1000000; ++i) {
           cnt_debug2++;
