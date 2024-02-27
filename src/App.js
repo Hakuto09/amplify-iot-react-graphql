@@ -136,8 +136,10 @@ const App = ({ signOut }) => {
 
     // for debug only.
     let cnt_debug = 0;
-    for(let i = 0; i < 1000000000; ++i) {
-      cnt_debug++;
+    for(let j = 0; j < 1000000; ++j) {
+      for(let i = 0; i < 1000000; ++i) {
+        cnt_debug++;
+      }
     }
     console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug);
     
@@ -172,8 +174,10 @@ const App = ({ signOut }) => {
       
       // for debug only.
       let cnt_debug2 = 0;
-      for(let i = 0; i < 1000000000; ++i) {
-        cnt_debug2++;
+      for(let j = 0; j < 1000000; ++j) {
+        for(let i = 0; i < 1000000; ++i) {
+          cnt_debug2++;
+        }
       }
       console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2);
 
