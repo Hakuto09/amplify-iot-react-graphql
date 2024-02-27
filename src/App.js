@@ -69,7 +69,7 @@ var data0s = new Array(maxLenGraph);
 var data1s = new Array(maxLenGraph);
 
 let numOfDevices = 0;
-let displayRegisters = true;
+//let displayRegisters = true;
 let completeFetchReg = false;
 let deviceNames = [];
 
@@ -125,16 +125,14 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
-  async function fetchNotes(dispReg) {
-    console_logger.warn('fetchNotes(): In: dispReg ', dispReg);
+  async function fetchNotes(displayRegisters) {
+    console_logger.warn('fetchNotes(): In:', ' displayRegisters ', displayRegisters);
 
     let wait_ms = 5000;
     setTimeout(
       console_logger.warn('fetchNotes(): setTimeout(): wait_ms ', wait_ms),
       wait_ms
     );
-
-    displayRegisters = dispReg;
 
     var notesFromAPI = [];
     var idForSort = "";
@@ -174,7 +172,7 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
 
-    onMessage(notesFromAPI);
+    onMessage(notesFromAPI, displayRegisters);
 
     if(displayRegisters == true) {
       completeFetchReg = true;
@@ -345,7 +343,9 @@ const App = ({ signOut }) => {
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  async function onMessage(notesFromAPI) {
+  async function onMessage(notesFromAPI, displayRegisters) {
+
+    console_logger.warn('onMessage(): In:', ' displayRegisters ', displayRegisters);
 
     const numOfNotesTotal = notesFromAPI.length;
     if(displayRegisters == true) {
