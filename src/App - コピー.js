@@ -110,14 +110,14 @@ const App = ({ signOut }) => {
     listOfDevices.selectedIndex = 0;
     console_logger.warn('App(): After listOfDevices.selectedIndex = 0:', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
 
-//    listOfDevices.addEventListener('change', fetchNotes(false), false);
-//    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+/    listOfDevices.addEventListener('change', fetchNotes(false), false);
+/    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
   }
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
 //  listOfDevices.addEventListener('change', setNotes, false);
-  listOfDevices.addEventListener('change', fetchNotes(false), false);
-  console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
+/  listOfDevices.addEventListener('change', fetchNotes(false), false);
+/console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
 
   const [notes, setNotes] = useState([]);
 

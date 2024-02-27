@@ -70,7 +70,6 @@ var data1s = new Array(maxLenGraph);
 
 let numOfDevices = 0;
 let displayRegisters = true;
-let completeFetchReg = false;
 let deviceNames = [];
 
 // All the devices in the list (those that have been sending telemetry)
@@ -110,14 +109,13 @@ const App = ({ signOut }) => {
     listOfDevices.selectedIndex = 0;
     console_logger.warn('App(): After listOfDevices.selectedIndex = 0:', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
 
-//    listOfDevices.addEventListener('change', fetchNotes(false), false);
-//    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+    listOfDevices.addEventListener('change', fetchNotes(false), false);
+    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
   }
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
 //  listOfDevices.addEventListener('change', setNotes, false);
-  listOfDevices.addEventListener('change', fetchNotes(false), false);
-  console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
+//  listOfDevices.addEventListener('change', fetchNotes(false), false);
 
   const [notes, setNotes] = useState([]);
 
@@ -148,7 +146,6 @@ const App = ({ signOut }) => {
       sortDirection = "ASC";
     }
     else {
-      if(completeFetchReg == false) return;
       idForSort = "multi001";
       sortDirection = "DESC";
       g_selectedIndex = listOfDevices.selectedIndex;
@@ -175,10 +172,6 @@ const App = ({ signOut }) => {
     console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
 
     onMessage(notesFromAPI);
-
-    if(displayRegisters == true) {
-      completeFetchReg = true;
-    }
   }
 
   async function createNote(event) {
