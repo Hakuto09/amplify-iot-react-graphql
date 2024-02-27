@@ -66,11 +66,10 @@ const console_logger = new ConsoleLogger('foo');
 const client = generateClient();
 
 var g_devices = [];
-var maxLenList = 1000;
-var maxLenDisplay = 50;
-var labels = new Array(maxLenDisplay);
-var data0s = new Array(maxLenDisplay);
-var data1s = new Array(maxLenDisplay);
+var maxLen = 50;
+var labels = new Array(maxLen);
+var data0s = new Array(maxLen);
+var data1s = new Array(maxLen);
 
 
 // All the devices in the list (those that have been sending telemetry)
@@ -79,7 +78,6 @@ class TrackedDevices {
     this.devices = [];
   }
 
-/*
   // Find a device based on its Id
   findDevice(deviceId) {
     console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
@@ -94,7 +92,6 @@ class TrackedDevices {
 
     return undefined;
   }
-*/
 
   getDevicesCount() {
     return this.devices.length;
@@ -134,56 +131,13 @@ const App = ({ signOut }) => {
 
   async function fetchNotes() {
     console_logger.warn('fetchNotes(): In')  // Hakuto
-
-//#if 0
-/*
 //    const apiData = await API.graphql({ query: listNotes });
+
     const apiData = await client.graphql({ query: listNotes });
     console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
 
     const notesFromAPI = apiData.data.listNotes.items;
     console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
-*/
-//#else
-    var notesFromAPI = [];
-    var idForSort = "multi001";
-    var nextToken = null;
-    var limit = 200;
-
-    while(1) {
-      const apiData = await client.graphql({
-        query: listNotes,
-//        variables: { limit: limit, nextToken: nextToken },
-        variables: { id: idForSort, sortDirection: "DESC", limit: limit, nextToken: nextToken },
-      });
-      console_logger.warn('listNotes(): After client.graphql(listNotes) apiData --> ', apiData);
-
-      Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
-      nextToken = apiData.data.listNotes.nextToken;
-      if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
-    }
-
-    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes) notesFromAPI --> ', notesFromAPI)
-
-//-------------------
-/*
-let sampleList = [];
-const fetchList = async (token) => {
-  const appSyncParams = {
-    filter: {
-      条件を記載
-    },
-    limit: 999999999
-  };
-  if (token) appSyncParams.nextToken = token;
-  const res = await API.graphql(graphqlOperation(queries.listTests, appSyncParams));
-  Array.prototype.push.apply(sampleList, res.data.listTests.items);
-  if (!res.data.listTests.nextToken) return;
-  await fetchList(res.data.listTests.nextToken);
-}
-await fetchList('');
-*/
-//-------------------
 
     setNotes(notesFromAPI);
     // Hakuto start
@@ -194,57 +148,40 @@ await fetchList('');
   }
 
   async function createNote(event) {
+    /* Hakuto --- Need check!!
     event.preventDefault();
     const form = new FormData(event.target);
     const data = {
-      id: form.get("id"),
-      date: form.get("date"),
       nickname: form.get("nickname"),
-//      send_cnt: form.get("send_cnt"),
-//      magx: form.get("magx"),
-//      magy: form.get("magy"),
-//      magz: form.get("magz"),
-//      degree: form.get("degree"),
-//      distance: form.get("distance"),
-//      pres: form.get("pres"),
-//      temp: form.get("temp"),
-//      humi: form.get("humi"),
-      postType: 'OPEN',
+      date: form.get("date"),
+      send_cnt: form.get("send_cnt"),
+      magx: form.get("magx"),
+      magy: form.get("magy"),
+      magz: form.get("magz"),
+      degree: form.get("degree"),
+      distance: form.get("distance"),
+      pres: form.get("pres"),
+      temp: form.get("temp"),
+      humi: form.get("humi"),
     };
 //    await API.graphql({
     await client.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
-
+    */
     fetchNotes();
     event.target.reset();
   }
 
-//  async function deleteNote({ id }) {
-  async function deleteNote({ id, date }) {
-//    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
-    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' date ', date, ' notes ', notes)
+  async function deleteNote({ id }) {
     const newNotes = notes.filter((note) => note.id !== id);
-    console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
-    const newNotes2 = notes.filter((note) => note.date !== date);
-    console_logger.warn('deleteNote(): After notes.filter() newNotes2 --> ', newNotes2)
-    const newNotes3 = notes.filter((note) => note.id === id && note.date !== date);
-    console_logger.warn('deleteNote(): After notes.filter() newNotes3 --> ', newNotes3)
-
-    console_logger.warn('deleteNote(): Before setNotes() id ', id, ' date ', date, ' notes ', notes)
-//    setNotes(newNotes);
-    setNotes(newNotes3);
-    console_logger.warn('deleteNote(): After setNotes() id ', id, ' date ', date, ' notes ', notes)
-
-    //    await API.graphql({
-    const apiDataDelete = await client.graphql({
+    setNotes(newNotes);
+//    await API.graphql({
+    await client.graphql({
       query: deleteNoteMutation,
-//      variables: { input: { id } },
-      variables: { input: { id, date } },
+      variables: { input: { id } },
     });
-
-    console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
   }
 
   // Hakuto start
@@ -261,28 +198,27 @@ await fetchList('');
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = maxLenDisplay;
-//      this.maxLen = 50;
+      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
-      this.generalData00 = new Array(this.maxLen);
+      this.humidityData = new Array(this.maxLen);
     }
 
     resetData() {
       this.timeData.length = 0;
       this.temperatureData.length = 0;
-      this.generalData00.length = 0;
+      this.humidityData.length = 0;
     }
 
     addData(time, temperature, humidity) {
       this.timeData.push(time);
       this.temperatureData.push(temperature);
-      this.generalData00.push(humidity || null);
+      this.humidityData.push(humidity || null);
 
-      if(this.timeData.length > this.maxLen) {
+      if (this.timeData.length > this.maxLen) {
         this.timeData.shift();
         this.temperatureData.shift();
-        this.generalData00.shift();
+        this.humidityData.shift();
       }
     }
   }
@@ -526,14 +462,14 @@ await fetchList('');
     //chartData.datasets[0].data = structuredClone(device.temperatureData);
     data0s = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
-    //chartData.datasets[1].data = structuredClone(device.generalData00);
-    data1s = structuredClone(device.generalData00);
-    console_logger.warn('OnSelectionChange(): device.generalData00 ', device.generalData00);
+    //chartData.datasets[1].data = structuredClone(device.humidityData);
+    data1s = structuredClone(device.humidityData);
+    console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
     /*
     for(let i = 0; i < maxLen; ++i) {
       chartData.labels[i] = device.timeData[i];
       chartData.datasets[0].data[i] = device.temperatureData[i];
-      chartData.datasets[1].data[i] = device.generalData00[i];
+      chartData.datasets[1].data[i] = device.humidityData[i];
     }
     */
     //console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
@@ -556,8 +492,7 @@ await fetchList('');
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  async function onMessage(notesFromAPI) {
-//  function onMessage(notesFromAPI) {
+  function onMessage(notesFromAPI) {
 
 //    fetchNote('dummy001');  // want to get data for each ID.
 
@@ -600,47 +535,15 @@ await fetchList('');
     console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
     for(let i = 0; i < numOfSeparator; ++i) {
       if(i >= numOfCreatedDevices) {
-        var id = notesFromAPI[separatorOfNotes[i]].id;
-        const newDeviceData = new DeviceData(id);
+        const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
         trackedDevices.devices.push(newDeviceData);
         console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
     
         // add device to the UI list
         const node = document.createElement('option');
-        const nodeText = document.createTextNode(id);
+        const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
-
-        let filter = {    // Hakuto. for debug only.
-// NG          id: { not: "dummy2" },
-// NG          id: { not: ["dummy2"] },
-// NG          id: { eq: ["dummy2"] },
-// NG          date: "2024-02-06T06:40:44.254Z",
-// OK          date: { between: ["2023-12-15T04:26:45.800Z", "2023-12-15T04:31:16.900Z"] },
-//          date: { ge: "2024-02-20T08:58:26.505Z" },
-// OK          temp: { ge: 60.0 },
-// OK          createdAt: { ge: "2024-02-21T04:20:43.031Z" },
-          nickname: { eq: "neqto-disco2" },
-        }
-
-        const apiData2 = await client.graphql({
-          query: listNotes,
-//          variables: { input: { id } },
-//          variables: { filter: { filter } },
-//          variables: { filter: filter },
-// NG          variables: { filter: filter, sortDirection: "ASC" },
-// OK          variables: { id: "multi001", sortDirection: "ASC" },
-          variables: { limit: 1000 },
-        });   // Hakuto. for debug only.
-        console_logger.warn('onMessage(): After client.graphql() apiData2 --> ', apiData2);  // Hakuto. for debug only.
-
-        const apiData3 = await client.graphql({
-          query: listNotes,
-// NG          variables: { filter: filter, sortDirection: "DESC" },
-// OK          variables: { id: "multi001", sortDirection: "DESC" },
-          variables: { id: "multi001", sortDirection: "DESC", filter: filter },
-        });   // Hakuto. for debug only.
-        console_logger.warn('onMessage(): After client.graphql() apiData3 --> ', apiData3);  // Hakuto. for debug only.
 
         numOfCreatedDevices++;
       }
@@ -742,8 +645,8 @@ await fetchList('');
     console_logger.warn('before App rutern. 0b: device2.timeData ', device2.timeData);
     data0s = structuredClone(device2.temperatureData);
     console_logger.warn('before App rutern. 0b: device2.temperatureData ', device2.temperatureData);
-    data1s = structuredClone(device2.generalData00);
-    console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
+    data1s = structuredClone(device2.humidityData);
+    console_logger.warn('before App rutern. 0b: device2.humidityData ', device2.humidityData);
   }
 
   /*
@@ -752,8 +655,8 @@ await fetchList('');
     console_logger.warn('before App rutern. 0b: g_devices[0].timeData ', g_devices[0].timeData);
     data0s = structuredClone(g_devices[0].temperatureData);
     console_logger.warn('before App rutern. 0b: g_devices[0].temperatureData ', g_devices[0].temperatureData);
-    data1s = structuredClone(g_devices[0].generalData00);
-    console_logger.warn('before App rutern. 0b: g_devices[0].generalData00 ', g_devices[0].generalData00);
+    data1s = structuredClone(g_devices[0].humidityData);
+    console_logger.warn('before App rutern. 0b: g_devices[0].humidityData ', g_devices[0].humidityData);
   }
   */
 
@@ -780,8 +683,7 @@ await fetchList('');
       },
       {
         //fill: false,
-        // label: 'Humidity',
-        label: 'General data',
+        label: 'Humidity',
         //yAxisID: 'Humidity',
         borderColor: 'rgba(24, 120, 240, 1)',
         //pointBoarderColor: 'rgba(24, 120, 240, 1)',
@@ -828,103 +730,77 @@ await fetchList('');
             //required  // Hakuto
           />
           <TextField
-            name="nickname"
-            placeholder="Nickname"
-            label="Nickname"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          {/*
-          <TextField
             name="send_cnt"
-            placeholder="Send_cnt"
-            label="Send_cnt"
+            placeholder="send_cnt"
+            label="send_cnt"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
-            //name="magx"
-            //placeholder="Magx"
-            //label="Magx"
-            //labelHidden
-            //variation="quiet"
+            name="magx"
+            placeholder="magx"
+            label="magx"
+            labelHidden
+            variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="magy"
-            placeholder="Magy"
-            label="Magy"
+            placeholder="magy"
+            label="magy"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="magz"
-            placeholder="Magz"
-            label="Magz"
+            placeholder="magz"
+            label="magz"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="degree"
-            placeholder="Degree"
-            label="Degree"
+            placeholder="degree"
+            label="degree"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="distance"
-            placeholder="Distance"
-            label="Distance"
+            placeholder="distance"
+            label="distance"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="pres"
-            placeholder="Pres"
-            label="Pres"
+            placeholder="pres"
+            label="pres"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="temp"
-            placeholder="Temp"
-            label="Temp"
+            placeholder="temp"
+            label="temp"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
-          {/*
           <TextField
             name="humi"
-            placeholder="Humi"
-            label="Humi"
+            placeholder="humi"
+            label="humi"
             labelHidden
             variation="quiet"
             //required  // Hakuto
           />
-          */}
           
           <Button type="submit" variation="primary">
             Create Note
@@ -944,18 +820,15 @@ await fetchList('');
           >
             <Text as="strong" fontWeight={700}>{note.id}</Text>
             <Text as="span">{note.date}</Text>
-            <Text as="span">{note.nickname}</Text>
             <Text as="span">{note.send_cnt}</Text>
-            {/*<Text as="span">{note.magx}</Text>*/}
-            {/*<Text as="span">{note.magy}</Text>*/}
-            {/*<Text as="span">{note.magz}</Text>*/}
-            {/*<Text as="span">{note.degree}</Text>*/}
-            {/*<Text as="span">{note.distance}</Text>*/}
-            {/*<Text as="span">{note.pres}</Text>*/}
+            <Text as="span">{note.magx}</Text>
+            <Text as="span">{note.magy}</Text>
+            <Text as="span">{note.magz}</Text>
+            <Text as="span">{note.degree}</Text>
+            <Text as="span">{note.distance}</Text>
+            <Text as="span">{note.pres}</Text>
             <Text as="span">{note.temp}</Text>
-            {/*<Text as="span">{note.humi}</Text>*/}
-            <Text as="span">{note.general_data00}</Text>
-            {/*<Text as="span">{note.postType}</Text>*/}
+            <Text as="span">{note.humi}</Text>
             <Button variation="link" onClick={() => deleteNote(note)}>
               Delete note
             </Button>
