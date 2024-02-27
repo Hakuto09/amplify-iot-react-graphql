@@ -134,13 +134,6 @@ const App = ({ signOut }) => {
       wait_ms
     );
 
-    // for debug only.
-    let cnt_debug = 0;
-    for(let i = 0; i < 10000; ++i) {
-      cnt_debug++;
-    }
-    console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug);
-    
     var notesFromAPI = [];
     var idForSort = "";
     let sortDirection = "";
@@ -158,7 +151,6 @@ const App = ({ signOut }) => {
       sortDirection = "DESC";
       g_selectedIndex = listOfDevices.selectedIndex;
       filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
-      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex);
     }
 
     while(1) {
@@ -169,13 +161,6 @@ const App = ({ signOut }) => {
         variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
       });
       console_logger.warn('fetchNotes(): After graphql(listNotes) apiData ', apiData);
-      
-      // for debug only.
-      let cnt_debug2 = 0;
-      for(let i = 0; i < 10000; ++i) {
-        cnt_debug2++;
-      }
-      console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2);
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
