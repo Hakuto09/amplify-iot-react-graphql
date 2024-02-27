@@ -176,7 +176,7 @@ const App = ({ signOut }) => {
       
       // for debug only.
       let cnt_debug2 = 0;
-      for(let j = 0; j < 100000; ++j) {
+      for(let j = 0; j < 50000; ++j) {
         for(let i = 0; i < 1000000; ++i) {
           cnt_debug2++;
         }
