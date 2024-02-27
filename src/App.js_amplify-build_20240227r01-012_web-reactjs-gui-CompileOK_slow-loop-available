@@ -87,7 +87,7 @@ class TrackedDevices {
 const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
-var g_selectedIndex = -1/*0*/;
+var g_selectedIndex = 0;
 
 
 console_logger.warn('Before App.');  // Hakuto
@@ -162,21 +162,13 @@ const App = ({ signOut }) => {
         return;
       }
 
-      if(g_selectedIndex === listOfDevices.selectedIndex) {
-        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):');
-        // for debug only.
-        let cnt_debug3 = 0;
-        for(let j = 0; j < 30000; ++j) {
-          for(let i = 0; i < 1000000; ++i) {
-            cnt_debug2++;
-          }
-        }
-        console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3);
-        return;
-      }
-      else {
+//      if(g_selectedIndex === listOfDevices.selectedIndex) {
+//        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):');
+//        return;
+//      }
+//      else {
         g_selectedIndex = listOfDevices.selectedIndex;
-      }
+//      }
 
       idForSort = "multi001";
       sortDirection = "DESC";
@@ -195,7 +187,7 @@ const App = ({ signOut }) => {
       
       // for debug only.
       let cnt_debug2 = 0;
-      for(let j = 0; j < 30000; ++j) {
+      for(let j = 0; j < 50000; ++j) {
         for(let i = 0; i < 1000000; ++i) {
           cnt_debug2++;
         }
