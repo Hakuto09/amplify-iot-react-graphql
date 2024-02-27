@@ -95,12 +95,6 @@ console_logger.warn('Before App.');  // Hakuto
 const App = ({ signOut }) => {
   console_logger.warn('App() In');  // Hakuto
 
-  const [notes, setNotes] = useState([]);
-
-  useEffect(() => {
-    fetchNotes(true);
-  }, []);
-
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
 
@@ -116,14 +110,20 @@ const App = ({ signOut }) => {
     listOfDevices.selectedIndex = 0;
     console_logger.warn('App(): After listOfDevices.selectedIndex = 0:', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
 
-//    listOfDevices.addEventListener('change', fetchNotes(false), false);
-//    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+    listOfDevices.addEventListener('change', fetchNotes(false), false);
+    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
   }
 
 //  listOfDevices.addEventListener('change', OnSelectionChange, false);
 //  listOfDevices.addEventListener('change', setNotes, false);
-  listOfDevices.addEventListener('change', fetchNotes(false), false);
-  console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
+//  listOfDevices.addEventListener('change', fetchNotes(false), false);
+//  console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
+
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    fetchNotes(true);
+  }, []);
 
   async function fetchNotes(displayRegisters) {
     console_logger.warn('fetchNotes(): In:', ' displayRegisters ', displayRegisters);
@@ -157,21 +157,10 @@ const App = ({ signOut }) => {
       sortDirection = "ASC";
     }
     else {
-      if(completeFetchReg == false) {
-        console_logger.warn('fetchNotes(): Before return by if(completeFetchReg == false):');
-        return;
-      }
-
-//      if(g_selectedIndex === listOfDevices.selectedIndex) {
-//        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):');
-//        return;
-//      }
-//      else {
-        g_selectedIndex = listOfDevices.selectedIndex;
-//      }
-
+      if(completeFetchReg == false) return;
       idForSort = "multi001";
       sortDirection = "DESC";
+      g_selectedIndex = listOfDevices.selectedIndex;
       filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
       console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex);
     }
