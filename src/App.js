@@ -331,12 +331,14 @@ const App = ({ signOut }) => {
   }
 */
 
+/*
   labels = [0, 1, 2];
   console_logger.warn('App(): After labels input0:', ' labels ', labels);
   data0s = [3, 13, 23];
   console_logger.warn('App(): After data0s input0:', ' data0s ', data0s);
   data1s = [7, 17, 27];
   console_logger.warn('App(): After data1s input0:', ' data1s ', data1s);
+*/
 
   const chartOptions = {
     options: {
@@ -565,14 +567,16 @@ const App = ({ signOut }) => {
   };
 
   console_logger.warn('before App rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
-  
+ 
+  /*
   labels = [6, 7, 8];
   console_logger.warn('App(): After labels input1:', ' labels ', labels);
   data0s = [53, 13, 93];
   console_logger.warn('App(): After data0s input1:', ' data0s ', data0s);
   data1s = [87, 17, 47];
   console_logger.warn('App(): After data1s input1:', ' data1s ', data1s);
-  
+  */
+
   console_logger.warn('before App rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
   
   // Hakuto about "Line"
