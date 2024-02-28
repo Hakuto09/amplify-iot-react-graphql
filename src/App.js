@@ -594,7 +594,7 @@ const App = ({ signOut }) => {
   }
 
   sleep(5, function () {
-    console_logger.warn("App(): After sleep() with setInterval and clearInterval: '5秒経過しました！');
+    console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました");
   });
     
   //completeFetchReg2
