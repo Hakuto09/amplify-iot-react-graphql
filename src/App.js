@@ -106,8 +106,10 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
-  function update() {
+  function update(event) {
+    event.preventDefault();
     fetchNotes(false);
+    event.target.reset();
   }
 
   async function fetchNotes(displayRegisters) {
@@ -674,7 +676,7 @@ const App = ({ signOut }) => {
   return (
     <View className="App">
       <Line options={chartOptions} data={chartData} />
-      <View as="form" margin="3rem 0" onSubmit={() => fetchNotes(false)/*fetchNotes(false)*//*update*/}>
+      <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
         <Flex direction="row" justifyContent="center">
           <Button type="submit" variation="primary">
             Update
