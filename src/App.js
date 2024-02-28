@@ -599,7 +599,7 @@ const App = ({ signOut }) => {
   }
 
   console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
-  sleep(5, sleep_cnt++, function (cnt) {
+  sleep(60, sleep_cnt++, function (cnt) {
     console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
   });
 
