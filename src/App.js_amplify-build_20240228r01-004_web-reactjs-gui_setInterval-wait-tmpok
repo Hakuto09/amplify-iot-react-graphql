@@ -200,9 +200,6 @@ const App = ({ signOut }) => {
       completeFetchReg = true;
       completeFetchReg2 = true;
     }
-    else {
-      completeFetchData = true;
-    }
   }
 
   async function createNote(event) {
@@ -598,17 +595,12 @@ const App = ({ signOut }) => {
     }, 1000);
   }
 
-  //console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
-  //sleep(5, sleep_cnt, function (cnt) {
-  //  console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
-  //});
+  console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
+  sleep(5, sleep_cnt, function (cnt) {
+    console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
+  });
     
-  while(!completeFetchReg2 || !completeFetchData) {
-    sleep(1, sleep_cnt, null);
-  }
-
-  completeFetchReg2 = false;
-  completeFetchData = false;
+  //completeFetchReg2
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
