@@ -598,13 +598,12 @@ const App = ({ signOut }) => {
     }, 1000);
   }
 
-  /*
   console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
-  sleep(5, sleep_cnt, function (cnt) {
+  sleep(5, sleep_cnt++, function (cnt) {
     console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
   });
-  */
 
+  /*
   sleep_cnt = 0;
   while(!completeFetchReg2 || !completeFetchData) {
     sleep(5, sleep_cnt, function (cnt) {
@@ -614,6 +613,7 @@ const App = ({ signOut }) => {
     console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
     sleep_cnt++;
   }
+  */
 
   completeFetchReg2 = false;
   completeFetchData = false;
