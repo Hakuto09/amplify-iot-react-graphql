@@ -609,7 +609,8 @@ const App = ({ signOut }) => {
   */
 
   let sleep_cnt_local = 0;
-  if(sleep_cnt) {
+  console_logger.warn("App(): Before while sleep loop:", ' sleep_cnt ', sleep_cnt, ' sleep_cnt_local ', sleep_cnt_local, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
+  if(sleep_cnt >= 2) {
     while(!completeFetchReg2 || !completeFetchData) {
       /*
       sleep(5, sleep_cnt, function (cnt) {
