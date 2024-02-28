@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-// Hakuto start
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +11,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-// Hakuto end
 
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
@@ -33,7 +31,6 @@ import {
   deleteNote as deleteNoteMutation,
 } from "./graphql/mutations";
 
-// Hakuto start
 //import { Amplify, Logger, AWSCloudWatchProvider} from 'aws-amplify'
 import { Amplify, AWSCloudWatchProvider} from 'aws-amplify'
 import { ConsoleLogger } from 'aws-amplify/utils';
@@ -61,36 +58,27 @@ const LOG_LEVEL = 'INFO' //どのレベルのログまでロギングするか
 //logger.addPluggable(new AWSCloudWatchProvider())
 
 const console_logger = new ConsoleLogger('foo');
-// Hakuto end
 
 const client = generateClient();
 
 var g_devices = [];
-var maxLen = 50;
-var labels = new Array(maxLen);
-var data0s = new Array(maxLen);
-var data1s = new Array(maxLen);
+var maxLenList = 1000;
+var maxLenGraph = 50;
+var labels = new Array(maxLenGraph);
+var data0s = new Array(maxLenGraph);
+var data1s = new Array(maxLenGraph);
 
+let numOfDevices = 0;
+//let displayRegisters = true;
+let completeFetchReg = false;
+let completeFetchReg2 = false;
+let completeFetchData = false;
+let deviceNames = [];
 
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
   constructor() {
     this.devices = [];
-  }
-
-  // Find a device based on its Id
-  findDevice(deviceId) {
-    console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
-    console_logger.warn('TrackedDevices.findDevice(): this.devices ', this.devices);
-    for (let i = 0; i < this.devices.length; ++i) {
-      console_logger.warn('TrackedDevices.findDevice(): this.devices.length ', this.devices.length, ' i ', i);
-      if (this.devices[i].deviceId === deviceId) {
-        console_logger.warn('TrackedDevices.findDevice(): before return. i ', i, ' this.devices[i] ', this.devices[i]);
-        return this.devices[i];
-      }
-    }
-
-    return undefined;
   }
 
   getDevicesCount() {
@@ -101,90 +89,186 @@ class TrackedDevices {
 const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
-var g_selectedIndex = 0;
+var g_selectedIndex = -1/*0*/;
 
 
-console_logger.warn('Before App.')  // Hakuto
+console_logger.warn('Before App.');  // Hakuto
 
 const App = ({ signOut }) => {
+  console_logger.warn('App() In');  // Hakuto
+
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    fetchNotes();
+    fetchNotes(true);
   }, []);
 
-//  // Hakuto start
-//    async function fetchNote(id) {
-//    console_logger.warn('fetchNote(): In')  // Hakuto
-//
-//    const apiDataOfGet = await client.graphql({
-//      query: getNote,
-//      variables: { input: { id } },
-//    });
-//  
-//    console_logger.warn('fetchNote(): After client.graphql() apiDataOfGet --> ', apiDataOfGet);  // Hakuto
-//
-//    const notesFromAPIofGet = apiDataOfGet.data.getNote.items;
-//    console_logger.warn('fetchNote(): After client.graphql() notesFromAPIofGet --> ', notesFromAPIofGet)  // Hakuto
-//  }
-//  // Hakuto end
+  async function fetchNotes(displayRegisters) {
+    console_logger.warn('fetchNotes(): In:', ' displayRegisters ', displayRegisters);
 
-  async function fetchNotes() {
-    console_logger.warn('fetchNotes(): In')  // Hakuto
-//    const apiData = await API.graphql({ query: listNotes });
+    let wait_ms = 5000;
+    setTimeout(
+      console_logger.warn('fetchNotes(): setTimeout(): wait_ms ', wait_ms),
+      wait_ms
+    );
 
-    const apiData = await client.graphql({ query: listNotes });
-    console_logger.warn('fetchNotes(): After client.graphql() apiData --> ', apiData);  // Hakuto
+    /*
+    // for debug only.
+    let cnt_debug = 0;
+    for(let j = 0; j < 10000; ++j) {
+      for(let i = 0; i < 1000000; ++i) {
+        cnt_debug++;
+      }
+    }
+    console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug, ' displayRegisters ', displayRegisters);
+    */
 
-    const notesFromAPI = apiData.data.listNotes.items;
-    console_logger.warn('fetchNotes(): After client.graphql() notesFromAPI --> ', notesFromAPI)  // Hakuto
+    var notesFromAPI = [];
+    var idForSort = "";
+    let sortDirection = "";
+    let filter = {};
+    var nextToken = null;
+    var limit = 200;
+
+    if(displayRegisters == true) {
+      idForSort = "register";
+      sortDirection = "ASC";
+    }
+    else {
+      if(completeFetchReg == false) {
+        console_logger.warn('fetchNotes(): Before return by if(completeFetchReg == false):', ' displayRegisters ', displayRegisters);
+        return;
+      }
+
+      if(g_selectedIndex === listOfDevices.selectedIndex) {
+        // for debug only.
+        let cnt_debug3 = 0;
+        console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        for(let j = 0; j < 10000; ++j) {
+          for(let i = 0; i < 1000000; ++i) {
+            cnt_debug3++;
+          }
+        }
+        console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):', ' displayRegisters ', displayRegisters);
+        return;
+      }
+      else {
+        g_selectedIndex = listOfDevices.selectedIndex;
+      }
+
+      idForSort = "multi001";
+      sortDirection = "DESC";
+      filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
+      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex, ' displayRegisters ', displayRegisters);
+    }
+
+    while(1) {
+      console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limit ', limit);
+      let apiData = [];
+      apiData = await client.graphql({
+        query: listNotes,
+        variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
+      });
+      console_logger.warn('fetchNotes(): After graphql(listNotes):', ' displayRegisters ', displayRegisters, ' apiData ', apiData);
+      
+      // for debug only.
+      let cnt_debug2 = 0;
+      console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
+      for(let j = 0; j < 10000; ++j) {
+        for(let i = 0; i < 1000000; ++i) {
+          cnt_debug2++;
+        }
+      }
+      console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
+
+      Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
+      nextToken = apiData.data.listNotes.nextToken;
+      if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
+    }
+
+    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
     setNotes(notesFromAPI);
-    // Hakuto start
-    console_logger.warn('fetchNotes(): After setNotes() notesFromAPI --> ', notesFromAPI)
+    console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
-    onMessage(notesFromAPI);
-    // Hakuto end
+    onMessage(notesFromAPI, displayRegisters);
+
+    if(displayRegisters == true) {
+      completeFetchReg = true;
+      completeFetchReg2 = true;
+    }
   }
 
   async function createNote(event) {
-    /* Hakuto --- Need check!!
     event.preventDefault();
     const form = new FormData(event.target);
+    const d = ('000' + numOfDevices).slice(-3);
+    const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
+    console_logger.warn('createNote(): After newDateForResister:  d ', d, ' newDateForResister ', newDateForResister)
     const data = {
+//      id: form.get("id"),
+      id: "register",
+//      date: form.get("date"),
+      date: newDateForResister, 
       nickname: form.get("nickname"),
-      date: form.get("date"),
-      send_cnt: form.get("send_cnt"),
-      magx: form.get("magx"),
-      magy: form.get("magy"),
-      magz: form.get("magz"),
-      degree: form.get("degree"),
-      distance: form.get("distance"),
-      pres: form.get("pres"),
-      temp: form.get("temp"),
-      humi: form.get("humi"),
+//      send_cnt: form.get("send_cnt"),
+//      magx: form.get("magx"),
+//      magy: form.get("magy"),
+//      magz: form.get("magz"),
+//      degree: form.get("degree"),
+//      distance: form.get("distance"),
+//      pres: form.get("pres"),
+//      temp: form.get("temp"),
+//      humi: form.get("humi"),
+      postType: 'OPEN',
     };
-//    await API.graphql({
-    await client.graphql({
+
+    console_logger.warn('createNote(): Before graphql(query: createNoteMutation):  data ', data);
+    //    await API.graphql({
+    const apiDataCreate = await client.graphql({
       query: createNoteMutation,
       variables: { input: data },
     });
-    */
-    fetchNotes();
+    console_logger.warn('createNote(): After graphql(query: createNoteMutation):  apiDataCreate ', apiDataCreate);
+
+    fetchNotes(true);
+
+    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
+    numOfDevices++;
+    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
     event.target.reset();
   }
 
-  async function deleteNote({ id }) {
+//  async function deleteNote({ id }) {
+  async function deleteNote({ id, date }) {
+//    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
+    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' date ', date, ' notes ', notes)
     const newNotes = notes.filter((note) => note.id !== id);
-    setNotes(newNotes);
-//    await API.graphql({
-    await client.graphql({
+    console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
+    const newNotes2 = notes.filter((note) => note.date !== date);
+    console_logger.warn('deleteNote(): After notes.filter() newNotes2 --> ', newNotes2)
+    const newNotes3 = notes.filter((note) => note.id === id && note.date !== date);
+    console_logger.warn('deleteNote(): After notes.filter() newNotes3 --> ', newNotes3)
+
+    console_logger.warn('deleteNote(): Before setNotes() id ', id, ' date ', date, ' notes ', notes)
+//    setNotes(newNotes);
+    setNotes(newNotes3);
+    console_logger.warn('deleteNote(): After setNotes() id ', id, ' date ', date, ' notes ', notes)
+
+    //    await API.graphql({
+    const apiDataDelete = await client.graphql({
       query: deleteNoteMutation,
-      variables: { input: { id } },
+//      variables: { input: { id } },
+      variables: { input: { id, date } },
     });
+
+    console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
+
+    fetchNotes(false);
+    console_logger.warn('deleteNote(): After fetchNotes() ')
   }
 
-  // Hakuto start
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -195,107 +279,45 @@ const App = ({ signOut }) => {
     Legend
   );
 
+/*
   class DeviceData {
     constructor(deviceId) {
       this.deviceId = deviceId;
-      this.maxLen = 50;
+      this.maxLen = maxLenGraph;
+//      this.maxLen = 50;
       this.timeData = new Array(this.maxLen);
       this.temperatureData = new Array(this.maxLen);
-      this.humidityData = new Array(this.maxLen);
+      this.generalData00 = new Array(this.maxLen);
     }
 
     resetData() {
       this.timeData.length = 0;
       this.temperatureData.length = 0;
-      this.humidityData.length = 0;
+      this.generalData00.length = 0;
     }
 
     addData(time, temperature, humidity) {
       this.timeData.push(time);
       this.temperatureData.push(temperature);
-      this.humidityData.push(humidity || null);
+      this.generalData00.push(humidity || null);
 
-      if (this.timeData.length > this.maxLen) {
+      if(this.timeData.length > this.maxLen) {
         this.timeData.shift();
         this.temperatureData.shift();
-        this.humidityData.shift();
+        this.generalData00.shift();
       }
     }
   }
+*/
 
-  // All the devices in the list (those that have been sending telemetry)
-  /*
-  class TrackedDevices {
-    constructor() {
-      this.devices = [];
-    }
-
-    // Find a device based on its Id
-    findDevice(deviceId) {
-      console_logger.warn('TrackedDevices.findDevice(): deviceId ', deviceId);
-      console_logger.warn('TrackedDevices.findDevice(): this.devices ', this.devices);
-      for (let i = 0; i < this.devices.length; ++i) {
-        console_logger.warn('TrackedDevices.findDevice(): this.devices.length ', this.devices.length, ' i ', i);
-        if (this.devices[i].deviceId === deviceId) {
-          console_logger.warn('TrackedDevices.findDevice(): before return. i ', i, ' this.devices[i] ', this.devices[i]);
-          return this.devices[i];
-        }
-      }
-
-      return undefined;
-    }
-
-    getDevicesCount() {
-      return this.devices.length;
-    }
-  }
-  */
-
-  //const trackedDevices = new TrackedDevices();
-
-  /*
-  var maxLen = 50;
-  var labels = new Array(maxLen);
-  var data0s = new Array(maxLen);
-  var data1s = new Array(maxLen);
-  */
-
+/*
   labels = [0, 1, 2];
+  console_logger.warn('App(): After labels input0:', ' labels ', labels);
   data0s = [3, 13, 23];
+  console_logger.warn('App(): After data0s input0:', ' data0s ', data0s);
   data1s = [7, 17, 27];
-
-  // Define the chart axes
-  /*
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        //fill: false,
-        label: 'Temperature',
-        //yAxisID: 'Temperature',
-        borderColor: 'rgba(255, 204, 0, 1)',
-        //pointBoarderColor: 'rgba(255, 204, 0, 1)',
-        backgroundColor: 'rgba(255, 204, 0, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
-        //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
-        //spanGaps: true,
-        data: data0s
-      },
-      {
-        //fill: false,
-        label: 'Humidity',
-        //yAxisID: 'Humidity',
-        borderColor: 'rgba(24, 120, 240, 1)',
-        //pointBoarderColor: 'rgba(24, 120, 240, 1)',
-        backgroundColor: 'rgba(24, 120, 240, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
-        //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
-        //spanGaps: true,
-        data: data1s
-      }
-    ]
-  };
-  */
+  console_logger.warn('App(): After data1s input0:', ' data1s ', data1s);
+*/
 
   const chartOptions = {
     options: {
@@ -313,141 +335,9 @@ const App = ({ signOut }) => {
         }
       }
     }
-    /*
-    options: {
-      scales: {
-        'Temperature': {
-          type: 'linear',
-          min: 0,
-          max: 100,
-          position: 'left'
-        },
-        'Humidity': {
-          type: 'linear',
-          min: 0,
-          max: 200,
-          position: 'right'
-        }
-      }
-    }
-    */
-    /*
-    options: {
-      scales: {
-        yAxes: [
-          {
-            id: 'Temperature',
-            type: 'linear',
-            scaleLabel: {
-              labelString: 'Temperature (C)',
-              display: true,
-            },
-            position: 'left',
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              beginAtZero: true
-            }
-          },
-          {
-            id: 'Humidity',
-            type: 'linear',
-            scaleLabel: {
-              labelString: 'Humidity (%)',
-              display: true,
-            },
-            position: 'right',
-            ticks: {
-              suggestedMin: 0,
-              suggestedMax: 100,
-              beginAtZero: true
-            }
-          }
-        ]
-      }
-    }
-    */
-    /*
-    options: {
-      scales: {
-        x: {
-          type: "time",
-          ticks: {
-            autoSkip: true,
-            maxTicksLimit: 20,
-          },
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: "Point"
-          }
-        },
-        y: {
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: "Value"
-          },
-          suggestedMin: 0,
-          suggestedMax: 100
-        }
-      }
-    }
-    */
-    /*
-    scales: {
-      yAxes: [{
-        id: 'Temperature',
-        type: 'linear',
-        scaleLabel: {
-          labelString: 'Temperature (C)',
-          display: true,
-        },
-        position: 'left',
-        ticks: {
-          suggestedMin: 0,
-          suggestedMax: 100,
-          beginAtZero: true
-        }
-      },
-      {
-        id: 'Humidity',
-        type: 'linear',
-        scaleLabel: {
-          labelString: 'Humidity (%)',
-          display: true,
-        },
-        position: 'right',
-        ticks: {
-          suggestedMin: 0,
-          suggestedMax: 100,
-          beginAtZero: true
-        }
-      }]
-    }
-    */
   };
 
-  //// Get the context of the canvas element we want to select
-  //const ctx = document.getElementById('iotChart').getContext('2d');
-  //const myLineChart = new Chart(
-  //  ctx,
-  //  {
-  //    type: 'line',
-  //    data: chartData,
-  //    options: chartOptions,
-  //  });
-
-  // Manage a list of devices in the UI, and update which device data the chart is showing
-  // based on selection
-
-  //let needsAutoSelect = true;
-  const deviceCount = document.getElementById('deviceCount');
-  console_logger.info('deviceCount -->')
-  console_logger.info(deviceCount)
-  const listOfDevices = document.getElementById('listOfDevices');
-  console_logger.info('listOfDevices -->')
-  console_logger.info(listOfDevices)
+/*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
     g_selectedIndex = listOfDevices.selectedIndex;
@@ -459,32 +349,19 @@ const App = ({ signOut }) => {
     //chartData.labels = structuredClone(device.timeData);
     labels = structuredClone(device.timeData);
     console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
+    console_logger.warn('OnSelectionChange():  ', labels);
     //chartData.datasets[0].data = structuredClone(device.temperatureData);
     data0s = structuredClone(device.temperatureData);
     console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
-    //chartData.datasets[1].data = structuredClone(device.humidityData);
-    data1s = structuredClone(device.humidityData);
-    console_logger.warn('OnSelectionChange(): device.humidityData ', device.humidityData);
-    /*
-    for(let i = 0; i < maxLen; ++i) {
-      chartData.labels[i] = device.timeData[i];
-      chartData.datasets[0].data[i] = device.temperatureData[i];
-      chartData.datasets[1].data[i] = device.humidityData[i];
-    }
-    */
-    //console_logger.warn('OnSelectionChange(): chartData.labels ', chartData.labels);
-    console_logger.warn('OnSelectionChange(): labels ', labels);
-    //console_logger.warn('OnSelectionChange(): chartData.datasets[0].data ', chartData.datasets[0].data);
     console_logger.warn('OnSelectionChange(): data0s ', data0s);
-    //console_logger.warn('OnSelectionChange(): chartData.datasets[1].data ', chartData.datasets[1].data);
+    //chartData.datasets[1].data = structuredClone(device.generalData00);
+    data1s = structuredClone(device.generalData00);
+    console_logger.warn('OnSelectionChange(): device.generalData00 ', device.generalData00);
     console_logger.warn('OnSelectionChange(): data1s ', data1s);
     
     //myLineChart.update();
   }
-
-//  listOfDevices.addEventListener('change', OnSelectionChange, false);
-  listOfDevices.addEventListener('change', fetchNotes, false);
-//  listOfDevices.addEventListener('change', setNotes, false);
+*/
 
   // When a web socket message arrives:
   // 1. Unpack it
@@ -492,13 +369,44 @@ const App = ({ signOut }) => {
   // 3. Find or create a cached device to hold the telemetry data
   // 4. Append the telemetry data
   // 5. Update the chart UI
-  function onMessage(notesFromAPI) {
+  async function onMessage(notesFromAPI, displayRegisters) {
 
-//    fetchNote('dummy001');  // want to get data for each ID.
+    console_logger.warn('onMessage(): In:', ' displayRegisters ', displayRegisters);
 
     const numOfNotesTotal = notesFromAPI.length;
+    if(displayRegisters == true) {
+      numOfDevices = numOfNotesTotal;
+      deviceCount.innerText = numOfDevices === 1 ? `${numOfDevices} device` : `${numOfDevices} devices`;
+      console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
+
+      for(let i = 0; i < numOfDevices; ++i) {
+        var deviceName = notesFromAPI[i].nickname;
+
+        // add device name to the UI list.
+        const device = document.createElement('option');
+        const deviceText = document.createTextNode(deviceName);
+        device.appendChild(deviceText);
+        listOfDevices.appendChild(device);
+        console_logger.warn('onMessage(): After listOfDevices.appendChild(device):');
+
+        // add device name to array.
+        deviceNames.push(deviceName);
+        console_logger.warn('onMessage(): After deviceNames.push():', ' i ', i, ' deviceName ', deviceName, ' deviceText ', deviceText, ' deviceNames ', deviceNames);
+      }
+    }
     console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
 
+    for(let i = 0; i < numOfNotesTotal; ++i) {
+      labels[i] = notesFromAPI[i].date;
+      data0s[i] = notesFromAPI[i].temp;
+      data1s[i] = notesFromAPI[i].general_data00;
+    }
+
+    console_logger.warn('onMessage(): After labels input loop:', ' labels ', labels);
+    console_logger.warn('onMessage(): After data0s input loop:', ' data0s ', data0s);
+    console_logger.warn('onMessage(): After data1s input loop:', ' data1s ', data1s);
+  
+/*
     var separatorOfNotes = [];
 
     for(let i = 0; i < numOfNotesTotal; ++i) {
@@ -535,13 +443,14 @@ const App = ({ signOut }) => {
     console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
     for(let i = 0; i < numOfSeparator; ++i) {
       if(i >= numOfCreatedDevices) {
-        const newDeviceData = new DeviceData(notesFromAPI[separatorOfNotes[i]].id);
+        var id = notesFromAPI[separatorOfNotes[i]].id;
+        const newDeviceData = new DeviceData(id);
         trackedDevices.devices.push(newDeviceData);
         console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
     
         // add device to the UI list
         const node = document.createElement('option');
-        const nodeText = document.createTextNode(notesFromAPI[separatorOfNotes[i]].id);
+        const nodeText = document.createTextNode(id);
         node.appendChild(nodeText);
         listOfDevices.appendChild(node);
 
@@ -549,7 +458,7 @@ const App = ({ signOut }) => {
       }
     }
 
-    const numDevices = trackedDevices.getDevicesCount();
+    let numDevices = trackedDevices.getDevicesCount();
     console_logger.warn('onMessage(): numDevices ', numDevices);
     
     deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
@@ -567,66 +476,19 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
     }
     console_logger.warn('onMessage(): g_devices ', g_devices);
+*/
 
     // if this is the first device being discovered, auto-select it
+/*
     if(needsAutoSelect) {
       needsAutoSelect = false;
       listOfDevices.selectedIndex = 0;
-      /*
-      console_logger.warn('onMessage(): before OnSelectionChange()');
-      OnSelectionChange();
-      console_logger.warn('onMessage(): after OnSelectionChange()');
-      */
     }
-
-    OnSelectionChange();
-
-//    try {
-//      //const messageData = JSON.parse(message.data);
-//      //console.log(messageData);
-//
-//      //// time and either temperature or humidity are required
-//      //if (!messageData.MessageDate || (!messageData.IotData.temperature && !messageData.IotData.humidity)) {
-//      //  return;
-//      //}
-//
-//      // find or add device to list of tracked devices
-//      const existingDeviceData = trackedDevices.findDevice(notesFromAPI[0].id/*messageData.DeviceId*/);
-//
-//      if (existingDeviceData) {
-//        existingDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
-//      }
-//      else {
-//        const newDeviceData = new DeviceData(notesFromAPI[0].id/*messageData.DeviceId*/);
-//        trackedDevices.devices.push(newDeviceData);
-//        const numDevices = trackedDevices.getDevicesCount();
-//        deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
-//        newDeviceData.addData(notesFromAPI[0].date/*messageData.MessageDate*/, notesFromAPI[0].temp/*messageData.IotData.temperature*/, notesFromAPI[0].humi/*messageData.IotData.humidity*/);
-//
-//        // add device to the UI list
-//        const node = document.createElement('option');
-//        const nodeText = document.createTextNode(notesFromAPI[0].id/*messageData.DeviceId*/);
-//        node.appendChild(nodeText);
-//        listOfDevices.appendChild(node);
-//
-//        // if this is the first device being discovered, auto-select it
-//        if (needsAutoSelect) {
-//          needsAutoSelect = false;
-//          listOfDevices.selectedIndex = 0;
-//          OnSelectionChange();
-//        }
-//      }
-//
-//      //myLineChart.update();
-//    }
-//    catch (err) {
-//      console.error(err);
-//    }
+*/
+//    OnSelectionChange();
   };
-  // Hakuto end
 
-  // Hakuto start
-
+/*
   //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
   console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
   console_logger.warn('before App rutern. 0: g_devices ', g_devices);
@@ -645,26 +507,12 @@ const App = ({ signOut }) => {
     console_logger.warn('before App rutern. 0b: device2.timeData ', device2.timeData);
     data0s = structuredClone(device2.temperatureData);
     console_logger.warn('before App rutern. 0b: device2.temperatureData ', device2.temperatureData);
-    data1s = structuredClone(device2.humidityData);
-    console_logger.warn('before App rutern. 0b: device2.humidityData ', device2.humidityData);
+    data1s = structuredClone(device2.generalData00);
+    console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
   }
+*/
 
-  /*
-  if(g_devices.length) {
-    labels = structuredClone(g_devices[0].timeData);
-    console_logger.warn('before App rutern. 0b: g_devices[0].timeData ', g_devices[0].timeData);
-    data0s = structuredClone(g_devices[0].temperatureData);
-    console_logger.warn('before App rutern. 0b: g_devices[0].temperatureData ', g_devices[0].temperatureData);
-    data1s = structuredClone(g_devices[0].humidityData);
-    console_logger.warn('before App rutern. 0b: g_devices[0].humidityData ', g_devices[0].humidityData);
-  }
-  */
-
-  //labels = [3, 4, 5];
-  //data0s = [23, 13, 3];
-  //data1s = [27, 17, 27];
-
-  console_logger.warn('before App rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
+  console_logger.warn('App(): before rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
 
   const chartData = {
     labels: labels,
@@ -683,7 +531,8 @@ const App = ({ signOut }) => {
       },
       {
         //fill: false,
-        label: 'Humidity',
+        // label: 'Humidity',
+        label: 'General data',
         //yAxisID: 'Humidity',
         borderColor: 'rgba(24, 120, 240, 1)',
         //pointBoarderColor: 'rgba(24, 120, 240, 1)',
@@ -696,118 +545,110 @@ const App = ({ signOut }) => {
     ]
   };
 
-  console_logger.warn('before App rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
-  
+  console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
+ 
+  /*
   labels = [6, 7, 8];
+  console_logger.warn('App(): After labels input1:', ' labels ', labels);
   data0s = [53, 13, 93];
+  console_logger.warn('App(): After data0s input1:', ' data0s ', data0s);
   data1s = [87, 17, 47];
-  
-  console_logger.warn('before App rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
-  // Hakuto end
+  console_logger.warn('App(): After data1s input1:', ' data1s ', data1s);
+  */
+
+  async function wait(msecond) {
+    return new Promise(resolve => setTimeout(resolve, msecond));
+  }
+
+  async function await(msecond) {
+    await wait(msecond);
+  }
+
+  console_logger.warn("App(): Before await(): 3秒後にログを表示します。");
+  await(3000);
+  console_logger.warn("App(): After await(): 3秒経過しました。");
+  //completeFetchReg2
+
+  // Manage a list of devices in the UI, and update which device data the chart is showing
+  // based on selection
+
+  //let needsAutoSelect = true;
+  const deviceCount = document.getElementById('deviceCount');
+  console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
+
+  const listOfDevices = document.getElementById('listOfDevices');
+  console_logger.warn('App(): After document.getElementById(\'listOfDevices\'):', ' listOfDevices ', listOfDevices);
+
+  if(needsAutoSelect) {
+    needsAutoSelect = false;
+    listOfDevices.selectedIndex = 0;
+    console_logger.warn('App(): After listOfDevices.selectedIndex = 0:', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+
+//    listOfDevices.addEventListener('change', fetchNotes(false), false);
+//    console_logger.warn('App(): After listOfDevices.addEventListener():', ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+  }
+
+//  listOfDevices.addEventListener('change', OnSelectionChange, false);
+//  listOfDevices.addEventListener('change', setNotes, false);
+  listOfDevices.addEventListener('change', fetchNotes(false), false);
+  console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
+
+  console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
   
   // Hakuto about "Line"
   return (
     <View className="App">
       <Line options={chartOptions} data={chartData} />
     
-      <Heading level={1}>My Notes App</Heading>
+      {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          <TextField
+          {/*<TextField
             name="id"
             placeholder="Id"
             label="Id"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />
-          <TextField
+          />*/}
+          {/*<TextField
             name="date"
             placeholder="Date"
             label="Date"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />
+          />*/}
           <TextField
+            name="nickname"
+            placeholder="Nickname"
+            label="Nickname"
+            labelHidden
+            variation="quiet"
+            //required  // Hakuto
+          />
+          {/*<TextField
             name="send_cnt"
-            placeholder="send_cnt"
-            label="send_cnt"
+            placeholder="Send_cnt"
+            label="Send_cnt"
             labelHidden
             variation="quiet"
             //required  // Hakuto
-          />
-          <TextField
-            name="magx"
-            placeholder="magx"
-            label="magx"
-            labelHidden
-            variation="quiet"
+          />*/}
+          {/*<TextField
+            //name="magx"
+            //placeholder="Magx"
+            //label="Magx"
+            //labelHidden
+            //variation="quiet"
             //required  // Hakuto
-          />
-          <TextField
-            name="magy"
-            placeholder="magy"
-            label="magy"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="magz"
-            placeholder="magz"
-            label="magz"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="degree"
-            placeholder="degree"
-            label="degree"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="distance"
-            placeholder="distance"
-            label="distance"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="pres"
-            placeholder="pres"
-            label="pres"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="temp"
-            placeholder="temp"
-            label="temp"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          <TextField
-            name="humi"
-            placeholder="humi"
-            label="humi"
-            labelHidden
-            variation="quiet"
-            //required  // Hakuto
-          />
-          
+          />*/}
           <Button type="submit" variation="primary">
-            Create Note
+           {/*Create Note*/}Register
           </Button>
         </Flex>
       </View>
-      <Heading level={2}>Current Notes</Heading>
+      <Heading level={2}>Current {/*Notes*/}Data</Heading>
       <View margin="3rem 0">
         {notes.map((note) => (
           <Flex
@@ -820,17 +661,15 @@ const App = ({ signOut }) => {
           >
             <Text as="strong" fontWeight={700}>{note.id}</Text>
             <Text as="span">{note.date}</Text>
+            <Text as="span">{note.nickname}</Text>
             <Text as="span">{note.send_cnt}</Text>
-            <Text as="span">{note.magx}</Text>
-            <Text as="span">{note.magy}</Text>
-            <Text as="span">{note.magz}</Text>
-            <Text as="span">{note.degree}</Text>
-            <Text as="span">{note.distance}</Text>
-            <Text as="span">{note.pres}</Text>
+            {/*<Text as="span">{note.magx}</Text>*/}
             <Text as="span">{note.temp}</Text>
-            <Text as="span">{note.humi}</Text>
+            {/*<Text as="span">{note.humi}</Text>*/}
+            <Text as="span">{note.general_data00}</Text>
+            {/*<Text as="span">{note.postType}</Text>*/}
             <Button variation="link" onClick={() => deleteNote(note)}>
-              Delete note
+              Delete {/*note*/}data
             </Button>
           </Flex>
         ))}
