@@ -96,8 +96,8 @@ var g_selectedIndex = -1/*0*/;
 
 console_logger.warn('Before App.');  // Hakuto
 
-//const App = ({ signOut }) => {
-const App = async ({ signOut }) => {
+const App = ({ signOut }) => {
+//const App = async ({ signOut }) => {
     console_logger.warn('App() In');  // Hakuto
 
   const [notes, setNotes] = useState([]);
@@ -608,19 +608,19 @@ const App = async ({ signOut }) => {
     console_logger.warn("App(): After sleep() with setInterval and clearInterval:",  ' cnt ', cnt, ' waitSec ', waitSec);
   });
   */
+
+  /*
   const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   let sleep_cnt_local = 0;
   console_logger.warn("App(): Before while sleep loop:", ' sleep_cnt ', sleep_cnt, ' sleep_cnt_local ', sleep_cnt_local, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
   if(sleep_cnt >= 2) {
     while(!completeFetchReg2 || !completeFetchData) {
-      /*
-      sleep(5, sleep_cnt, function (cnt) {
-        console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
-      });
-      sleep(1, sleep_cnt, null);
-      console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
-      */
+      //sleep(5, sleep_cnt, function (cnt) {
+      //  console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
+      //});
+      //sleep(1, sleep_cnt, null);
+      //console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
       await _sleep(2000);
       sleep_cnt_local++;
     }
@@ -631,6 +631,7 @@ const App = async ({ signOut }) => {
 
   completeFetchReg2 = false;
   completeFetchData = false;
+  */
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
