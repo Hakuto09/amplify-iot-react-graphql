@@ -607,6 +607,9 @@ const App = ({ signOut }) => {
 
   sleep_cnt = 0;
   while(!completeFetchReg2 || !completeFetchData) {
+    sleep(5, sleep_cnt, function (cnt) {
+      console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
+    });
     sleep(1, sleep_cnt, null);
     console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
     sleep_cnt++;
