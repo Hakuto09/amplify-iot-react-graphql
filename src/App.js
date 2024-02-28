@@ -674,7 +674,7 @@ const App = ({ signOut }) => {
   return (
     <View className="App">
       <Line options={chartOptions} data={chartData} />
-      <View as="form" margin="3rem 0" onSubmit={/*fetchNotes(false)*/update}>
+      <View as="form" margin="3rem 0" onSubmit={() => fetchNotes(false)/*fetchNotes(false)*//*update*/}>
         <Flex direction="row" justifyContent="center">
           <Button type="submit" variation="primary">
             Update
