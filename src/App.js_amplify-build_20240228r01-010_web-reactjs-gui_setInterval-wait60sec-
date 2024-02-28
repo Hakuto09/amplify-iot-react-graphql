@@ -575,7 +575,6 @@ const App = ({ signOut }) => {
   console_logger.warn("App(): After waitWrap(): 3秒経過しました。");
   */
 
-  /*
   // setIntervalを使う方法
   function sleep(waitSec, cnt, callbackFunc) {
 
@@ -594,36 +593,27 @@ const App = ({ signOut }) => {
           clearInterval(id);
 
           // 完了時、コールバック関数を実行
-          if (callbackFunc) callbackFunc(cnt, waitSec);
+          if (callbackFunc) callbackFunc(cnt);
       }
     }, 1000);
   }
-  */
+
+  console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
+  sleep(60, sleep_cnt++, function (cnt) {
+    console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
+  });
 
   /*
-  console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
-  const wsec = 60;
-  sleep(wsec, sleep_cnt++, function (cnt, waitSec) {
-    console_logger.warn("App(): After sleep() with setInterval and clearInterval:",  ' cnt ', cnt, ' waitSec ', waitSec);
-  });
-  */
-
-  let sleep_cnt_local = 0;
-  if(sleep_cnt) {
-    while(!completeFetchReg2 || !completeFetchData) {
-      /*
-      sleep(5, sleep_cnt, function (cnt) {
-        console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
-      });
-      sleep(1, sleep_cnt, null);
-      console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
-      */
-      sleep_cnt_local++;
-    }
+  sleep_cnt = 0;
+  while(!completeFetchReg2 || !completeFetchData) {
+    sleep(5, sleep_cnt, function (cnt) {
+      console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
+    });
+    sleep(1, sleep_cnt, null);
+    console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
+    sleep_cnt++;
   }
-
-  console_logger.warn("App(): After while sleep loop:", ' sleep_cnt ', sleep_cnt, ' sleep_cnt_local ', sleep_cnt_local, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
-  sleep_cnt++;
+  */
 
   completeFetchReg2 = false;
   completeFetchData = false;
