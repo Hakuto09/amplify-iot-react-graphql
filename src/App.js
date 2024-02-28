@@ -96,8 +96,9 @@ var g_selectedIndex = -1/*0*/;
 
 console_logger.warn('Before App.');  // Hakuto
 
-const App = ({ signOut }) => {
-  console_logger.warn('App() In');  // Hakuto
+//const App = ({ signOut }) => {
+const App = async ({ signOut }) => {
+    console_logger.warn('App() In');  // Hakuto
 
   const [notes, setNotes] = useState([]);
 
@@ -607,6 +608,7 @@ const App = ({ signOut }) => {
     console_logger.warn("App(): After sleep() with setInterval and clearInterval:",  ' cnt ', cnt, ' waitSec ', waitSec);
   });
   */
+  const _sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   let sleep_cnt_local = 0;
   console_logger.warn("App(): Before while sleep loop:", ' sleep_cnt ', sleep_cnt, ' sleep_cnt_local ', sleep_cnt_local, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
@@ -619,6 +621,7 @@ const App = ({ signOut }) => {
       sleep(1, sleep_cnt, null);
       console_logger.warn("App(): After sleep():", ' sleep_cnt ', sleep_cnt, ' completeFetchReg2 ', completeFetchReg2, ' completeFetchData ', completeFetchData);
       */
+      await _sleep(2000);
       sleep_cnt_local++;
     }
   }
