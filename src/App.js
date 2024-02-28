@@ -560,13 +560,13 @@ const App = ({ signOut }) => {
     return new Promise(resolve => setTimeout(resolve, msecond));
   }
 
-  async function await(msecond) {
+  async function waitWrap(msecond) {
     await wait(msecond);
   }
 
-  console_logger.warn("App(): Before await(): 3秒後にログを表示します。");
-  await(3000);
-  console_logger.warn("App(): After await(): 3秒経過しました。");
+  console_logger.warn("App(): Before waitWrap(): 3秒後にログを表示します。");
+  waitWrap(3000);
+  console_logger.warn("App(): After waitWrap(): 3秒経過しました。");
   //completeFetchReg2
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
