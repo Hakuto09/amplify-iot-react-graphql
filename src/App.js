@@ -556,6 +556,7 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): After data1s input1:', ' data1s ', data1s);
   */
 
+  /*
   async function wait(msecond) {
     return new Promise(resolve => setTimeout(resolve, msecond));
   }
@@ -567,6 +568,35 @@ const App = ({ signOut }) => {
   console_logger.warn("App(): Before waitWrap(): 3秒後にログを表示します。");
   waitWrap(3000);
   console_logger.warn("App(): After waitWrap(): 3秒経過しました。");
+  */
+
+  // setIntervalを使う方法
+  function sleep(waitSec, callbackFunc) {
+
+    // 経過時間（秒）
+    var spanedSec = 0;
+
+    // 1秒間隔で無名関数を実行
+    var id = setInterval(function () {
+
+      spanedSec++;
+
+      // 経過時間 >= 待機時間の場合、待機終了。
+      if (spanedSec >= waitSec) {
+
+          // タイマー停止
+          clearInterval(id);
+
+          // 完了時、コールバック関数を実行
+          if (callbackFunc) callbackFunc();
+      }
+    }, 1000);
+  }
+
+  sleep(5, function () {
+    console_logger.warn("App(): After sleep() with setInterval and clearInterval: '5秒経過しました！');
+  });
+    
   //completeFetchReg2
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
