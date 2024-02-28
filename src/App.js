@@ -75,6 +75,8 @@ let completeFetchReg2 = false;
 let completeFetchData = false;
 let deviceNames = [];
 
+let sleep_cnt = 0;
+
 // All the devices in the list (those that have been sending telemetry)
 class TrackedDevices {
   constructor() {
@@ -571,7 +573,7 @@ const App = ({ signOut }) => {
   */
 
   // setIntervalを使う方法
-  function sleep(waitSec, callbackFunc) {
+  function sleep(waitSec, cnt, callbackFunc) {
 
     // 経過時間（秒）
     var spanedSec = 0;
@@ -588,13 +590,14 @@ const App = ({ signOut }) => {
           clearInterval(id);
 
           // 完了時、コールバック関数を実行
-          if (callbackFunc) callbackFunc();
+          if (callbackFunc) callbackFunc(cnt);
       }
     }, 1000);
   }
 
-  sleep(5, function () {
-    console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました");
+  console_logger.warn("App(): Before sleep() with setInterval and clearInterval:", ' sleep_cnt ', sleep_cnt);
+  sleep(5, sleep_cnt, function (cnt) {
+    console_logger.warn("App(): After sleep() with setInterval and clearInterval: 5秒経過しました", ' cnt ', cnt);
   });
     
   //completeFetchReg2
