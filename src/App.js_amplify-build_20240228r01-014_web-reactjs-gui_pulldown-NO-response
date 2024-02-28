@@ -144,7 +144,6 @@ const App = ({ signOut }) => {
       }
 
       if(g_selectedIndex === listOfDevices.selectedIndex) {
-        /*
         // for debug only.
         let cnt_debug3 = 0;
         console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
@@ -154,8 +153,6 @@ const App = ({ signOut }) => {
           }
         }
         console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
-        */
-
         console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):', ' displayRegisters ', displayRegisters);
         return;
       }
@@ -177,8 +174,7 @@ const App = ({ signOut }) => {
         variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
       });
       console_logger.warn('fetchNotes(): After graphql(listNotes):', ' displayRegisters ', displayRegisters, ' apiData ', apiData);
-
-      /*
+      
       // for debug only.
       let cnt_debug2 = 0;
       console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
@@ -188,7 +184,6 @@ const App = ({ signOut }) => {
         }
       }
       console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
-      */
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
