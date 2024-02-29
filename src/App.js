@@ -228,8 +228,12 @@ const App = ({ signOut }) => {
     const nickname_split = nickname.split("_");
     const num_in_nickname = Number(nickname_split[1]);
 
-    if(num_in_nickname !== NaN) {
-//      const d = ('000' + numOfDevices).slice(-3);
+//    if(num_in_nickname !== NaN) {
+    if(isNaN(num_in_nickname)) {
+      console_logger.warn('createNote(): After if(isNaN(num_in_nickname)):', ' num_in_nickname ', num_in_nickname);
+    }
+    else {
+  //      const d = ('000' + numOfDevices).slice(-3);
       const d = ('000' + num_in_nickname).slice(-3);
       console_logger.warn('createNote(): Before newDateForResister:', ' d ', d, ' nickname ', nickname, ' nickname_split ', nickname_split, ' num_in_nickname ', num_in_nickname);
       const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
@@ -259,9 +263,6 @@ const App = ({ signOut }) => {
         variables: { input: data },
       });
       console_logger.warn('createNote(): After graphql(query: createNoteMutation):', ' apiDataCreate ', apiDataCreate);
-    }
-    else {
-      console_logger.warn('createNote(): After if(num_in_nickname !== NaN) else:', ' num_in_nickname ', num_in_nickname);
     }
 
     g_displayRegisters = true;
