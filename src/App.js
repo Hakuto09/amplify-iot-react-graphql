@@ -400,6 +400,9 @@ const App = ({ signOut }) => {
         console_logger.warn('onMessage(): After listOfDevices.removeChild():', ' i ', i, ' listOfDevices ', listOfDevices);
       }
 
+      // deviceNames reset.
+      deviceNames = [];
+
       // add device name to the UI list.
       for(let i = 0; i < numOfDevices; ++i) {
         var deviceName = notesFromAPI[i].nickname;
