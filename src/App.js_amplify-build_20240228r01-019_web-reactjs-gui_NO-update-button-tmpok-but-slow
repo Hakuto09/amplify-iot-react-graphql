@@ -137,8 +137,7 @@ const App = ({ signOut }) => {
     let sortDirection = "";
     let filter = {};
     var nextToken = null;
-//    var limit = 200;
-    var limit = 1000;
+    var limit = 200;
 
     if(displayRegisters == true) {
       idForSort = "register";
@@ -676,6 +675,7 @@ const App = ({ signOut }) => {
   // Hakuto about "Line"
   return (
     <View className="App">
+      <Line options={chartOptions} data={chartData} />
       <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
         <Flex direction="row" justifyContent="center">
           <Button type="submit" variation="primary">
@@ -683,7 +683,6 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Line options={chartOptions} data={chartData} />
       {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
