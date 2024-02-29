@@ -225,7 +225,7 @@ const App = ({ signOut }) => {
     event.preventDefault();
     const form = new FormData(event.target);
     const nickname = form.get("nickname");
-    const nickname_split = nickname.split(nickname);
+    const nickname_split = nickname.split("_");
     const num_in_nickname = Number(nickname_split[1]);
 //    const d = ('000' + numOfDevices).slice(-3);
     const d = ('000' + num_in_nickname).slice(-3);
