@@ -64,9 +64,12 @@ const client = generateClient();
 var g_devices = [];
 var maxLenList = 1000;
 var maxLenGraph = 50;
-var labels = new Array(maxLenGraph);
-var data0s = new Array(maxLenGraph);
-var data1s = new Array(maxLenGraph);
+//var labels = new Array(maxLenGraph);
+var labels = [];
+//var data0s = new Array(maxLenGraph);
+var data0s = [];
+//var data1s = new Array(maxLenGraph);
+var data1s = [];
 
 let numOfDevices = 0;
 //let displayRegisters = true;
@@ -183,23 +186,19 @@ const App = ({ signOut }) => {
         query: listNotes,
         variables: { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken },
       });
-      console_logger.warn('fetchNotes(): After graphql(listNotes):', ' displayRegisters ', displayRegisters, ' apiData ', apiData);
-
-      /*
-      // for debug only.
-      let cnt_debug2 = 0;
-      console_logger.warn('fetchNotes(): Before cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
-      for(let j = 0; j < 10000; ++j) {
-        for(let i = 0; i < 1000000; ++i) {
-          cnt_debug2++;
-        }
-      }
-      console_logger.warn('fetchNotes(): After cnt_debug2 loop:', ' cnt_debug2 ', cnt_debug2, ' displayRegisters ', displayRegisters);
-      */
 
       Array.prototype.push.apply(notesFromAPI, apiData.data.listNotes.items);
       nextToken = apiData.data.listNotes.nextToken;
-      if(!nextToken || notesFromAPI.length > maxLenList - limit) break;
+
+      console_logger.warn('fetchNotes(): After graphql(listNotes) etc.:', ' displayRegisters ', displayRegisters, ' apiData ', apiData, ' notesFromAPI ', notesFromAPI, ' nextToken ', nextToken);
+
+      if(notesFromAPI.length > maxLenList) {
+        notesFromAPI.length = maxLenList;
+      }
+
+      if(!nextToken || notesFromAPI.length >= maxLenList) {
+        break;
+      }
     }
 
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
@@ -337,24 +336,6 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): After data1s input0:', ' data1s ', data1s);
 */
 
-  const chartOptions = {
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Min and Max Settings'
-        }
-      },
-      scales: {
-        y: {
-          min: 0,
-          max: 200,
-        }
-      }
-    }
-  };
-
 /*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
@@ -391,16 +372,28 @@ const App = ({ signOut }) => {
 
     console_logger.warn('onMessage(): In:', ' displayRegisters ', displayRegisters);
 
+    // Graph data reset.
+    labels = [];
+    data0s = [];
+    data1s = [];
+
     const numOfNotesTotal = notesFromAPI.length;
+    console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
     if(displayRegisters == true) {
       numOfDevices = numOfNotesTotal;
       deviceCount.innerText = numOfDevices === 1 ? `${numOfDevices} device` : `${numOfDevices} devices`;
       console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
 
+      // select box reset.
+      for(let i = 0; i < listOfDevices.length; ++i) {
+        listOfDevices.removeChild(listOfDevices.options[i]);
+        console_logger.warn('onMessage(): After listOfDevices.removeChild():', ' i ', i);
+      }
+
+      // add device name to the UI list.
       for(let i = 0; i < numOfDevices; ++i) {
         var deviceName = notesFromAPI[i].nickname;
 
-        // add device name to the UI list.
         const device = document.createElement('option');
         const deviceText = document.createTextNode(deviceName);
         device.appendChild(deviceText);
@@ -412,18 +405,22 @@ const App = ({ signOut }) => {
         console_logger.warn('onMessage(): After deviceNames.push():', ' i ', i, ' deviceName ', deviceName, ' deviceText ', deviceText, ' deviceNames ', deviceNames);
       }
     }
-    console_logger.warn('onMessage(): numOfNotesTotal ', numOfNotesTotal);
+    else {
+      // add graph data.
+      for(let i = 0; i < numOfNotesTotal; ++i) {
+//        labels[i] = notesFromAPI[i].date;
+        labels.push(notesFromAPI[i].date);
+//        data0s[i] = notesFromAPI[i].temp;
+        data0s.push(notesFromAPI[i].temp);
+//        data1s[i] = notesFromAPI[i].general_data00;
+        data1s.push(notesFromAPI[i].general_data00);
+      }
 
-    for(let i = 0; i < numOfNotesTotal; ++i) {
-      labels[i] = notesFromAPI[i].date;
-      data0s[i] = notesFromAPI[i].temp;
-      data1s[i] = notesFromAPI[i].general_data00;
+      console_logger.warn('onMessage(): After labels input loop:', ' labels ', labels);
+      console_logger.warn('onMessage(): After data0s input loop:', ' data0s ', data0s);
+      console_logger.warn('onMessage(): After data1s input loop:', ' data1s ', data1s);
     }
-
-    console_logger.warn('onMessage(): After labels input loop:', ' labels ', labels);
-    console_logger.warn('onMessage(): After data0s input loop:', ' data0s ', data0s);
-    console_logger.warn('onMessage(): After data1s input loop:', ' data1s ', data1s);
-  
+ 
 /*
     var separatorOfNotes = [];
 
@@ -531,6 +528,24 @@ const App = ({ signOut }) => {
 */
 
   console_logger.warn('App(): before rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
+
+  const chartOptions = {
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Min and Max Settings'
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 200,
+        }
+      }
+    }
+  };
 
   const chartData = {
     labels: labels,
