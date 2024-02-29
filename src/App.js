@@ -227,36 +227,42 @@ const App = ({ signOut }) => {
     const nickname = form.get("nickname");
     const nickname_split = nickname.split("_");
     const num_in_nickname = Number(nickname_split[1]);
-//    const d = ('000' + numOfDevices).slice(-3);
-    const d = ('000' + num_in_nickname).slice(-3);
-    console_logger.warn('createNote(): Before newDateForResister:  d ', d, ' nickname ', nickname, ' nickname_split ', nickname_split, ' num_in_nickname ', num_in_nickname);
-    const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
-    console_logger.warn('createNote(): After newDateForResister:  d ', d, ' newDateForResister ', newDateForResister);
-    const data = {
-//      id: form.get("id"),
-      id: "register",
-//      date: form.get("date"),
-      date: newDateForResister, 
-      nickname: nickname,
-//      send_cnt: form.get("send_cnt"),
-//      magx: form.get("magx"),
-//      magy: form.get("magy"),
-//      magz: form.get("magz"),
-//      degree: form.get("degree"),
-//      distance: form.get("distance"),
-//      pres: form.get("pres"),
-//      temp: form.get("temp"),
-//      humi: form.get("humi"),
-      postType: 'OPEN',
-    };
 
-    console_logger.warn('createNote(): Before graphql(query: createNoteMutation):  data ', data);
-    //    await API.graphql({
-    const apiDataCreate = await client.graphql({
-      query: createNoteMutation,
-      variables: { input: data },
-    });
-    console_logger.warn('createNote(): After graphql(query: createNoteMutation):  apiDataCreate ', apiDataCreate);
+    if(num_in_nickname !== NaN) {
+//      const d = ('000' + numOfDevices).slice(-3);
+      const d = ('000' + num_in_nickname).slice(-3);
+      console_logger.warn('createNote(): Before newDateForResister:', ' d ', d, ' nickname ', nickname, ' nickname_split ', nickname_split, ' num_in_nickname ', num_in_nickname);
+      const newDateForResister = "1970-01-01T00:00:00." + d + "Z"
+      console_logger.warn('createNote(): After newDateForResister:', ' d ', d, ' newDateForResister ', newDateForResister);
+      const data = {
+//        id: form.get("id"),
+        id: "register",
+//        date: form.get("date"),
+        date: newDateForResister, 
+        nickname: nickname,
+//        send_cnt: form.get("send_cnt"),
+//        magx: form.get("magx"),
+//        magy: form.get("magy"),
+//        magz: form.get("magz"),
+//        degree: form.get("degree"),
+//        distance: form.get("distance"),
+//        pres: form.get("pres"),
+//        temp: form.get("temp"),
+//        humi: form.get("humi"),
+        postType: 'OPEN',
+      };
+
+      console_logger.warn('createNote(): Before graphql(query: createNoteMutation):', ' data ', data);
+      //    await API.graphql({
+      const apiDataCreate = await client.graphql({
+        query: createNoteMutation,
+        variables: { input: data },
+      });
+      console_logger.warn('createNote(): After graphql(query: createNoteMutation):', ' apiDataCreate ', apiDataCreate);
+    }
+    else {
+      console_logger.warn('createNote(): After if(num_in_nickname !== NaN) else:', ' num_in_nickname ', num_in_nickname);
+    }
 
     g_displayRegisters = true;
     fetchNotes(g_displayRegisters);
