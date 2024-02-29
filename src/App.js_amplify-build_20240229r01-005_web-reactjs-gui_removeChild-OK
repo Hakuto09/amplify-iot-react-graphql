@@ -72,7 +72,7 @@ var data0s = [];
 var data1s = [];
 
 let numOfDevices = 0;
-let g_displayRegisters = true;
+//let displayRegisters = true;
 let completeFetchReg = false;
 let completeFetchReg2 = false;
 let completeFetchData = false;
@@ -81,7 +81,6 @@ let deviceNames = [];
 let sleep_cnt = 0;
 
 // All the devices in the list (those that have been sending telemetry)
-/*
 class TrackedDevices {
   constructor() {
     this.devices = [];
@@ -91,9 +90,8 @@ class TrackedDevices {
     return this.devices.length;
   }
 }
-*/
 
-//const trackedDevices = new TrackedDevices();
+const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
@@ -120,13 +118,11 @@ const App = ({ signOut }) => {
   async function fetchNotes(displayRegisters) {
     console_logger.warn('fetchNotes(): In:', ' displayRegisters ', displayRegisters);
 
-    /*
     let wait_ms = 5000;
     setTimeout(
       console_logger.warn('fetchNotes(): setTimeout(): wait_ms ', wait_ms),
       wait_ms
     );
-    */
 
     /*
     // for debug only.
@@ -253,32 +249,29 @@ const App = ({ signOut }) => {
     });
     console_logger.warn('createNote(): After graphql(query: createNoteMutation):  apiDataCreate ', apiDataCreate);
 
-    g_displayRegisters = true;
-    fetchNotes(g_displayRegisters);
+    fetchNotes(true);
 
-//    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
-//    numOfDevices++;
-//    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
+    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
+    numOfDevices++;
+    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
     event.target.reset();
   }
 
 //  async function deleteNote({ id }) {
   async function deleteNote({ id, date }) {
-    console_logger.warn('deleteNote(): In:');
-    // Use notes.filter. But is it necessary ?
 //    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
-    console_logger.warn('deleteNote(): Before notes.filter():', ' id ', id, ' date ', date, ' notes ', notes);
-//    const newNotes = notes.filter((note) => note.id !== id);
-//    console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
-//    const newNotes2 = notes.filter((note) => note.date !== date);
-//    console_logger.warn('deleteNote(): After notes.filter() newNotes2 --> ', newNotes2)
+    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' date ', date, ' notes ', notes)
+    const newNotes = notes.filter((note) => note.id !== id);
+    console_logger.warn('deleteNote(): After notes.filter() newNotes --> ', newNotes)
+    const newNotes2 = notes.filter((note) => note.date !== date);
+    console_logger.warn('deleteNote(): After notes.filter() newNotes2 --> ', newNotes2)
     const newNotes3 = notes.filter((note) => note.id === id && note.date !== date);
-    console_logger.warn('deleteNote(): After notes.filter():', ' newNotes3 ', newNotes3);
+    console_logger.warn('deleteNote(): After notes.filter() newNotes3 --> ', newNotes3)
 
-    console_logger.warn('deleteNote(): Before setNotes():', ' id ', id, ' date ', date, ' notes ', notes);
+    console_logger.warn('deleteNote(): Before setNotes() id ', id, ' date ', date, ' notes ', notes)
 //    setNotes(newNotes);
     setNotes(newNotes3);
-    console_logger.warn('deleteNote(): After setNotes():', ' id ', id, ' date ', date, ' notes ', notes);
+    console_logger.warn('deleteNote(): After setNotes() id ', id, ' date ', date, ' notes ', notes)
 
     //    await API.graphql({
     const apiDataDelete = await client.graphql({
@@ -287,10 +280,10 @@ const App = ({ signOut }) => {
       variables: { input: { id, date } },
     });
 
-    console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation):', ' apiDataDelete ', apiDataDelete)
+    console_logger.warn('deleteNote(): After client.graphql(deleteNoteMutation) apiDataDelete --> ', apiDataDelete)
 
-    fetchNotes(g_displayRegisters);
-    console_logger.warn('deleteNote(): After fetchNotes():', ' g_displayRegisters ', g_displayRegisters);
+    fetchNotes(false);
+    console_logger.warn('deleteNote(): After fetchNotes() ')
   }
 
   ChartJS.register(
@@ -389,7 +382,7 @@ const App = ({ signOut }) => {
     if(displayRegisters == true) {
       numOfDevices = numOfNotesTotal;
       deviceCount.innerText = numOfDevices === 1 ? `${numOfDevices} device` : `${numOfDevices} devices`;
-      console_logger.warn('onMessage(): After deviceCount.innerText input:', ' deviceCount.innerText ', deviceCount.innerText, ' numOfDevices ', numOfDevices);
+      console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
 
       // select box reset.
       let loops = listOfDevices.length;
