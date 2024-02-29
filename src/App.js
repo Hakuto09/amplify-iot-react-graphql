@@ -385,8 +385,9 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
 
       // select box reset.
-      console_logger.warn('onMessage(): Before select box reset.:', ' listOfDevices.length ', listOfDevices.length, ' listOfDevices ', listOfDevices);
-      for(let i = 0; i < listOfDevices.length; ++i) {
+      let loops = listOfDevices.length;
+      console_logger.warn('onMessage(): Before select box reset.:', ' loops ', loops, ' listOfDevices.length ', listOfDevices.length, ' listOfDevices ', listOfDevices);
+      for(let i = loops - 1; i >= 0; --i) {
         console_logger.warn('onMessage(): Before listOfDevices.removeChild():', ' i ', i, ' listOfDevices ', listOfDevices);
         listOfDevices.removeChild(listOfDevices.options[i]);
         console_logger.warn('onMessage(): After listOfDevices.removeChild():', ' i ', i, ' listOfDevices ', listOfDevices);
