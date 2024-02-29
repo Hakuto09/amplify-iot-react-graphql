@@ -387,8 +387,9 @@ const App = ({ signOut }) => {
       // select box reset.
       console_logger.warn('onMessage(): Before select box reset.:', ' listOfDevices.length ', listOfDevices.length, ' listOfDevices ', listOfDevices);
       for(let i = 0; i < listOfDevices.length; ++i) {
+        console_logger.warn('onMessage(): Before listOfDevices.removeChild():', ' i ', i, ' listOfDevices ', listOfDevices);
         listOfDevices.removeChild(listOfDevices.options[i]);
-        console_logger.warn('onMessage(): After listOfDevices.removeChild():', ' i ', i);
+        console_logger.warn('onMessage(): After listOfDevices.removeChild():', ' i ', i, ' listOfDevices ', listOfDevices);
       }
 
       // add device name to the UI list.
