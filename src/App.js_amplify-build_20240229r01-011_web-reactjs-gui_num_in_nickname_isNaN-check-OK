@@ -99,14 +99,13 @@ let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
 
-console_logger.warn('Before App.');
+console_logger.warn('Before App.');  // Hakuto
 
 const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
-  console_logger.warn('App() In');
+    console_logger.warn('App() In');  // Hakuto
 
   const [notes, setNotes] = useState([]);
-  console_logger.warn('App() After useState():', ' notes ', notes);
 
   useEffect(() => {
     fetchNotes(true);
@@ -433,18 +432,18 @@ const App = ({ signOut }) => {
     }
     else {
       // add graph data.
-      let loops = Math.min(numOfNotesTotal, maxLenGraph);
-      console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
-      for(let i = 0; i < loops; ++i) {
-        let j = loops - i - 1;
-//        labels[i] = notesFromAPI[j].date;
-        labels.push(notesFromAPI[j].date);
-//        data0s[i] = notesFromAPI[j].temp;
-        data0s.push(notesFromAPI[j].temp);
-//        data1s[i] = notesFromAPI[j].general_data00;
-        data1s.push(notesFromAPI[j].general_data00);
+      for(let i = 0; i < numOfNotesTotal; ++i) {
+//        labels[i] = notesFromAPI[i].date;
+        labels.push(notesFromAPI[i].date);
+//        data0s[i] = notesFromAPI[i].temp;
+        data0s.push(notesFromAPI[i].temp);
+//        data1s[i] = notesFromAPI[i].general_data00;
+        data1s.push(notesFromAPI[i].general_data00);
       }
-      console_logger.warn('onMessage(): After graph data. input loop:', ' loops ', loops, ' labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
+
+      console_logger.warn('onMessage(): After labels input loop:', ' labels ', labels);
+      console_logger.warn('onMessage(): After data0s input loop:', ' data0s ', data0s);
+      console_logger.warn('onMessage(): After data1s input loop:', ' data1s ', data1s);
     }
  
 /*
@@ -714,6 +713,7 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
   
+  // Hakuto about "Line"
   return (
     <View className="App">
       <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
@@ -733,7 +733,7 @@ const App = ({ signOut }) => {
             label="Id"
             labelHidden
             variation="quiet"
-            //required
+            //required  // Hakuto
           />*/}
           {/*<TextField
             name="date"
@@ -741,7 +741,7 @@ const App = ({ signOut }) => {
             label="Date"
             labelHidden
             variation="quiet"
-            //required
+            //required  // Hakuto
           />*/}
           <TextField
             name="nickname"
@@ -749,7 +749,7 @@ const App = ({ signOut }) => {
             label="Nickname"
             labelHidden
             variation="quiet"
-            //required
+            //required  // Hakuto
           />
           {/*<TextField
             name="send_cnt"
@@ -757,7 +757,7 @@ const App = ({ signOut }) => {
             label="Send_cnt"
             labelHidden
             variation="quiet"
-            //required
+            //required  // Hakuto
           />*/}
           {/*<TextField
             //name="magx"
@@ -765,7 +765,7 @@ const App = ({ signOut }) => {
             //label="Magx"
             //labelHidden
             //variation="quiet"
-            //required
+            //required  // Hakuto
           />*/}
           <Button type="submit" variation="primary">
            {/*Create Note*/}Register
