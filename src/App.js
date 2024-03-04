@@ -9,7 +9,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  TimeScale,
 } from "chart.js";
+
 import { Line } from "react-chartjs-2";
 
 import "./App.css";
@@ -313,7 +315,8 @@ const App = ({ signOut }) => {
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    TimeScale
   );
 
 /*
