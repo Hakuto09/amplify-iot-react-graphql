@@ -565,7 +565,6 @@ const App = ({ signOut }) => {
         }
       },
       scales: {
-        /*
         x: {
           scaleLabel: {
               display: true,
@@ -585,31 +584,6 @@ const App = ({ signOut }) => {
           min: 0,
           max: 200,
         }
-        */
-        xAxes: [{
-          type: "time",
-          time: {
-            format: "YYYY-MM",
-            unit: "month",
-            displayFormats: {
-              month: 'YYYY-MM'
-            },
-            tooltipFormat: 'll'
-          },
-          scaleLabel: {
-            display: true,
-            labelString: 'Date'
-          }
-        }],
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'points'
-          },
-          ticks: {
-            beginAtZero: true
-          }
-        }]
       }
     }
   };
