@@ -657,40 +657,6 @@ const App = ({ signOut }) => {
     ]
   };
 
-  var values = [
-    {x:"2020-02-01", y:100},
-    {x:"2020-02-02", y:200},
-    {x:"2020-02-03", y:300},
-    {x:"2020-02-04", y:400},
-    {x:"2020-02-07", y:200},
-    {x:"2020-02-14", y:600},
-  ];
-
-  chartData2 = {
-    datasets: [{
-      label: "値1",
-      fill: false,
-      borderColor: 'rgba(0, 0, 255, 0.5)',
-      lineTension: 0.1,   //曲線にする度合
-      data: values,
-    }],
-  };
-
-  chartOptions2 = {
-    spanGaps: true,   //点をつなげる場合
-    scales: {
-      x: {
-        type: 'time',
-        time:{
-          unit: 'week',    //週に線
-          displayFormats: {
-              week: 'yyyy-MM-dd'
-          }
-        },
-      }
-    }
-  };
-
   console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
  
   /*
@@ -811,7 +777,6 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Line options={chartOptions} data={chartData} />
-      <Line options={chartOptions2} data={chartData2} />
       {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
