@@ -557,9 +557,7 @@ const App = ({ signOut }) => {
 
   const chartOptions = {
     options: {
-      /*
       responsive: true,
-      */
       /*
       plugins: {
         title: {
