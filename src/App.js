@@ -581,11 +581,12 @@ const App = ({ signOut }) => {
               }
           }
         },
+        */
         y: {
           min: 0,
           max: 200,
-        }
-        */
+        },
+        /*
         xAxes: [{
           type: "time",
           time: {
@@ -610,6 +611,7 @@ const App = ({ signOut }) => {
             beginAtZero: true
           }
         }]
+        */
       }
     }
   };
