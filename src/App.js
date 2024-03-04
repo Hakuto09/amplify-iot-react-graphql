@@ -657,7 +657,7 @@ const App = ({ signOut }) => {
     ]
   };
 
-  var values = [
+  const values = [
     {x:"2020-02-01", y:100},
     {x:"2020-02-02", y:200},
     {x:"2020-02-03", y:300},
@@ -666,7 +666,7 @@ const App = ({ signOut }) => {
     {x:"2020-02-14", y:600},
   ];
 
-  chartData2 = {
+  const chartData2 = {
     datasets: [{
       label: "値1",
       fill: false,
@@ -676,7 +676,7 @@ const App = ({ signOut }) => {
     }],
   };
 
-  chartOptions2 = {
+  const chartOptions2 = {
     spanGaps: true,   //点をつなげる場合
     scales: {
       x: {
