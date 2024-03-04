@@ -565,6 +565,21 @@ const App = ({ signOut }) => {
         }
       },
       scales: {
+        x: {
+          scaleLabel: {
+              display: true,
+              labelString: '時刻'
+          },
+          type: 'time',
+          time: {
+              parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
+              unit: 'minutes',
+              stepSize: 1,
+              displayFormats: {
+                  'minutes': 'mm分'
+              }
+          }
+        },
         y: {
           min: 0,
           max: 200,
