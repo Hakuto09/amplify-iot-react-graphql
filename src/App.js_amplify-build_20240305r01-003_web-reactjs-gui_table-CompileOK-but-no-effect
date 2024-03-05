@@ -697,20 +697,7 @@ const App = ({ signOut }) => {
   };
 
   console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
-
-  const tableData = [
-    {id: 1, name: 'Taro', pv: Math.random()},
-    {id: 2, name: 'Jiro', pv: Math.random()},
-    {id: 3, name:'Saburo', pv: Math.random()},
-    {id: 4, name:'Shiro', pv: Math.random()},
-    {id: 5, name: 'Goro', pv: Math.random()},
-    {id: 6, name: 'Mutsumi', pv: Math.random()},
-    {id: 7, name: 'Nanako', pv: Math.random()},
-    {id: 8, name: 'Yaeko', pv: Math.random()},
-    {id: 9, name: 'Kyuro', pv: Math.random()},
-    {id: 10, name: 'juro', pv: Math.random()}
-  ];
-
+ 
   /*
   labels = [6, 7, 8];
   console_logger.warn('App(): After labels input1:', ' labels ', labels);
@@ -891,27 +878,6 @@ const App = ({ signOut }) => {
       {/*</View>*/}
       </table>
       <Button onClick={signOut}>Sign Out</Button>
-      <h1>
-        Content にテーブルを作る課題やってます！
-      </h1>
-      <table className="table">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col-2">id</th>
-            <th scope="col-4">name</th>
-            <th scope="col-6">pv</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((value) =>
-            <tr>
-              <th scope="row">{value.id}</th>
-              <td>{value.name}</td>
-              <td>{value.pv}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
     </View>
   );
 };
