@@ -851,7 +851,7 @@ const App = ({ signOut }) => {
       </View>
       <Heading level={2}>Current {/*Notes*/}Data</Heading>
       {/*<View margin="3rem 0">*/}
-      <Table margin="3rem 0">
+      <table margin="3rem 0">
         {notes.map((note) => (
           <Flex
 //            key={note.id || note.name}
@@ -876,7 +876,7 @@ const App = ({ signOut }) => {
           </Flex>
         ))}
       {/*</View>*/}
-      </Table>
+      </table>
       <Button onClick={signOut}>Sign Out</Button>
     </View>
   );
