@@ -931,24 +931,26 @@ export const BasicTable: React.FC = () => {
       </table>
       <Button onClick={signOut}>Sign Out</Button>
       <h1>Content にテーブルを作る</h1>
-      <table className="table" border="1" width="800">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col-2">id</th>
-            <th scope="col-4">name</th>
-            <th scope="col-6">pv</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((value) =>
+      <div style="text-align: center">
+        <table className="table" border="1" width="800">
+          <thead className="table-dark">
             <tr>
-              <th scope="row">{value.id}</th>
-              <td>{value.name}</td>
-              <td>{value.pv}</td>
+              <th scope="col-2">id</th>
+              <th scope="col-4">name</th>
+              <th scope="col-6">pv</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tableData.map((value) =>
+              <tr>
+                <th scope="row">{value.id}</th>
+                <td>{value.name}</td>
+                <td>{value.pv}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       {/*h1>Content にテーブルを作る ２</h1>
       <table>
         <thead>
