@@ -104,6 +104,35 @@ var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
+/*
+type Book = {
+  title: string;
+  author: string;
+};
+
+const books: Book[] = [
+  {
+    title: 'ハリー・ポッターと賢者の石',
+    author: 'J.K.ローリング',
+  },
+  {
+    title: 'こころ',
+    author: '夏目漱石',
+  },
+];
+
+const columns: ColumnDef<Book, any>[] = [
+  {
+    accessorKey: 'title',
+    header: 'タイトル',
+  },
+  {
+    accessorKey: 'author',
+    header: '著者',
+  },
+];
+*/
+
 console_logger.warn('Before App.');
 
 const App = ({ signOut }) => {
@@ -699,7 +728,6 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
 
-  /*
   const tableData = [
     {id: 1, name: 'Taro', pv: Math.random()},
     {id: 2, name: 'Jiro', pv: Math.random()},
@@ -712,7 +740,6 @@ const App = ({ signOut }) => {
     {id: 9, name: 'Kyuro', pv: Math.random()},
     {id: 10, name: 'juro', pv: Math.random()}
   ];
-  */
 
   /*
   labels = [6, 7, 8];
@@ -822,6 +849,15 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
 
+/*
+export const BasicTable: React.FC = () => {
+  const table = useReactTable<Book>({
+    data: books,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+*/
+
   return (
     <View className="App">
       <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
@@ -866,7 +902,7 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current {/*Notes*/}Data</Heading>
-      {/*<View margin="3rem 0">
+      <View margin="3rem 0">
         {notes.map((note) => (
           <Flex
 //            key={note.id || note.name}
@@ -880,17 +916,17 @@ const App = ({ signOut }) => {
             <Text as="span">{note.date}</Text>
             <Text as="span">{note.nickname}</Text>
             <Text as="span">{note.send_cnt}</Text>
-//            <Text as="span">{note.magx}</Text>
+            {/*<Text as="span">{note.magx}</Text>*/}
             <Text as="span">{note.temp}</Text>
-//            <Text as="span">{note.humi}</Text>
+            {/*<Text as="span">{note.humi}</Text>*/}
             <Text as="span">{note.general_data00}</Text>
-//            <Text as="span">{note.postType}</Text>
+            {/*<Text as="span">{note.postType}</Text>*/}
             <Button variation="link" onClick={() => deleteNote(note)}>
-              Delete data
+              Delete {/*note*/}data
             </Button>
           </Flex>
         ))}
-      </View>*/}
+      </View>
       <h1>テーブルを作る ０</h1>
       <table border="1" width="1000">
         <thead className="table-dark">
@@ -923,7 +959,8 @@ const App = ({ signOut }) => {
         </tbody>
       </table>
       <Button onClick={signOut}>Sign Out</Button>
-      {/*<h1>テーブルを作る １</h1>
+      <h1>テーブルを作る １</h1>
+      {/*<div style="text-align: center">*/}
         <table className="table" border="1" width="800">
           <thead className="table-dark">
             <tr>
@@ -941,7 +978,31 @@ const App = ({ signOut }) => {
               </tr>
             )}
           </tbody>
-        </table>*/}
+        </table>
+      {/*</div>*/}
+      {/*h1>テーブルを作る ２</h1>
+      <table>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>*/}
     </View>
   );
 };
