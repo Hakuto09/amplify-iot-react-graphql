@@ -931,7 +931,7 @@ export const BasicTable: React.FC = () => {
       </table>
       <Button onClick={signOut}>Sign Out</Button>
       <h1>Content にテーブルを作る</h1>
-      <table className="table" border="1" width="300">
+      <table className="table" border="1">
         <thead className="table-dark">
           <tr>
             <th scope="col-2">id</th>
