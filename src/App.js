@@ -902,9 +902,7 @@ export const BasicTable: React.FC = () => {
         </Flex>
       </View>
       <Heading level={2}>Current {/*Notes*/}Data</Heading>
-      {/*<View margin="3rem 0">*/}
-      {/*<table margin="3rem 0">*/}
-      <table border="1" width="1000">
+      <View margin="3rem 0">
         {notes.map((note) => (
           <Flex
 //            key={note.id || note.name}
@@ -928,10 +926,45 @@ export const BasicTable: React.FC = () => {
             </Button>
           </Flex>
         ))}
-      {/*</View>*/}
+      </View>
+      <h1>テーブルを作る ０</h1>
+      <table border="1" width="1000">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col-1">id</th>
+            <th scope="col-2">date</th>
+            <th scope="col-2">nickname</th>
+            <th scope="col-2">send_cnt</th>
+            <th scope="col-2">temp</th>
+            <th scope="col-2">general_data00</th>
+            <th scope="col-2">delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map((note) => (
+            <Flex
+//              key={note.id || note.name}
+              key={!!note.id}
+              direction="row"
+//              justifyContent="center"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <Text as="strong" fontWeight={700}>{note.id}</Text>
+              <Text as="span">{note.date}</Text>
+                <Text as="span">{note.nickname}</Text>
+              <Text as="span">{note.send_cnt}</Text>
+              <Text as="span">{note.temp}</Text>
+              <Text as="span">{note.general_data00}</Text>
+              <Button variation="link" onClick={() => deleteNote(note)}>
+                Delete data
+              </Button>
+            </Flex>
+          ))}
+        </tbody>
       </table>
       <Button onClick={signOut}>Sign Out</Button>
-      <h1>Content にテーブルを作る</h1>
+      <h1>テーブルを作る １</h1>
       {/*<div style="text-align: center">*/}
         <table className="table" border="1" width="800">
           <thead className="table-dark">
@@ -952,7 +985,7 @@ export const BasicTable: React.FC = () => {
           </tbody>
         </table>
       {/*</div>*/}
-      {/*h1>Content にテーブルを作る ２</h1>
+      {/*h1>テーブルを作る ２</h1>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
