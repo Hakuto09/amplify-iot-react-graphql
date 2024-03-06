@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
 import 'chartjs-adapter-moment';
 
@@ -104,34 +102,6 @@ var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
-/*
-type Book = {
-  title: string;
-  author: string;
-};
-
-const books: Book[] = [
-  {
-    title: 'ハリー・ポッターと賢者の石',
-    author: 'J.K.ローリング',
-  },
-  {
-    title: 'こころ',
-    author: '夏目漱石',
-  },
-];
-
-const columns: ColumnDef<Book, any>[] = [
-  {
-    accessorKey: 'title',
-    header: 'タイトル',
-  },
-  {
-    accessorKey: 'author',
-    header: '著者',
-  },
-];
-*/
 
 console_logger.warn('Before App.');
 
@@ -848,14 +818,7 @@ const App = ({ signOut }) => {
 */
 
   console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
-
-//export const BasicTable: React.FC = () => {
-  const table = useReactTable<Book>({
-    data: books,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
+  
   return (
     <View className="App">
       <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
@@ -928,8 +891,10 @@ const App = ({ signOut }) => {
       {/*</View>*/}
       </table>
       <Button onClick={signOut}>Sign Out</Button>
-      <h1>Content にテーブルを作る</h1>
-      <table className="table" border="1">
+      <h1>
+        Content にテーブルを作る課題やってます！
+      </h1>
+      <table className="table">
         <thead className="table-dark">
           <tr>
             <th scope="col-2">id</th>
@@ -947,29 +912,6 @@ const App = ({ signOut }) => {
           )}
         </tbody>
       </table>
-      {/*}h1>Content にテーブルを作る ２</h1>
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>*/}
     </View>
   );
 };
