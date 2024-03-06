@@ -849,12 +849,14 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
 
-//export const BasicTable: React.FC = () => {
+/*
+export const BasicTable: React.FC = () => {
   const table = useReactTable<Book>({
     data: books,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+*/
 
   return (
     <View className="App">
@@ -947,7 +949,7 @@ const App = ({ signOut }) => {
           )}
         </tbody>
       </table>
-      {/*}h1>Content にテーブルを作る ２</h1>
+      {/*h1>Content にテーブルを作る ２</h1>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
