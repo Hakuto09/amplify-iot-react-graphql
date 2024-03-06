@@ -942,24 +942,19 @@ export const BasicTable: React.FC = () => {
         </thead>
         <tbody>
           {notes.map((note) => (
-            <Flex
-//              key={note.id || note.name}
-              key={!!note.id}
-              direction="row"
-//              justifyContent="center"
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              <Text as="strong" fontWeight={700}>{note.id}</Text>
-              <Text as="span">{note.date}</Text>
-                <Text as="span">{note.nickname}</Text>
-              <Text as="span">{note.send_cnt}</Text>
-              <Text as="span">{note.temp}</Text>
-              <Text as="span">{note.general_data00}</Text>
-              <Button variation="link" onClick={() => deleteNote(note)}>
-                Delete data
-              </Button>
-            </Flex>
+            <tr>
+              <th scope="row">{note.id}</th>
+              <td>{note.date}</td>
+              <td>{note.nickname}</td>
+              <td>{note.send_cnt}</td>
+              <td>{note.temp}</td>
+              <td>{note.general_data00}</td>
+              <td>
+                <Button variation="link" onClick={() => deleteNote(note)}>
+                  Delete data
+                </Button>
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
