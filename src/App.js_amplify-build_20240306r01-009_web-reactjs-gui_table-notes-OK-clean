@@ -563,8 +563,9 @@ const App = ({ signOut }) => {
 
   const chartOptions = {
     options: {
-//      responsive: true,
-      spanGaps: true,   //点をつなげる場合
+      /*
+      responsive: true,
+      */
       /*
       plugins: {
         title: {
@@ -575,6 +576,8 @@ const App = ({ signOut }) => {
       */
       /*
       scales: {
+      */
+        /*
         x: {
           scaleLabel: {
               display: true,
@@ -590,23 +593,42 @@ const App = ({ signOut }) => {
               }
           }
         },
+        */
+        /*
         y: {
           min: 0,
           max: 200,
         },
+        */
+        /*
+        xAxes: [{
+          type: "time",
+          time: {
+            format: "YYYY-MM",
+            unit: "month",
+            displayFormats: {
+              month: 'YYYY-MM'
+            },
+            tooltipFormat: 'll'
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Date'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'points'
+          },
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+        */
+      /*
       }
       */
-      scales: {
-        x: {
-          type: 'time',
-          time:{
-            unit: 'seconds',
-            displayFormats: {
-              week: 'YYYY-MM-DDTHH:mm:ss'
-            }
-          },
-        }
-      }
     }
   };
 
@@ -869,7 +891,7 @@ const App = ({ signOut }) => {
           </Flex>
         ))}
       </View>*/}
-      {/*<h1>テーブルを作る ０</h1>*/}
+      <h1>テーブルを作る ０</h1>
       <table border="1" width="1000">
         <thead className="table-dark">
           <tr>
