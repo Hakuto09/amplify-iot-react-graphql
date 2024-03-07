@@ -601,11 +601,13 @@ const App = ({ signOut }) => {
           type: 'time',
           time:{
             parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
+            unit: 'week',
 //            unit: 'seconds',
-            unit: 'second',
+//            unit: 'second',
             displayFormats: {
+              week: 'yyyy-MM-dd'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
-              second: 'h:mm:ss a'
+//              second: 'h:mm:ss a'
             }
           },
         }
@@ -654,7 +656,7 @@ const App = ({ signOut }) => {
         time:{
           unit: 'week',    //週に線
           displayFormats: {
-              week: 'yyyy-MM-dd'
+            week: 'yyyy-MM-dd'
           }
         },
       }
