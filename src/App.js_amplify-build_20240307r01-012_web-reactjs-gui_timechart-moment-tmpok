@@ -659,18 +659,9 @@ const App = ({ signOut }) => {
 //  console_logger.warn('App(): before rutern. 1:', ' moment2ss ', moment("2010-10-20 4:30:50 +0000", "YYYY-MM-DD HH:mm:ss Z"));
 //  console_logger.warn('App(): before rutern. 1:', ' moment3SSS ', moment("2010-10-20 4:30:50.123 +0000", "YYYY-MM-DD HH:mm:ss.SSS Z"));
 
-  var m1 = moment("20150101", "YYYYMMDD"); // 第一引数：指定日時、第二引数：フォーマット
-  var m1_output = m1.format('YYYY年MM月DD日 HH:mm:ss dddd');
-  console_logger.warn('App(): before rutern. 1:', ' moment m1_output ', m1_output); // => 2015年01月01日 00:00:00 Thursday 
-
-  var m2 = moment("1970-01-01 00:00:00", "YYYY-MM-DD HH:mm:ss");
-  var m2_output = m2.format('YYYY年MM月DD日 HH:mm:ss');
-  console_logger.warn('App(): before rutern. 1:', ' moment m2_output ', m2_output);
-  
-  var m3 = moment("1970-01-01 00:00:00.007", "YYYY-MM-DD HH:mm:ss.SSS");
-  var m3_output = m3.format('YYYY年MM月DD日 HH:mm:ss.SSS');
-  console_logger.warn('App(): before rutern. 1:', ' moment m3_output ', m3_output); // => 2015年01月01日 00:00:00 Thursday 
-
+  var m = moment("20150101", "YYYYMMDD"); // 第一引数：指定日時、第二引数：フォーマット
+  var output = m.format('YYYY年MM月DD日 HH:mm:ss dddd');
+  console_logger.warn('App(): before rutern. 1:', ' moment output ', output); // => 2015年01月01日 00:00:00 Thursday 
 
   console_logger.warn('App(): before rutern. 1:', ' chartOptions ', chartOptions, ' chartData ', chartData);
 
