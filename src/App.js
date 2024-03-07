@@ -602,7 +602,7 @@ const App = ({ signOut }) => {
           time:{
             unit: 'seconds',
             displayFormats: {
-              week: 'YYYY-MM-DDTHH:mm:ss'
+              seconds: 'YYYY-MM-DDTHH:mm:ss'
             }
           },
         }
