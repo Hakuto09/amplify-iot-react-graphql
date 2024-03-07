@@ -445,8 +445,7 @@ const App = ({ signOut }) => {
         let j = loops - i - 1;
 //        labels[i] = notesFromAPI[j].date;
 //        labels.push(notesFromAPI[j].date);
-//        labels.push(notesFromAPI[j].date.substr(0, 10));
-        labels.push(notesFromAPI[j].date.replace('Z', ''));
+        labels.push(notesFromAPI[j].date.substr(0, 10));
 //        data0s[i] = notesFromAPI[j].temp;
         data0s.push(notesFromAPI[j].temp);
 //        data1s[i] = notesFromAPI[j].general_data00;
@@ -603,7 +602,6 @@ const App = ({ signOut }) => {
           type: 'time',
           time: {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
-            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
             unit: 'week',
 //            unit: 'seconds',
 //            unit: 'second',
