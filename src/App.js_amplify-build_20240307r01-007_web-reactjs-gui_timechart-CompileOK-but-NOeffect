@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
 import 'chartjs-adapter-moment';
-import Moment from "moment";
 
 import {
   Chart as ChartJS,
@@ -444,14 +443,10 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
-        const date = new Date();
-        const nowUnix = date.getTime();
 //        labels[i] = notesFromAPI[j].date;
 //        labels.push(notesFromAPI[j].date);
 //        labels.push(notesFromAPI[j].date.substr(0, 10));
-//        labels.push(notesFromAPI[j].date.replace('Z', ''));
-          const moment = new Moment();
-          labels.push(moment.utc(nowUnix).format(moment.HTML5_FMT.DATETIME_LOCAL_MS));
+        labels.push(notesFromAPI[j].date.replace('Z', ''));
 //        data0s[i] = notesFromAPI[j].temp;
         data0s.push(notesFromAPI[j].temp);
 //        data1s[i] = notesFromAPI[j].general_data00;
