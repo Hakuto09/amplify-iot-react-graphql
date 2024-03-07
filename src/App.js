@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
 import 'chartjs-adapter-moment';
-import Moment from "moment";
+import moment from "moment";
 
 import {
   Chart as ChartJS,
@@ -654,7 +654,7 @@ const App = ({ signOut }) => {
     ]
   };
 
-  const moment = new Moment();
+//  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
 //  console_logger.warn('App(): before rutern. 1:', ' moment2ss ', moment("2010-10-20 4:30:50 +0000", "YYYY-MM-DD HH:mm:ss Z"));
 //  console_logger.warn('App(): before rutern. 1:', ' moment3SSS ', moment("2010-10-20 4:30:50.123 +0000", "YYYY-MM-DD HH:mm:ss.SSS Z"));
