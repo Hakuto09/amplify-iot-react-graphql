@@ -444,8 +444,7 @@ const App = ({ signOut }) => {
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
 //        labels[i] = notesFromAPI[j].date;
-//        labels.push(notesFromAPI[j].date);
-        labels.push(notesFromAPI[j].date.substr(0, 10));
+        labels.push(notesFromAPI[j].date);
 //        data0s[i] = notesFromAPI[j].temp;
         data0s.push(notesFromAPI[j].temp);
 //        data1s[i] = notesFromAPI[j].general_data00;
@@ -600,8 +599,8 @@ const App = ({ signOut }) => {
       scales: {
         x: {
           type: 'time',
-          time: {
-//            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
+          time:{
+            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
             unit: 'week',
 //            unit: 'seconds',
 //            unit: 'second',
@@ -654,7 +653,7 @@ const App = ({ signOut }) => {
     scales: {
       x: {
         type: 'time',
-        time: {
+        time:{
           unit: 'week',    //週に線
           displayFormats: {
             week: 'yyyy-MM-dd'
