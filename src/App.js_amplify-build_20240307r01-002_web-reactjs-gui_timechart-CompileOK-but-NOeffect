@@ -600,11 +600,9 @@ const App = ({ signOut }) => {
         x: {
           type: 'time',
           time:{
-//            unit: 'seconds',
-            unit: 'second',
+            unit: 'seconds',
             displayFormats: {
-//              seconds: 'YYYY-MM-DDTHH:mm:ss'
-              second: 'h:mm:ss a'
+              seconds: 'YYYY-MM-DDTHH:mm:ss'
             }
           },
         }
