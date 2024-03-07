@@ -600,7 +600,6 @@ const App = ({ signOut }) => {
         x: {
           type: 'time',
           time:{
-            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            unit: 'seconds',
             unit: 'second',
             displayFormats: {
@@ -644,23 +643,6 @@ const App = ({ signOut }) => {
     ]
   };
 
-  console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
-
-  const chartOptions2 = {
-    spanGaps: true,   //点をつなげる場合
-    scales: {
-      x: {
-        type: 'time',
-        time:{
-          unit: 'week',    //週に線
-          displayFormats: {
-              week: 'yyyy-MM-dd'
-          }
-        },
-      }
-    }
-  };
-  
   const values = [
     {x:"2020-02-01", y:100},
     {x:"2020-02-02", y:200},
@@ -680,8 +662,25 @@ const App = ({ signOut }) => {
     }],
   };
 
+  const chartOptions2 = {
+    spanGaps: true,   //点をつなげる場合
+    scales: {
+      x: {
+        type: 'time',
+        time:{
+          unit: 'week',    //週に線
+          displayFormats: {
+              week: 'yyyy-MM-dd'
+          }
+        },
+      }
+    }
+  };
+
+  console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
+
   /*
-  const tableData2 = [
+  const tableData = [
     {id: 1, name: 'Taro', pv: Math.random()},
     {id: 2, name: 'Jiro', pv: Math.random()},
     {id: 3, name:'Saburo', pv: Math.random()},
@@ -694,9 +693,6 @@ const App = ({ signOut }) => {
     {id: 10, name: 'juro', pv: Math.random()}
   ];
   */
-
-  console_logger.warn('App(): before rutern. 2: chartOptions2 ', chartOptions2, ' chartData2 ', chartData2);
-//  console_logger.warn('App(): before rutern. 2: chartOptions2 ', chartOptions2, ' chartData2 ', chartData2, ' tableData2 ', tableData2);
 
   /*
   labels = [6, 7, 8];
@@ -804,7 +800,7 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): After listOfDevices.addEventListener():', ' listOfDevices ', listOfDevices);
 */
 
-  console_logger.warn('App(): before rutern:');
+  console_logger.warn('App(): before rutern. 2: chartOptions ', chartOptions, ' chartData ', chartData);
 
   return (
     <View className="App">
@@ -917,7 +913,7 @@ const App = ({ signOut }) => {
             </tr>
           </thead>
           <tbody>
-            {tableData1.map((value) =>
+            {tableData.map((value) =>
               <tr>
                 <th scope="row">{value.id}</th>
                 <td>{value.name}</td>
