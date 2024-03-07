@@ -444,13 +444,12 @@ const App = ({ signOut }) => {
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
-//        const date = new Date();
+        const date = new Date();
 //        const nowUnix = date.getTime();
 //        labels[i] = notesFromAPI[j].date;
 //        labels.push(notesFromAPI[j].date);
 //        labels.push(notesFromAPI[j].date.substr(0, 10));
-        let date_nt = notesFromAPI[j].date.replace('T', ' ');
-        labels.push(date_nt.replace('Z', ''));
+        labels.push(notesFromAPI[j].date.replace('Z', ''));
 //        const moment = new Moment();
 //        labels.push(moment.utc(nowUnix).format(moment.HTML5_FMT.DATETIME_LOCAL_MS));
 //        data0s[i] = notesFromAPI[j].temp;
@@ -609,17 +608,14 @@ const App = ({ signOut }) => {
           type: 'time',
           time: {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
-//            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
-            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
-//            unit: 'week',
+            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
+            unit: 'week',
 //            unit: 'seconds',
 //            unit: 'second',
-            unit: 'ss',
             displayFormats: {
-//              week: 'yyyy-MM-dd'
+              week: 'yyyy-MM-dd'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
-              ss: 'YYYY-MM-DD HH:mm:ss'
             }
           },
         }
