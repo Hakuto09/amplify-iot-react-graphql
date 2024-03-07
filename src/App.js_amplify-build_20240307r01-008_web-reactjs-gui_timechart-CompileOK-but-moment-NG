@@ -445,13 +445,13 @@ const App = ({ signOut }) => {
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
         const date = new Date();
-//        const nowUnix = date.getTime();
+        const nowUnix = date.getTime();
 //        labels[i] = notesFromAPI[j].date;
 //        labels.push(notesFromAPI[j].date);
 //        labels.push(notesFromAPI[j].date.substr(0, 10));
-        labels.push(notesFromAPI[j].date.replace('Z', ''));
-//        const moment = new Moment();
-//        labels.push(moment.utc(nowUnix).format(moment.HTML5_FMT.DATETIME_LOCAL_MS));
+//        labels.push(notesFromAPI[j].date.replace('Z', ''));
+          const moment = new Moment();
+          labels.push(moment.utc(nowUnix).format(moment.HTML5_FMT.DATETIME_LOCAL_MS));
 //        data0s[i] = notesFromAPI[j].temp;
         data0s.push(notesFromAPI[j].temp);
 //        data1s[i] = notesFromAPI[j].general_data00;
@@ -654,11 +654,7 @@ const App = ({ signOut }) => {
     ]
   };
 
-  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
-  console_logger.warn('App(): before rutern. 1:', ' moment2ss ', moment("2010-10-20 4:30:50 +0000", "YYYY-MM-DD HH:mm:ss Z"));
-  console_logger.warn('App(): before rutern. 1:', ' moment3SSS ', moment("2010-10-20 4:30:50.123 +0000", "YYYY-MM-DD HH:mm:ss.SSS Z"));
-
-  console_logger.warn('App(): before rutern. 1:', ' chartOptions ', chartOptions, ' chartData ', chartData);
+  console_logger.warn('App(): before rutern. 1: chartOptions ', chartOptions, ' chartData ', chartData);
 
   const chartOptions2 = {
     spanGaps: true,   //点をつなげる場合
@@ -709,8 +705,8 @@ const App = ({ signOut }) => {
   ];
   */
 
-  console_logger.warn('App(): before rutern. 2:', ' chartOptions2 ', chartOptions2, ' chartData2 ', chartData2);
-//  console_logger.warn('App(): before rutern. 2:', ' chartOptions2 ', chartOptions2, ' chartData2 ', chartData2, ' tableData2 ', tableData2);
+  console_logger.warn('App(): before rutern. 2: chartOptions2 ', chartOptions2, ' chartData2 ', chartData2);
+//  console_logger.warn('App(): before rutern. 2: chartOptions2 ', chartOptions2, ' chartData2 ', chartData2, ' tableData2 ', tableData2);
 
   /*
   labels = [6, 7, 8];
