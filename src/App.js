@@ -714,10 +714,12 @@ const App = ({ signOut }) => {
         type: 'time',
         time: {
 //          unit: 'week',    //週に線
-          unit: 'day',    //週に線
+//          unit: 'day',    //週に線
+          unit: 'yMDHm',    //週に線
           displayFormats: {
 //            week: 'yyyy-MM-dd'
 //            week: 'yyyy-MM-DD'
+            yMDHm: 'yyyy-MM-DD HH:mm'
           }
         },
       }
