@@ -628,14 +628,14 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
             parser: 'YYYY-MM-DD HH:mm:ss.SSS',
-            unit: 'week',
-//            unit: 'min',
+//            unit: 'week',
+            unit: 'min',
 //            unit: 'seconds',
 //            unit: 'second',
 //            unit: 'ss',
             displayFormats: {
-              week: 'yyyy-MM-dd'
-//              min: 'YYYY-MM-DD HH:mm'
+//              week: 'yyyy-MM-dd'
+              min: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
 //              ss: 'YYYY-MM-DD HH:mm:ss'
@@ -705,8 +705,7 @@ const App = ({ signOut }) => {
         time: {
           unit: 'week',    //週に線
           displayFormats: {
-//            week: 'yyyy-MM-dd'
-            week: 'yyyy-MM-DD'
+            week: 'yyyy-MM-dd'
           }
         },
       }
