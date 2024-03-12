@@ -167,17 +167,25 @@ const App = ({ signOut }) => {
         return;
       }
 
-      /*
       if(g_selectedIndex === listOfDevices.selectedIndex) {
+        /*
+        // for debug only.
+        let cnt_debug3 = 0;
+        console_logger.warn('fetchNotes(): Before cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        for(let j = 0; j < 10000; ++j) {
+          for(let i = 0; i < 1000000; ++i) {
+            cnt_debug3++;
+          }
+        }
+        console_logger.warn('fetchNotes(): After cnt_debug3 loop:', ' cnt_debug3 ', cnt_debug3, ' displayRegisters ', displayRegisters);
+        */
+
         console_logger.warn('fetchNotes(): Before return by if(g_selectedIndex === listOfDevices.selectedIndex):', ' displayRegisters ', displayRegisters);
         return;
       }
       else {
-      */
         g_selectedIndex = listOfDevices.selectedIndex;
-      /*
       }
-      */
 
       sortDirection = "DESC";
       if(fetchById == true) {
@@ -629,16 +637,14 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
             parser: 'YYYY-MM-DD HH:mm:ss.SSS',
 //            unit: 'week',
-            unit: 'min',
 //            unit: 'seconds',
 //            unit: 'second',
-//            unit: 'ss',
+            unit: 'ss',
             displayFormats: {
 //              week: 'yyyy-MM-dd'
-              min: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
-//              ss: 'YYYY-MM-DD HH:mm:ss'
+              ss: 'YYYY-MM-DD HH:mm:ss'
             }
           },
         }
@@ -938,14 +944,14 @@ const App = ({ signOut }) => {
       <table border="1" width="1000">
         <thead className="table-dark">
           <tr>
-            <th scope="col">id</th>
-            <th scope="col">date</th>
-            {/*<th scope="col">nickname</th>*/}
-            <th scope="col">device_id</th>
-            <th scope="col">send_cnt</th>
-            <th scope="col">temp</th>
-            <th scope="col">general_data00</th>
-            <th scope="col">delete</th>
+            <th scope="col-1">id</th>
+            <th scope="col-2">date</th>
+            {/*<th scope="col-3">nickname</th>*/}
+            <th scope="col-3">device_id</th>
+            <th scope="col-4">send_cnt</th>
+            <th scope="col-5">temp</th>
+            <th scope="col-6">general_data00</th>
+            <th scope="col-7">delete</th>
           </tr>
         </thead>
         <tbody>
