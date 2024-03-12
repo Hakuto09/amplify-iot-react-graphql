@@ -251,7 +251,7 @@ const App = ({ signOut }) => {
     const form = new FormData(event.target);
     let deviceid;
     if(fetchById) {
-      deviceid = form.get("id");
+      deviceid = form.get("device_id");
     }
     else {
       deviceid = form.get("nickname");
