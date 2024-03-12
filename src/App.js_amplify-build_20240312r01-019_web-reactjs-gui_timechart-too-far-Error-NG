@@ -714,13 +714,13 @@ const App = ({ signOut }) => {
         type: 'time',
         time: {
 //          unit: 'week',    //週に線
-          unit: 'day',    //週に線
-//          unit: 'yMDH',    //週に線
+//          unit: 'day',    //週に線
+          unit: 'yMDH',    //週に線
 //          unit: 'yMDHm',    //週に線
           displayFormats: {
 //            week: 'yyyy-MM-dd'
 //            week: 'yyyy-MM-DD'
-//            yMDHm: 'yyyy-MM-DD HH'
+            yMDHm: 'yyyy-MM-DD HH'
 //            yMDHm: 'yyyy-MM-DD HH:mm'
           }
         },
@@ -895,7 +895,7 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <View as="form" margin="3rem 0" onSubmit={update}>
+      <View as="form" margin="3rem 0" onSubmit={/*() => fetchNotes(false)*//*fetchNotes(false)*/update}>
         <Flex direction="row" justifyContent="center">
           <Button type="submit" variation="primary">
             Update
