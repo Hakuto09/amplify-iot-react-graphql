@@ -627,16 +627,14 @@ const App = ({ signOut }) => {
           time: {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
-//            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
-//            unit: 'week',
-            unit: 'day',
+            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
+            unit: 'week',
 //            unit: 'min',
 //            unit: 'seconds',
 //            unit: 'second',
 //            unit: 'ss',
             displayFormats: {
-//              week: 'yyyy-MM-dd'
-              day: 'yyyy-MM-DD'
+              week: 'yyyy-MM-dd'
 //              min: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
@@ -705,8 +703,7 @@ const App = ({ signOut }) => {
       x: {
         type: 'time',
         time: {
-//          unit: 'week',    //週に線
-          unit: 'day',    //週に線
+          unit: 'week',    //週に線
           displayFormats: {
 //            week: 'yyyy-MM-dd'
             week: 'yyyy-MM-DD'
