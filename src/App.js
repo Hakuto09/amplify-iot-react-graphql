@@ -633,10 +633,11 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
 //            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
 //            unit: 'week',
-            unit: 'day',
+//            unit: 'day',
+//            unit: 'minute',
 //            unit: 'min',
 //            unit: 'seconds',
-//            unit: 'second',
+            unit: 'second',
 //            unit: 'ss',
 //              unit: 'millisecond',
               displayFormats: {
