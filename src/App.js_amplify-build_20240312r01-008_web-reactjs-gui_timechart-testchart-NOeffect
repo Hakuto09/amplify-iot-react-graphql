@@ -629,12 +629,12 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
 //            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
 //            unit: 'week',
-            unit: 'day',
+//            unit: 'day',
 //            unit: 'min',
 //            unit: 'seconds',
 //            unit: 'second',
 //            unit: 'ss',
-//              unit: 'millisecond',
+              unit: 'millisecond',
               displayFormats: {
 //              week: 'yyyy-MM-dd'
 //              day: 'yyyy-MM-DD'
@@ -664,7 +664,6 @@ const App = ({ signOut }) => {
         //spanGaps: true,
         data: data0s
       },
-      /*
       {
         //fill: false,
         // label: 'Humidity',
@@ -678,7 +677,6 @@ const App = ({ signOut }) => {
         //spanGaps: true,
         data: data1s
       }
-      */
     ]
   };
 
