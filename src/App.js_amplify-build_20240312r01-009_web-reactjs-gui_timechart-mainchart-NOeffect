@@ -467,15 +467,11 @@ const App = ({ signOut }) => {
 //        labels.push(notesFromAPI[j].date);
 //        labels.push(notesFromAPI[j].date.substr(0, 10));
         let date_nt = notesFromAPI[j].date.replace('T', ' ');
-        let date_ntnz = date_nt.replace('Z', '');
-        let data0s_tmp = { x: date_ntnz, y: notesFromAPI[j].temp };
-
-        labels.push(date_ntnz);
+        labels.push(date_nt.replace('Z', ''));
 //        const moment = new Moment();
 //        labels.push(moment.utc(nowUnix).format(moment.HTML5_FMT.DATETIME_LOCAL_MS));
 //        data0s[i] = notesFromAPI[j].temp;
-//        data0s.push(notesFromAPI[j].temp);
-        data0s.push(data0s_tmp);
+        data0s.push(notesFromAPI[j].temp);
 //        data1s[i] = notesFromAPI[j].general_data00;
         data1s.push(notesFromAPI[j].general_data00);
       }
@@ -654,7 +650,7 @@ const App = ({ signOut }) => {
   };
 
   const chartData = {
-//    labels: labels,
+    labels: labels,
     datasets: [
       {
         //fill: false,
