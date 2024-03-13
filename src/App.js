@@ -786,7 +786,7 @@ const App = ({ signOut }) => {
   ];
   */
 
-  console_logger.warn('App(): before rutern. 2:', ' chartOptions2 ', chartOptions2, ' chartData2 ', chartData2);
+//  console_logger.warn('App(): before rutern. 2:', ' chartOptions2 ', chartOptions2, ' chartData2 ', chartData2);
 //  console_logger.warn('App(): before rutern. 2:', ' chartOptions2 ', chartOptions2, ' chartData2 ', chartData2, ' tableData2 ', tableData2);
 
   /*
