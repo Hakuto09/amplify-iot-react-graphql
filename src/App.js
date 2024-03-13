@@ -223,7 +223,7 @@ const App = ({ signOut }) => {
       sortDirection = "DESC";
       if(fetchById == true) {
         idForSort = deviceNames[g_selectedIndex];
-        filter = { date: { between: { startDateTime, endDateTime } } };
+        filter = { date: { between: [ startDateTime, endDateTime ] } };
       }
       else {
         idForSort = "multi001";
