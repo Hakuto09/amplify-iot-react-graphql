@@ -116,22 +116,38 @@ const App = ({ signOut }) => {
 
   const [notes, setNotes] = useState([]);
   console_logger.warn('App() After useState():', ' notes ', notes);
-  const [disableButtons, setDisableButtons] = useState(false);
 
   useEffect(() => {
     fetchNotes(true);
   }, []);
 
   function update(event) {
-    setDisableButtons(true);
     event.preventDefault();
     fetchNotes(false);
-    setDisableButtons(false);
     event.target.reset();
   }
 
   async function fetchNotes(displayRegisters) {
     console_logger.warn('fetchNotes(): In:', ' displayRegisters ', displayRegisters);
+
+    /*
+    let wait_ms = 5000;
+    setTimeout(
+      console_logger.warn('fetchNotes(): setTimeout(): wait_ms ', wait_ms),
+      wait_ms
+    );
+    */
+
+    /*
+    // for debug only.
+    let cnt_debug = 0;
+    for(let j = 0; j < 10000; ++j) {
+      for(let i = 0; i < 1000000; ++i) {
+        cnt_debug++;
+      }
+    }
+    console_logger.warn('fetchNotes(): After cnt_debug loop:', ' cnt_debug ', cnt_debug, ' displayRegisters ', displayRegisters);
+    */
 
     var notesFromAPI = [];
     var idForSort = "";
@@ -223,7 +239,6 @@ const App = ({ signOut }) => {
   }
 
   async function createNote(event) {
-    setDisableButtons(true);
     event.preventDefault();
     const form = new FormData(event.target);
     let deviceid;
@@ -280,13 +295,11 @@ const App = ({ signOut }) => {
 //    console_logger.warn('createNote(): Before numOfDevices++:  numOfDevices ', numOfDevices);
 //    numOfDevices++;
 //    console_logger.warn('createNote(): After numOfDevices++:  numOfDevices ', numOfDevices);
-    setDisableButtons(false);
     event.target.reset();
   }
 
 //  async function deleteNote({ id }) {
   async function deleteNote({ id, date }) {
-    setDisableButtons(true);
     console_logger.warn('deleteNote(): In:');
     // Use notes.filter. But is it necessary ?
 //    console_logger.warn('deleteNote(): Before notes.filter() id ', id, ' notes ', notes)
@@ -314,7 +327,6 @@ const App = ({ signOut }) => {
 
     fetchNotes(g_displayRegisters);
     console_logger.warn('deleteNote(): After fetchNotes():', ' g_displayRegisters ', g_displayRegisters);
-    setDisableButtons(false);
   }
 
   ChartJS.register(
@@ -703,9 +715,9 @@ const App = ({ signOut }) => {
         type: 'time',
         time: {
 //          unit: 'week',    //週に線
-          unit: 'day',
-//          unit: 'yMDH',
-//          unit: 'yMDHm',
+          unit: 'day',    //週に線
+//          unit: 'yMDH',    //週に線
+//          unit: 'yMDHm',    //週に線
           displayFormats: {
 //            week: 'yyyy-MM-dd'
 //            week: 'yyyy-MM-DD'
@@ -889,7 +901,7 @@ const App = ({ signOut }) => {
     <View className="App">
       <View as="form" margin="3rem 0" onSubmit={update}>
         <Flex direction="row" justifyContent="center">
-          <Button disabled={disableButtons} type="submit" variation="primary">
+          <Button type="submit" variation="primary">
             Update
           </Button>
         </Flex>
@@ -931,7 +943,7 @@ const App = ({ signOut }) => {
             variation="quiet"
             //required
           />
-          <Button type="submit" disabled={disableButtons} variation="primary">
+          <Button type="submit" variation="primary">
            {/*Create Note*/}Register
           </Button>
         </Flex>
@@ -956,7 +968,7 @@ const App = ({ signOut }) => {
 //            <Text as="span">{note.humi}</Text>
             <Text as="span">{note.general_data00}</Text>
 //            <Text as="span">{note.postType}</Text>
-            <Button variation="link" disabled={disableButtons} onClick={() => deleteNote(note)}>
+            <Button variation="link" onClick={() => deleteNote(note)}>
               Delete data
             </Button>
           </Flex>
@@ -986,7 +998,7 @@ const App = ({ signOut }) => {
               <td>{note.temp}</td>
               <td>{note.general_data00}</td>
               <td>
-                <Button disabled={disableButtons} variation="link" onClick={() => deleteNote(note)}>
+                <Button variation="link" onClick={() => deleteNote(note)}>
                   Delete data
                 </Button>
               </td>
@@ -994,7 +1006,7 @@ const App = ({ signOut }) => {
           ))}
         </tbody>
       </table>
-      <Button disabled={disableButtons} onClick={signOut}>Sign Out</Button>
+      <Button onClick={signOut}>Sign Out</Button>
       {/*<h1>テーブルを作る １</h1>
         <table className="table" border="1" width="800">
           <thead className="table-dark">
