@@ -19,9 +19,8 @@ import {
 
 import { Line } from "react-chartjs-2";
 
-import 'flatpickr/dist/flatpickr.min.css'
-import { Japanese } from 'flatpickr/dist/l10n/ja.js'
-import Flatpickr from 'react-flatpickr'
+import flatpickr from 'flatpickr/dist/flatpickr.min.js';
+import { Japanese } from "flatpickr/dist/l10n/ja.js"  //日本語用モジュール
 
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
@@ -920,28 +919,7 @@ const App = ({ signOut }) => {
       <Line options={chartOptions} data={chartData}/>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
       {/*<Heading level={1}>My Notes App</Heading>*/}
-      {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
-      <form className='grid gap-4 place-content-center min-h-screen'>
-        <div>
-          <label>開始日</label>
-          <Flatpickr
-            options={start_option}
-            className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
-            onChange={([date]) => {
-              setStart(date)
-              field.onChange(date)
-            }}
-          />
-        </div>
-        <div>
-          <label>終了日</label>
-          <Flatpickr
-            className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
-            options={end_option}
-            onChange={([date]) => field.onChange(date)}
-          />
-        </div>
-      </form>
+      <input type="text" name="datepicker" id="js-datepicker"></input>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           {/*<TextField
