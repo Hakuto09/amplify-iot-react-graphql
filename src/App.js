@@ -111,7 +111,7 @@ let completeFetchReg2 = false;
 let completeFetchData = false;
 let deviceNames = [];
 
-let sleep_cnt = 0;
+//let sleep_cnt = 0;
 
 // All the devices in the list (those that have been sending telemetry)
 /*
