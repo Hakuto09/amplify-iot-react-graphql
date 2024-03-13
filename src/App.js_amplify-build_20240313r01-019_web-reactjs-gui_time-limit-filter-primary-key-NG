@@ -222,8 +222,7 @@ const App = ({ signOut }) => {
       if(fetchById == true) {
         idForSort = deviceNames[g_selectedIndex];
 //        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
-//        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
-        filter = { createdAt: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
+        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
       }
       else {
         idForSort = "multi001";
