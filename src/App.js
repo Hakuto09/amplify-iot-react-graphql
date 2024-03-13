@@ -956,7 +956,7 @@ const App = ({ signOut }) => {
             onChange={([date]) => {
               setEndDate(date)
 //              field.onChange(date)}
-            }
+            }}
           />
         </div>
       </form>
