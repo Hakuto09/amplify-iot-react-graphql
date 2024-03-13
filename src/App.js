@@ -383,15 +383,6 @@ const App = ({ signOut }) => {
 */
 
 /*
-  labels = [0, 1, 2];
-  console_logger.warn('App(): After labels input0:', ' labels ', labels);
-  data0s = [3, 13, 23];
-  console_logger.warn('App(): After data0s input0:', ' data0s ', data0s);
-  data1s = [7, 17, 27];
-  console_logger.warn('App(): After data1s input0:', ' data1s ', data1s);
-*/
-
-/*
   function OnSelectionChange() {
     console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
     g_selectedIndex = listOfDevices.selectedIndex;
