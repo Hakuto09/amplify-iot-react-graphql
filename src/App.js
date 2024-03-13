@@ -166,7 +166,7 @@ const App = ({ signOut }) => {
   const end_option = {
       locale: Japanese,
       dateFormat: 'Y/m/d(D)',
-      minDate: start,
+      minDate: new Date(),
   }
 
   function update(event) {
