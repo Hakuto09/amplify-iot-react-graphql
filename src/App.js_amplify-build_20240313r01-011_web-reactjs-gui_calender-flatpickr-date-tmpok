@@ -157,18 +157,16 @@ const App = ({ signOut }) => {
 
   /** 開始日の設定 */
   const start_option = {
-    locale: Japanese,
-    dateFormat: 'Y/m/d(D)',
-//    minDate: new Date(),
-    timeFormat: "HH:mm",      
+      locale: Japanese,
+      dateFormat: 'Y/m/d(D)',
+      minDate: new Date(),
   }
 
   /**終了日の設定 */
   const end_option = {
-    locale: Japanese,
-    dateFormat: 'Y/m/d(D)',
-    maxDate: new Date(),
-    timeFormat: "HH:mm",      
+      locale: Japanese,
+      dateFormat: 'Y/m/d(D)',
+      minDate: new Date(),
   }
 
   function update(event) {
@@ -927,7 +925,18 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-            <form className='grid gap-4 place-content-center min-h-screen'>
+      <View as="form" margin="3rem 0" onSubmit={update}>
+        <Flex direction="row" justifyContent="center">
+          <Button disabled={disableButtons} type="submit" variation="primary">
+            Update
+          </Button>
+        </Flex>
+      </View>
+      <Line options={chartOptions} data={chartData}/>
+      {/*<Line options={chartOptions2} data={chartData2}/>*/}
+      {/*<Heading level={1}>My Notes App</Heading>*/}
+      {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
+      <form className='grid gap-4 place-content-center min-h-screen'>
         <div>
           <label>開始日</label>
           <Flatpickr
@@ -951,17 +960,6 @@ const App = ({ signOut }) => {
           />
         </div>
       </form>
-      <View as="form" margin="3rem 0" onSubmit={update}>
-        <Flex direction="row" justifyContent="center">
-          <Button disabled={disableButtons} type="submit" variation="primary">
-            Update
-          </Button>
-        </Flex>
-      </View>
-      <Line options={chartOptions} data={chartData}/>
-      {/*<Line options={chartOptions2} data={chartData2}/>*/}
-      {/*<Heading level={1}>My Notes App</Heading>*/}
-      {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           {/*<TextField
