@@ -159,22 +159,18 @@ const App = ({ signOut }) => {
   const start_option = {
     locale: Japanese,
 //    dateFormat: 'Y/m/d(D)',
-    dateFormat  : 'Y.m.d（D）H:i',
-    defaultDate : new Date(),
-    enableTime  : true,
+    dateFormat: 'yyyy/MM/dd HH:mm',
 //    minDate: new Date(),
-//    timeFormat: "HH:mm",      
+    timeFormat: "HH:mm",      
   }
 
   /**終了日の設定 */
   const end_option = {
     locale: Japanese,
 //    dateFormat: 'Y/m/d(D)',
-    dateFormat  : 'Y.m.d（D）H:i',
-    defaultDate : new Date(),
+    dateFormat: 'yyyy/MM/dd HH:mm',
     maxDate: new Date(),
-    enableTime  : true,
-//    timeFormat: "HH:mm",      
+    timeFormat: "HH:mm",      
   }
 
   function update(event) {
