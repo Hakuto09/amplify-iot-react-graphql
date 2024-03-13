@@ -707,7 +707,6 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before rutern. 1:', ' chartOptions ', chartOptions, ' chartData ', chartData);
 
-  /*
   const chartOptions2 = {
     spanGaps: true,   //点をつなげる場合
     scales: {
@@ -728,7 +727,6 @@ const App = ({ signOut }) => {
       }
     }
   };
-  */
   
   /*
   const values = [
@@ -750,7 +748,6 @@ const App = ({ signOut }) => {
     {x:"2020-02-14 06:06:06", y:600},
   ];
   */
-  /*
   const values = [
     {x:"2020-02-01 01:01:01.111", y:100},
     {x:"2020-02-02 02:02:02.222", y:200},
@@ -769,7 +766,6 @@ const App = ({ signOut }) => {
       data: values,
     }],
   };
-  */
 
   /*
   const tableData2 = [
@@ -906,8 +902,8 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Line options={chartOptions} data={chartData}/>
-      {/*<Line options={chartOptions2} data={chartData2}/>*/}
+      <Line options={chartOptions} data={chartData} />
+      <Line options={chartOptions2} data={chartData2} />
       {/*<Heading level={1}>My Notes App</Heading>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
