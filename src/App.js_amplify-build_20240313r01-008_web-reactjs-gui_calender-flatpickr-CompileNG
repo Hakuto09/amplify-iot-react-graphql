@@ -146,15 +146,7 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
-  const [startDate, setStartDate] = useState()
-  console_logger.warn('App() After useState():', ' startDate ', startDate);
-  const [endDate, setEndDate] = useState()
-  console_logger.warn('App() After useState():', ' endDate ', endDate);
-  const [startTime, setStartTime] = useState()
-  console_logger.warn('App() After useState():', ' startTime ', startTime);
-  const [endTime, setEndTime] = useState()
-  console_logger.warn('App() After useState():', ' endTime ', endTime);
-
+  const [start, setStart] = useState()
   /** 開始日の設定 */
   const start_option = {
       locale: Japanese,
@@ -168,7 +160,7 @@ const App = ({ signOut }) => {
       dateFormat: 'Y/m/d(D)',
       minDate: start,
   }
-
+  
   function update(event) {
     setDisableButtons(true);
     event.preventDefault();
@@ -943,8 +935,8 @@ const App = ({ signOut }) => {
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             onChange={([date]) => {
-              setStartDate(date)
-//              field.onChange(date)
+              setStart(date)
+              field.onChange(date)
             }}
           />
         </div>
@@ -953,10 +945,7 @@ const App = ({ signOut }) => {
           <Flatpickr
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
-            onChange={([date]) => {
-              setEndDate(date)
-//              field.onChange(date)}
-            }
+            onChange={([date]) => field.onChange(date)}
           />
         </div>
       </form>
