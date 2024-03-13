@@ -238,7 +238,8 @@ const App = ({ signOut }) => {
       let variables = {};
 
       if(fetchById == true) {
-        variables = { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken };
+//        variables = { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limit, nextToken: nextToken };
       }
       else {
         variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken };
