@@ -153,32 +153,26 @@ const App = ({ signOut }) => {
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
 //  console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
 
-  // 現時刻でDateオブジェクトのインスタンス作成
-  let date_tmp = new Date();
-  date_tmp.setHours(0);
-  date_tmp.setMinutes(0);
-
   /** 開始日の設定 */
   const start_option = {
     locale: Japanese,
 //    dateFormat: 'Y/m/d(D)',
 //    dateFormat  : 'Y.m.d（D）H:i',
     dateFormat  : 'Y-m-d  H:i',
-    defaultDate : date_tmp,
+    defaultDate : new Date(),
     enableTime  : true,
 //    minDate: new Date(),
 //    timeFormat: "HH:mm",      
   }
 
   /**終了日の設定 */
-  date_tmp.setDate(date_tmp.getDate() + 1);
   const end_option = {
     locale: Japanese,
 //    dateFormat: 'Y/m/d(D)',
 //    dateFormat  : 'Y.m.d（D）H:i',
     dateFormat  : 'Y-m-d  H:i',
-    defaultDate : date_tmp,
-//    maxDate: new Date(),
+    defaultDate : new Date(),
+    maxDate: new Date(),
     enableTime  : true,
 //    timeFormat: "HH:mm",      
   }
