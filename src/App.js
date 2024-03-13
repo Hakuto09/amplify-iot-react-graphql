@@ -146,13 +146,6 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
-  const [startDateTime, setstartDateTime] = useState()
-  console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
-//  console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
-  const [endDateTime, setendDateTime] = useState()
-  console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
-//  console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
-
   /** 開始日の設定 */
   let today0 = new Date();
   today0.setHours(0);
@@ -183,6 +176,13 @@ const App = ({ signOut }) => {
     enableTime  : true,
 //    timeFormat: "HH:mm",      
   }
+
+  const [startDateTime, setStartDateTime] = useState(today0)
+  console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
+  console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
+  const [endDateTime, setEndDateTime] = useState(tomorrow0)
+  console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
+  console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
 
   function update(event) {
     setDisableButtons(true);
@@ -228,11 +228,11 @@ const App = ({ signOut }) => {
       sortDirection = "DESC";
       if(fetchById == true) {
         idForSort = deviceNames[g_selectedIndex];
-//        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
 //        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
 //        filter = { createdAt: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
-        filter = { date: { between: [ startDateTime, endDateTime ] } };
-}
+//        filter = { date: { between: [ startDateTime, endDateTime ] } };
+      }
       else {
         idForSort = "multi001";
         filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
@@ -954,7 +954,7 @@ const App = ({ signOut }) => {
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             onChange={([date]) => {
-              setstartDateTime(date)
+              setStartDateTime(date)
 //              field.onChange(date)
             }}
           />
@@ -965,7 +965,7 @@ const App = ({ signOut }) => {
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
             onChange={([date]) => {
-              setendDateTime(date)
+              setEndDateTime(date)
 //              field.onChange(date)}
             }}
           />
