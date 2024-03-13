@@ -148,10 +148,10 @@ const App = ({ signOut }) => {
 
   const [startDateTime, setstartDateTime] = useState()
   console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
-  console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
+//  console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
   const [endDateTime, setendDateTime] = useState()
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
-  console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
+//  console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
 
   /** 開始日の設定 */
   const start_option = {
@@ -221,7 +221,8 @@ const App = ({ signOut }) => {
       sortDirection = "DESC";
       if(fetchById == true) {
         idForSort = deviceNames[g_selectedIndex];
-        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+//        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
       }
       else {
         idForSort = "multi001";
