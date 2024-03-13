@@ -228,10 +228,10 @@ const App = ({ signOut }) => {
       sortDirection = "DESC";
       if(fetchById == true) {
         idForSort = deviceNames[g_selectedIndex];
-        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+//        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
 //        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
 //        filter = { createdAt: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
-//        filter = { date: { between: [ startDateTime, endDateTime ] } };
+        filter = { createdAt: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
       }
       else {
         idForSort = "multi001";
