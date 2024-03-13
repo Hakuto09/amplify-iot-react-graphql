@@ -158,8 +158,7 @@ const App = ({ signOut }) => {
   /** 開始日の設定 */
   const start_option = {
     locale: Japanese,
-//    dateFormat: 'Y/m/d(D)',
-    dateFormat: 'yyyy/MM/dd HH:mm',
+    dateFormat: 'Y/m/d(D)',
 //    minDate: new Date(),
     timeFormat: "HH:mm",      
   }
@@ -167,8 +166,7 @@ const App = ({ signOut }) => {
   /**終了日の設定 */
   const end_option = {
     locale: Japanese,
-//    dateFormat: 'Y/m/d(D)',
-    dateFormat: 'yyyy/MM/dd HH:mm',
+    dateFormat: 'Y/m/d(D)',
     maxDate: new Date(),
     timeFormat: "HH:mm",      
   }
