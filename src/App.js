@@ -178,7 +178,7 @@ const App = ({ signOut }) => {
 //    dateFormat: 'Y/m/d(D)',
 //    dateFormat  : 'Y.m.d（D）H:i',
     dateFormat  : 'Y-m-d  H:i',
-    defaultDate : date_tmp,
+    defaultDate : tomorrow0,
 //    maxDate: new Date(),
     enableTime  : true,
 //    timeFormat: "HH:mm",      
