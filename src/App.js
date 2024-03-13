@@ -72,6 +72,7 @@ const console_logger = new ConsoleLogger('foo');
 
 const client = generateClient();
 
+/*
 async function flatpickrInit() {
   const holidays = await fetchHolidays();
   flatpickr('#js-datepicker-5', {
@@ -90,7 +91,7 @@ async function flatpickrInit() {
 }
 
 flatpickrInit();
-
+*/
 
 var fetchById = true;
 
@@ -145,6 +146,21 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
+  const [start, setStart] = useState()
+  /** 開始日の設定 */
+  const start_option = {
+      locale: Japanese,
+      dateFormat: 'Y/m/d(D)',
+      minDate: new Date(),
+  }
+
+  /**終了日の設定 */
+  const end_option = {
+      locale: Japanese,
+      dateFormat: 'Y/m/d(D)',
+      minDate: start,
+  }
+  
   function update(event) {
     setDisableButtons(true);
     event.preventDefault();
