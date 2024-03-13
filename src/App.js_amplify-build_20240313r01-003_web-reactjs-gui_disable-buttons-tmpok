@@ -19,9 +19,6 @@ import {
 
 import { Line } from "react-chartjs-2";
 
-import flatpickr from 'flatpickr/dist/flatpickr.min.js';
-import { Japanese } from "flatpickr/dist/l10n/ja.js"  //日本語用モジュール
-
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 //import { API } from "aws-amplify";
@@ -70,25 +67,6 @@ const LOG_LEVEL = 'INFO' //どのレベルのログまでロギングするか
 const console_logger = new ConsoleLogger('foo');
 
 const client = generateClient();
-
-async function flatpickrInit() {
-  const holidays = await fetchHolidays();
-  flatpickr('#js-datepicker-5', {
-    locale      : Japanese,
-    dateFormat  : 'Y.m.d (D) H:i',
-    defaultDate : minDate,
-    minDate     : minDate,
-    maxDate     : maxDate,
-    enableTime  : true,
-    minTime     : '09:00',
-    maxTime     : '18:00',
-    onDayCreate : (dObj, dStr, fp, dayElem) => {
-      this.addHolidayClass(dayElem);
-    }
-  });
-}
-
-flatpickrInit();
 
 
 var fetchById = true;
@@ -919,7 +897,6 @@ const App = ({ signOut }) => {
       <Line options={chartOptions} data={chartData}/>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
       {/*<Heading level={1}>My Notes App</Heading>*/}
-      <input type="text" name="datepicker" id="js-datepicker"></input>
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
           {/*<TextField
@@ -959,7 +936,7 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Heading level={2}>Current Data</Heading>
+      <Heading level={2}>Current {/*Notes*/}Data</Heading>
       {/*<View margin="3rem 0">
         {notes.map((note) => (
           <Flex
