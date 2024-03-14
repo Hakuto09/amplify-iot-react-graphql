@@ -163,7 +163,7 @@ const App = ({ signOut }) => {
 
   /**終了日の設定 */
   let tomorrow0 = new Date();
-  tomorrow0.setDate(tomorrow0.getDate() + 1);
+  tomorrow0.setDate(today0.getDate() + 1);
   tomorrow0.setHours(0);
   tomorrow0.setMinutes(0);
   const end_option = {
@@ -180,19 +180,6 @@ const App = ({ signOut }) => {
   const [startDateTime, setStartDateTime] = useState(today0)
   console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
   console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
-  /* ISO形式で日本時間へ変換していく */
-  let startDateTimeTmp = startDateTime;
-  // UTCとローカルタイムゾーンとの差を取得し、分からミリ秒に変換
-  //const startDT_diff = startDateTime.getTimezoneOffset() * 60 * 1000    // -540 * 60 * 1000 = -32400000
-  // toISOString()で、UTC時間になってしまう（-9時間）ので、日本時間に9時間足しておく
-  startDateTimeTmp.setHours(startDateTimeTmp.getHours() + 1);
-  //const startDT_plusLocal = new Date(startDateTime + startDT_diff)    // Thu Apr 23 2020 07:39:03 GMT+0900 (Japan Standard Time)
-  // ISO形式に変換（UTCタイムゾーンで日本時間、というよくない状態）
-  //startDateTime = startDT_plusLocal.toISOString()   // "2020-04-22T22:39:03.397Z"
-  // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
-  startDateTimeIso = startDateTimeTmp.toISOString().slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
-  console_logger.warn('App() After toISOString():', ' startDateTimeIso ', startDateTimeIso, ' startDateTimeTmp ', startDateTimeTmp);
-
   const [endDateTime, setEndDateTime] = useState(tomorrow0)
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
   console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
@@ -753,13 +740,13 @@ const App = ({ signOut }) => {
 //  console_logger.warn('App(): before rutern. 1:', ' moment2ss ', moment("2010-10-20 4:30:50 +0000", "YYYY-MM-DD HH:mm:ss Z"));
 //  console_logger.warn('App(): before rutern. 1:', ' moment3SSS ', moment("2010-10-20 4:30:50.123 +0000", "YYYY-MM-DD HH:mm:ss.SSS Z"));
 
-//  var m1 = moment("20150101", "YYYYMMDD"); // 第一引数：指定日時、第二引数：フォーマット
-//  var m1_output = m1.format('YYYY年MM月DD日 HH:mm:ss dddd');
-//  console_logger.warn('App(): before rutern. 1:', ' moment m1_output ', m1_output); // => 2015年01月01日 00:00:00 Thursday 
+  var m1 = moment("20150101", "YYYYMMDD"); // 第一引数：指定日時、第二引数：フォーマット
+  var m1_output = m1.format('YYYY年MM月DD日 HH:mm:ss dddd');
+  console_logger.warn('App(): before rutern. 1:', ' moment m1_output ', m1_output); // => 2015年01月01日 00:00:00 Thursday 
 
-//  var m2 = moment("1970-01-01 00:00:00", "YYYY-MM-DD HH:mm:ss");
-//  var m2_output = m2.format('YYYY年MM月DD日 HH:mm:ss');
-//  console_logger.warn('App(): before rutern. 1:', ' moment m2_output ', m2_output);
+  var m2 = moment("1970-01-01 00:00:00", "YYYY-MM-DD HH:mm:ss");
+  var m2_output = m2.format('YYYY年MM月DD日 HH:mm:ss');
+  console_logger.warn('App(): before rutern. 1:', ' moment m2_output ', m2_output);
   
   var m3 = moment("1970-01-01 00:00:00.007", "YYYY-MM-DD HH:mm:ss.SSS");
   var m3_output = m3.format('YYYY年MM月DD日 HH:mm:ss.SSS');
