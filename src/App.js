@@ -180,22 +180,24 @@ const App = ({ signOut }) => {
   const [startDateTime, setStartDateTime] = useState(today0)
   console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
   console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
-  /* ISO形式で日本時間へ変換していく */
-  let startDateTimeTmp = startDateTime;
+  /* ISO形式かつ日本時間へ変換していく */
+  let startDateTimeJstTmp = startDateTime;
   // UTCとローカルタイムゾーンとの差を取得し、分からミリ秒に変換
   //const startDT_diff = startDateTime.getTimezoneOffset() * 60 * 1000    // -540 * 60 * 1000 = -32400000
   // toISOString()で、UTC時間になってしまう（-9時間）ので、日本時間に9時間足しておく
-  startDateTimeTmp.setHours(startDateTimeTmp.getHours() + 1);
+  startDateTimeJstTmp.setHours(startDateTimeJstTmp.getHours() + 9);
   //const startDT_plusLocal = new Date(startDateTime + startDT_diff)    // Thu Apr 23 2020 07:39:03 GMT+0900 (Japan Standard Time)
   // ISO形式に変換（UTCタイムゾーンで日本時間、というよくない状態）
   //startDateTime = startDT_plusLocal.toISOString()   // "2020-04-22T22:39:03.397Z"
   // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
-  startDateTimeIso = startDateTimeTmp.toISOString().slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
-  console_logger.warn('App() After toISOString():', ' startDateTimeIso ', startDateTimeIso, ' startDateTimeTmp ', startDateTimeTmp);
+  let startDateTimeJstIso = startDateTimeJstTmp.toISOString().slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
+  console_logger.warn('App() After toISOString():', ' startDateTimeJstIso ', startDateTimeJstIso, ' startDateTimeJstTmp ', startDateTimeJstTmp);
 
   const [endDateTime, setEndDateTime] = useState(tomorrow0)
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
   console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
+  /* ISO形式かつ日本時間へ変換していく */
+  let endDateTimeJstIso = startDateTimeJstIso;  // Temporary!!
 
   function update(event) {
     setDisableButtons(true);
@@ -244,7 +246,8 @@ const App = ({ signOut }) => {
 //        filter = { date: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
 //        filter = { date: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
 //        filter = { createdAt: { between: [ "2024-03-13T00:00:00.000+0900", "2024-03-13T23:59:59.999+0900" ] } };
-        filter = { createdAt: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+//        filter = { createdAt: { between: [ startDateTime.toISOString(), endDateTime.toISOString() ] } };
+        filter = { createdAt: { between: [ startDateTimeJstIso, endDateTime.toISOString() ] } };
       }
       else {
         idForSort = "multi001";
