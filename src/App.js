@@ -300,7 +300,12 @@ const App = ({ signOut }) => {
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
     setNotes(notesFromAPI);
-    console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
+    console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
+
+    /* test sort */
+    let notesSorted = notesFromAPI.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
+    setNotes(notesSorted);
+    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' displayRegisters ', displayRegisters, ' notesSorted ', notesSorted);
 
     onMessage(notesFromAPI, displayRegisters);
 
