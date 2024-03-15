@@ -434,7 +434,7 @@ const App = ({ signOut }) => {
     console_logger.warn('fetchNotes(): After sort() and setNotes():', ' g_displayRegisters ', g_displayRegisters, ' notesSorted ', notesSorted);
 
     setDisableButtons(false);
-//    event.target.reset();
+    event.target.reset();
   }
 
   ChartJS.register(
