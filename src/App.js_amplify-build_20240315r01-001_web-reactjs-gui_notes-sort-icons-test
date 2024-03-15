@@ -309,6 +309,11 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
 
+    /* test sort */
+    let notesSorted = notesFromAPI.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
+    setNotes(notesSorted);
+    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' displayRegisters ', displayRegisters, ' notesSorted ', notesSorted);
+
     onMessage(notesFromAPI, displayRegisters);
 
     if(displayRegisters == true) {
@@ -414,16 +419,6 @@ const App = ({ signOut }) => {
 
     fetchNotes(g_displayRegisters);
     console_logger.warn('deleteNote(): After fetchNotes():', ' g_displayRegisters ', g_displayRegisters);
-    setDisableButtons(false);
-  }
-
-  async function sortNotes() {
-    setDisableButtons(true);
-
-    let notesSorted = notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
-    setNotes(notesSorted);
-    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' displayRegisters ', displayRegisters, ' notesSorted ', notesSorted);
-
     setDisableButtons(false);
   }
 
@@ -1092,19 +1087,16 @@ const App = ({ signOut }) => {
       <table border="1" width="1000">
         <thead className="table-dark">
           <tr>
-            <th scope="col">
-              id
+            <th scope="col">id
+              <h1 className="sort icons test">
+                TiArrowSortedDown <TiArrowSortedDown/>
+              </h1>
             </th>
             <th scope="col">date</th>
             {/*<th scope="col">nickname</th>*/}
             <th scope="col">device_id</th>
             <th scope="col">send_cnt</th>
-            <th scope="col">
-              temp
-              <Button disabled={disableButtons} variation="primary" size="small" onClick={() => sortNotes()}>
-                <TiArrowSortedDown/>
-              </Button>
-            </th>
+            <th scope="col">temp</th>
             <th scope="col">general_data00</th>
             <th scope="col">delete</th>
           </tr>
@@ -1119,7 +1111,7 @@ const App = ({ signOut }) => {
               <td>{note.temp}</td>
               <td>{note.general_data00}</td>
               <td>
-                <Button disabled={disableButtons} variation="link" size="small" onClick={() => deleteNote(note)}>
+                <Button disabled={disableButtons} variation="link" onClick={() => deleteNote(note)}>
                   Delete data
                 </Button>
               </td>
