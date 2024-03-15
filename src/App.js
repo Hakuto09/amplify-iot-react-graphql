@@ -1112,10 +1112,10 @@ const App = ({ signOut }) => {
             <th scope="col">
               temp
               {/*<br>*/}
-                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(1)}>
+                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(event, 1)}>
                   <TiArrowSortedUp/>
                 </Button>
-                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(0)}>
+                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(event, 0)}>
                 {/*<Button disabled={disableButtons} size="small" onClick={sortNotes}>*/}
                   <TiArrowSortedDown/>
                 </Button>
