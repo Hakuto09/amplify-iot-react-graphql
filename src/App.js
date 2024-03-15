@@ -145,6 +145,12 @@ const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
 
+  const deviceCount = document.getElementById('deviceCount');
+  console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
+
+  const listOfDevices = document.getElementById('listOfDevices');
+  console_logger.warn('App(): After document.getElementById(\'listOfDevices\'):', ' listOfDevices ', listOfDevices);
+
   const [notes, setNotes] = useState([]);
   console_logger.warn('App() After useState():', ' notes ', notes);
   const [disableButtons, setDisableButtons] = useState(false);
@@ -217,7 +223,9 @@ const App = ({ signOut }) => {
   function update(event) {
     setDisableButtons(true);
     event.preventDefault();
+
     fetchNotes(false);
+    
     setDisableButtons(false);
     event.target.reset();
   }
@@ -417,14 +425,16 @@ const App = ({ signOut }) => {
     setDisableButtons(false);
   }
 
-  async function sortNotes() {
+  async function sortNotes(event) {
     setDisableButtons(true);
+    event.preventDefault();
 
     let notesSorted = notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
     setNotes(notesSorted);
     console_logger.warn('fetchNotes(): After sort() and setNotes():', ' g_displayRegisters ', g_displayRegisters, ' notesSorted ', notesSorted);
 
     setDisableButtons(false);
+    event.target.reset();
   }
 
   ChartJS.register(
@@ -960,14 +970,6 @@ const App = ({ signOut }) => {
 
   // Manage a list of devices in the UI, and update which device data the chart is showing
   // based on selection
-
-  //let needsAutoSelect = true;
-  const deviceCount = document.getElementById('deviceCount');
-  console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
-
-  const listOfDevices = document.getElementById('listOfDevices');
-  console_logger.warn('App(): After document.getElementById(\'listOfDevices\'):', ' listOfDevices ', listOfDevices);
-
   if(needsAutoSelect) {
     needsAutoSelect = false;
     listOfDevices.selectedIndex = 0;
