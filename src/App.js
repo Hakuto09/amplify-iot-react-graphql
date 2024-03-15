@@ -422,7 +422,7 @@ const App = ({ signOut }) => {
 
     let notesSorted = notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
     setNotes(notesSorted);
-    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' displayRegisters ', displayRegisters, ' notesSorted ', notesSorted);
+    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' g_displayRegisters ', g_displayRegisters, ' notesSorted ', notesSorted);
 
     setDisableButtons(false);
   }
