@@ -1111,7 +1111,7 @@ const App = ({ signOut }) => {
             <th scope="col">send_cnt</th>
             <th scope="col">
               temp
-              {/*<br>*/}
+              <br>
                 <Button disabled={disableButtons} size="small" onClick={() => sortNotes(1)}>
                   <TiArrowSortedUp/>
                 </Button>
@@ -1119,7 +1119,7 @@ const App = ({ signOut }) => {
                 {/*<Button disabled={disableButtons} size="small" onClick={sortNotes}>*/}
                   <TiArrowSortedDown/>
                 </Button>
-              {/*</br>*/}
+              </br>
             </th>
             <th scope="col">general_data00</th>
             <th scope="col">delete</th>
