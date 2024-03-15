@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-//import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
 import 'chartjs-adapter-moment';
 import moment from "moment";
@@ -49,13 +49,6 @@ import { ConsoleLogger } from 'aws-amplify/utils';
 //import { Authenticator } from '@aws-amplify/ui-react'
 
 import awsExports from './aws-exports'
-
-import {
-  TiArrowSortedDown,
-  TiArrowSortedUp,
-  TiArrowUnsorted,
-} from "react-icons/ti";
-
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
@@ -1087,11 +1080,7 @@ const App = ({ signOut }) => {
       <table border="1" width="1000">
         <thead className="table-dark">
           <tr>
-            <th scope="col">id
-              <h1 className="sort icons test">
-                TiArrowSortedDown <TiArrowSortedDown/>
-              </h1>
-            </th>
+            <th scope="col">id</th>
             <th scope="col">date</th>
             {/*<th scope="col">nickname</th>*/}
             <th scope="col">device_id</th>
