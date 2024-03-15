@@ -429,10 +429,8 @@ const App = ({ signOut }) => {
     setDisableButtons(true);
     event.preventDefault();
 
-    let notesSorted = [];
-    notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
+    let notesSorted = notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
     console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes);
-    Array.prototype.push.apply(notesSorted, notes);
     setNotes(notesSorted);
     console_logger.warn('fetchNotes(): After sort() and setNotes():', ' g_displayRegisters ', g_displayRegisters, ' notesSorted ', notesSorted);
 
