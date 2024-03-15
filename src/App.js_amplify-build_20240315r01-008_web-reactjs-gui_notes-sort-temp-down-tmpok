@@ -425,21 +425,16 @@ const App = ({ signOut }) => {
     setDisableButtons(false);
   }
 
-  async function sortNotes(event, downOrUp) {
+  async function sortNotes(event) {
     setDisableButtons(true);
     event.preventDefault();
 
     let notesSorted = [];
-    if(downOrUp) {
-      notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
-    }
-    else {
-      notes.sort((c1, c2) => (c1.temp < c2.temp) ? -1 : (c1.temp > c2.temp) ? 1 : 0);
-    }
+    notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
     console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes);
     Array.prototype.push.apply(notesSorted, notes);
     setNotes(notesSorted);
-    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
+    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' g_displayRegisters ', g_displayRegisters, ' notesSorted ', notesSorted);
 
     setDisableButtons(false);
 //    event.target.reset();
@@ -1111,15 +1106,10 @@ const App = ({ signOut }) => {
             <th scope="col">send_cnt</th>
             <th scope="col">
               temp
-              <br>
-                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(1)}>
-                  <TiArrowSortedUp/>
-                </Button>
-                <Button disabled={disableButtons} size="small" onClick={() => sortNotes(0)}>
-                {/*<Button disabled={disableButtons} size="small" onClick={sortNotes}>*/}
-                  <TiArrowSortedDown/>
-                </Button>
-              </br>
+              {/*<Button disabled={disableButtons} size="small" onClick={() => sortNotes()}></Button>*/}
+              <Button disabled={disableButtons} size="small" onClick={sortNotes}>
+                <TiArrowSortedDown/>
+              </Button>
             </th>
             <th scope="col">general_data00</th>
             <th scope="col">delete</th>
