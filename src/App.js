@@ -440,7 +440,10 @@ const App = ({ signOut }) => {
       case 'date' :
         notes.sort((c1, c2) => (c1.date < c2.date) ? ifC2Bigger : (c1.date > c2.date) ? ifC1Bigger : 0);
         break;
-      case 'send_cnt' :
+        case 'device_id' :
+          notes.sort((c1, c2) => (c1.device_id < c2.device_id) ? ifC2Bigger : (c1.device_id > c2.device_id) ? ifC1Bigger : 0);
+          break;
+        case 'send_cnt' :
         notes.sort((c1, c2) => (c1.send_cnt < c2.send_cnt) ? ifC2Bigger : (c1.send_cnt > c2.send_cnt) ? ifC1Bigger : 0);
         break;
       case 'temp' :
@@ -1113,7 +1116,7 @@ const App = ({ signOut }) => {
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
       <div>
-        <table border="1" width="1000">
+        <table border="1" /*width="1000"*/>
           <thead className="table-dark">
             <tr>
               <th scope="col">
@@ -1135,7 +1138,15 @@ const App = ({ signOut }) => {
                 </Button>
               </th>
               {/*<th scope="col">nickname</th>*/}
-              <th scope="col">device_id</th>
+              <th scope="col">
+                device_id
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "device_id")}>
+                  <TiArrowSortedUp/>
+                </Button>
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0, "device_id")}>
+                  <TiArrowSortedDown/>
+                </Button>
+              </th>
               <th scope="col">
                 send_cnt
                 <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "send_cnt")}>
