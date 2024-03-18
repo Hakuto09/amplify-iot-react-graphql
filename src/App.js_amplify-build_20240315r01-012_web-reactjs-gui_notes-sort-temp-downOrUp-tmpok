@@ -998,7 +998,7 @@ const App = ({ signOut }) => {
 
   return (
     <View className="App">
-      <form className='grid gap-4 place-content-center min-h-screen'>
+            <form className='grid gap-4 place-content-center min-h-screen'>
         <div>
           <label>開始日時</label>
           <Flatpickr
@@ -1099,7 +1099,6 @@ const App = ({ signOut }) => {
         ))}
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
-      <div>
       <table border="1" width="1000">
         <thead className="table-dark">
           <tr>
@@ -1144,7 +1143,6 @@ const App = ({ signOut }) => {
           ))}
         </tbody>
       </table>
-      </div>
       <Button disabled={disableButtons} onClick={signOut}>Sign Out</Button>
       {/*<h1>テーブルを作る １</h1>
         <table className="table" border="1" width="800">
