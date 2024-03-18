@@ -441,7 +441,7 @@ const App = ({ signOut }) => {
         notes.sort((c1, c2) => (c1.date < c2.date) ? ifC2Bigger : (c1.date > c2.date) ? ifC1Bigger : 0);
         break;
       case 'device_id' :
-        notes.sort((c1, c2) => (c1.nickname < c2.nickname) ? ifC2Bigger : (c1.nickname > c2.nickname) ? ifC1Bigger : 0);
+        notes.sort((c1, c2) => (c1.device_id < c2.nickname) ? ifC2Bigger : (c1.device_id > c2.nickname) ? ifC1Bigger : 0);
         break;
       case 'send_cnt' :
         notes.sort((c1, c2) => (c1.send_cnt < c2.send_cnt) ? ifC2Bigger : (c1.send_cnt > c2.send_cnt) ? ifC1Bigger : 0);
