@@ -441,7 +441,7 @@ const App = ({ signOut }) => {
         notes.sort((c1, c2) => (c1.date < c2.date) ? ifC2Bigger : (c1.date > c2.date) ? ifC1Bigger : 0);
         break;
       case 'device_id' :
-        notes.sort((c1, c2) => (c1.device_id < c2.device_id) ? ifC2Bigger : (c1.device_id > c2.device_id) ? ifC1Bigger : 0);
+        notes.sort((c1, c2) => (c1.device_id < c2.nickname) ? ifC2Bigger : (c1.device_id > c2.nickname) ? ifC1Bigger : 0);
         break;
       case 'send_cnt' :
         notes.sort((c1, c2) => (c1.send_cnt < c2.send_cnt) ? ifC2Bigger : (c1.send_cnt > c2.send_cnt) ? ifC1Bigger : 0);
@@ -1140,10 +1140,10 @@ const App = ({ signOut }) => {
               {/*<th scope="col">nickname</th>*/}
               <th scope="col">
                 device_id
-                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "device_id")}>
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "nickname")}>
                   <TiArrowSortedUp/>
                 </Button>
-                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0, "device_id")}>
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0, "nickname")}>
                   <TiArrowSortedDown/>
                 </Button>
               </th>
