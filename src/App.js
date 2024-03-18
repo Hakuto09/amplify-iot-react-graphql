@@ -440,10 +440,10 @@ const App = ({ signOut }) => {
       case 'date' :
         notes.sort((c1, c2) => (c1.date < c2.date) ? ifC2Bigger : (c1.date > c2.date) ? ifC1Bigger : 0);
         break;
-        case 'device_id' :
-          notes.sort((c1, c2) => (c1.device_id < c2.device_id) ? ifC2Bigger : (c1.device_id > c2.device_id) ? ifC1Bigger : 0);
-          break;
-        case 'send_cnt' :
+      case 'device_id' :
+        notes.sort((c1, c2) => (c1.device_id < c2.device_id) ? ifC2Bigger : (c1.device_id > c2.device_id) ? ifC1Bigger : 0);
+        break;
+      case 'send_cnt' :
         notes.sort((c1, c2) => (c1.send_cnt < c2.send_cnt) ? ifC2Bigger : (c1.send_cnt > c2.send_cnt) ? ifC1Bigger : 0);
         break;
       case 'temp' :
@@ -453,7 +453,7 @@ const App = ({ signOut }) => {
         notes.sort((c1, c2) => (c1.general_data00 < c2.general_data00) ? ifC2Bigger : (c1.general_data00 > c2.general_data00) ? ifC1Bigger : 0);
         break;
     }
-    console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes);
+    console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes, ' columnName ', columnName);
 
     Array.prototype.push.apply(notesSorted, notes);
     setNotes(notesSorted);
