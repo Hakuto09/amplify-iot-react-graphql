@@ -1006,6 +1006,7 @@ const App = ({ signOut }) => {
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             onChange={([date]) => {
               setStartDateTime(date)
+//              field.onChange(date)
             }}
           />
         </div>
@@ -1016,6 +1017,7 @@ const App = ({ signOut }) => {
             options={end_option}
             onChange={([date]) => {
               setEndDateTime(date)
+//              field.onChange(date)}
             }}
           />
         </div>
@@ -1098,53 +1100,52 @@ const App = ({ signOut }) => {
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
       <div>
-        <table border="1" width="1000">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">
-                id
-              </th>
-              <th scope="col">date</th>
-              {/*<th scope="col">nickname</th>*/}
-              <th scope="col">device_id</th>
-              <th scope="col">send_cnt</th>
-              <th scope="col">
-                temp
-                {/*<br>*/}
-                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1)}>
-                    <TiArrowSortedUp/>
-                  </Button>
-                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0)}>
+      <table border="1" width="1000">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">
+              id
+            </th>
+            <th scope="col">date</th>
+            {/*<th scope="col">nickname</th>*/}
+            <th scope="col">device_id</th>
+            <th scope="col">send_cnt</th>
+            <th scope="col">
+              temp
+              {/*<br>*/}
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1)}>
+                  <TiArrowSortedUp/>
+                </Button>
+                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0)}>
                 {/*<Button disabled={disableButtons} size="small" onClick={sortNotes}>*/}
-                    <TiArrowSortedDown/>
-                  </Button>
-                {/*</br>*/}
-              </th>
-              <th scope="col">general_data00</th>
-              <th scope="col">delete</th>
+                  <TiArrowSortedDown/>
+                </Button>
+              {/*</br>*/}
+            </th>
+            <th scope="col">general_data00</th>
+            <th scope="col">delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map((note) => (
+            <tr>
+              <th scope="row">{note.id}</th>
+              <td>{note.date}</td>
+              <td>{note.nickname}</td>
+              <td>{note.send_cnt}</td>
+              <td>{note.temp}</td>
+              <td>{note.general_data00}</td>
+              <td>
+                <Button disabled={disableButtons} variation="link" size="small" onClick={() => deleteNote(note)}>
+                  Delete data
+                </Button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {notes.map((note) => (
-              <tr>
-                <th scope="row">{note.id}</th>
-                <td>{note.date}</td>
-                <td>{note.nickname}</td>
-                <td>{note.send_cnt}</td>
-                <td>{note.temp}</td>
-                <td>{note.general_data00}</td>
-                <td>
-                  <Button disabled={disableButtons} variation="link" size="small" onClick={() => deleteNote(note)}>
-                    Delete data
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
       </div>
-      {/*<Button disabled={disableButtons} onClick={signOut}>Sign Out</Button>*/}
-      <Button disabled={disableButtons} margin="3rem 1rem" onClick={signOut}>Sign Out</Button>
+      <Button disabled={disableButtons} onClick={signOut}>Sign Out</Button>
       {/*<h1>テーブルを作る １</h1>
         <table className="table" border="1" width="800">
           <thead className="table-dark">
