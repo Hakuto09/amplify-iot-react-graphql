@@ -440,7 +440,7 @@ const App = ({ signOut }) => {
       case 'date' :
         notes.sort((c1, c2) => (c1.date < c2.date) ? ifC2Bigger : (c1.date > c2.date) ? ifC1Bigger : 0);
         break;
-      case 'device_id' :
+      case 'nickname' :   // device_id
         notes.sort((c1, c2) => (c1.nickname < c2.nickname) ? ifC2Bigger : (c1.nickname > c2.nickname) ? ifC1Bigger : 0);
         break;
       case 'send_cnt' :
@@ -1116,7 +1116,7 @@ const App = ({ signOut }) => {
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
       <div>
-        <table border="1" /*width="1000"*/>
+        <table border="1" cellpadding="5" /*width="1000"*/>
           <thead className="table-dark">
             <tr>
               <th scope="col">
