@@ -425,24 +425,18 @@ const App = ({ signOut }) => {
     setDisableButtons(false);
   }
 
-  async function sortNotes(event, downOrUp, columnName) {
+  async function sortNotes(event, downOrUp) {
     setDisableButtons(true);
     event.preventDefault();
 
-    let ifC1Bigger = (!downOrUp) ? 1 : -1;
-    let ifC2Bigger = (!downOrUp) ? -1 : 1;
     let notesSorted = [];
-
-    switch(columnName) {
-      case 'temp' :
-        notes.sort((c1, c2) => (c1.temp < c2.temp) ? ifC1Bigger : (c1.temp > c2.temp) ? ifC2Bigger : 0);
-        break;
-      case 'general_data00' :
-        notes.sort((c1, c2) => (c1.general_data00 < c2.general_data00) ? ifC1Bigger : (c1.temp > c2.temp) ? ifC2Bigger : 0);
-        break;
+    if(downOrUp) {
+      notes.sort((c1, c2) => (c1.temp < c2.temp) ? 1 : (c1.temp > c2.temp) ? -1 : 0);
+    }
+    else {
+      notes.sort((c1, c2) => (c1.temp < c2.temp) ? -1 : (c1.temp > c2.temp) ? 1 : 0);
     }
     console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes);
-
     Array.prototype.push.apply(notesSorted, notes);
     setNotes(notesSorted);
     console_logger.warn('fetchNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
@@ -1117,24 +1111,16 @@ const App = ({ signOut }) => {
               <th scope="col">
                 temp
                 {/*<br>*/}
-                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "temp")}>
+                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1)}>
                     <TiArrowSortedUp/>
                   </Button>
-                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0, "temp")}>
+                  <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0)}>
                 {/*<Button disabled={disableButtons} size="small" onClick={sortNotes}>*/}
                     <TiArrowSortedDown/>
                   </Button>
                 {/*</br>*/}
               </th>
-              <th scope="col">
-                general_data00
-                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 1, "general_data00")}>
-                  <TiArrowSortedUp/>
-                </Button>
-                <Button disabled={disableButtons} size="small" onClick={(event) => sortNotes(event, 0, "general_data00")}>
-                  <TiArrowSortedDown/>
-                </Button>
-              </th>
+              <th scope="col">general_data00</th>
               <th scope="col">delete</th>
             </tr>
           </thead>
