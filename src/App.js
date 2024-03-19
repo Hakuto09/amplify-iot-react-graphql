@@ -62,7 +62,7 @@ import { mkConfig, generateCsv, asString } from "export-to-csv";
 
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
-const addNewLine = (s: string): string => s + "\n";
+const addNewLine = (s) => s + "\n";
 
 const mockData = [
   {
