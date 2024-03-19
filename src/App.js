@@ -82,12 +82,19 @@ const mockData = [
 // Converts your Array<Object> to a CsvOutput string based on the configs
 const csvOutput = generateCsv(csvConfig)(mockData);
 
-// This would result in a type error
-// const csvOutputWithNewLine = addNewLine(csvOutput);
-// ❌ => CsvOutput is not assignable to type string.
-
 // This unpacks CsvOutput which turns it into a string before use
 const csvOutputWithNewLine = addNewLine(asString(csvOutput));
+
+// Converts your Array<Object> to a CsvOutput string based on the configs
+const csv = generateCsv(csvConfig)(mockData);
+const csvFilename = `${csvConfig.filename}.csv`;
+const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
+
+// Write the csv file to disk
+writeFile(csvFilename, csvBuffer, (err) => {
+  if (err) throw err;
+  console.log("file saved: ", csvFilename);
+});
 
 
 const loggerPrefix = 'amplify-logger'
@@ -163,7 +170,7 @@ let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
 
-console_logger.warn('After csvOutputWithNewLine = addNewLine():', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine);
+console_logger.warn('After csvOutputWithNewLine = addNewLine():', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 
 console_logger.warn('Before App.');
 
