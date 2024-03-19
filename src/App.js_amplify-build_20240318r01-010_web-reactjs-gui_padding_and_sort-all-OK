@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
@@ -56,8 +56,6 @@ import {
   TiArrowUnsorted,
 } from "react-icons/ti";
 
-import { fse } from "fs-extra";
-
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
@@ -114,8 +112,6 @@ var data0s = [];
 //var data1s = new Array(maxLenGraph);
 var data1s = [];
 
-let csvStr = "";
-
 let numOfDevices = 0;
 let g_displayRegisters = true;
 let completeFetchReg = false;
@@ -162,9 +158,6 @@ const App = ({ signOut }) => {
   useEffect(() => {
     fetchNotes(true);
   }, []);
-
-  const anchorRef = useRef<HTMLAnchorElement>(null);
-
 
   /** 開始日の設定 */
   let today0 = new Date();
@@ -432,95 +425,6 @@ const App = ({ signOut }) => {
     setDisableButtons(false);
   }
 
-  /*
-  const downloadCSV = (event, csv, filename) => {
-    setDisableButtons(true);
-    event.preventDefault();
-
-    const link = anchorRef.current
-    if (!link) return
-  
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    link.setAttribute('href', url)
-    link.setAttribute('download', filename)
-    link.click()
-  
-    setDisableButtons(false);
-    event.target.reset();
-  }
-  */
-
-  /*
-  const convertToCSV = () => {
-    const key = User.key()
-    const values = users.map((user) => user.value())
-    const array = [key].concat(values)
-    
-    return array.map((a) => a.join(',')).join('\n')
-  }
-  */
-
-  function csvAddhederAndData(jsons) {
-    let count = 0;
-    let keys = [""];
-    let values = [];
-
-    JSON.parse(jsons[0], (key) => {
-      if(key) {
-        keys.push(key);   // keyの取得
-        count++;
-      }
-    })
-  
-    for(let i = 0; i < count; i++) {
-      if(i == count - 1)  { csvStr = csvStr.concat(keys[i],"\n"); }   // 行末の処理
-      else                { csvStr = csvStr.concat(keys[i],", "); }
-    }
-
-    let j = 0;
-    while(json[j] !== null) {
-      JSON.parse(json[j], (key, value) => {
-        if(key) { values.push(value); }
-      })
-  
-      for(let i = 0; i < count; i++) {
-        if(i == count - 1)  { csvStr = csvStr.concat(values[i],"\n"); }   // 行末の処理
-        else                { csvStr = csvStr.concat(values[i],", "); }
-      }
-
-      j++;
-    }
-  }
-
-  function writeCSV(event, filename) {
-    setDisableButtons(true);
-    event.preventDefault();
-
-    if(csvStr == "") {
-      console_logger.warn("empty Text .")
-      return 
-    }
-  
-    // 既存ファイルの上書き "overwrite" / 既存ファイルの書き換え "rewrite"
-    const WRITE_CONFIG = "rewrite"
-  
-    if (WRITE_CONFIG == "rewrite") {
-      fse.writeFileSync(filename, csvStr)
-      console_logger.warn("Rewrite csv file.")
-    }
-//    else if (WRITE_CONFIG == "overwrite") {
-//      fs.appendFileSync("./test.csv",csvStr);
-//      console.log("overwrite csv file .")
-//    }
-    else {
-      console_logger.warn("Please check! cannot write csvfile.")
-    }
-
-    setDisableButtons(false);
-    event.target.reset();
-  }
-
   async function sortNotes(event, downOrUp, columnName) {
     setDisableButtons(true);
     event.preventDefault();
@@ -569,6 +473,63 @@ const App = ({ signOut }) => {
     Legend,
     TimeScale
   );
+
+/*
+  class DeviceData {
+    constructor(deviceId) {
+      this.deviceId = deviceId;
+      this.maxLen = maxLenGraph;
+//      this.maxLen = 50;
+      this.timeData = new Array(this.maxLen);
+      this.temperatureData = new Array(this.maxLen);
+      this.generalData00 = new Array(this.maxLen);
+    }
+
+    resetData() {
+      this.timeData.length = 0;
+      this.temperatureData.length = 0;
+      this.generalData00.length = 0;
+    }
+
+    addData(time, temperature, humidity) {
+      this.timeData.push(time);
+      this.temperatureData.push(temperature);
+      this.generalData00.push(humidity || null);
+
+      if(this.timeData.length > this.maxLen) {
+        this.timeData.shift();
+        this.temperatureData.shift();
+        this.generalData00.shift();
+      }
+    }
+  }
+*/
+
+/*
+  function OnSelectionChange() {
+    console_logger.warn('OnSelectionChange(): In.  listOfDevices.selectedIndex ', listOfDevices.selectedIndex);
+    g_selectedIndex = listOfDevices.selectedIndex;
+    console_logger.warn('OnSelectionChange(): In.  g_selectedIndex ', g_selectedIndex);
+    console_logger.warn('OnSelectionChange(): In.  trackedDevices.devices ', trackedDevices.devices);
+    //const device = trackedDevices.findDevice(listOfDevices[listOfDevices.selectedIndex].text);
+    const device = trackedDevices.devices[listOfDevices.selectedIndex];
+    console_logger.warn('OnSelectionChange(): device ', device);
+    //chartData.labels = structuredClone(device.timeData);
+    labels = structuredClone(device.timeData);
+    console_logger.warn('OnSelectionChange(): device.timeData ', device.timeData);
+    console_logger.warn('OnSelectionChange():  ', labels);
+    //chartData.datasets[0].data = structuredClone(device.temperatureData);
+    data0s = structuredClone(device.temperatureData);
+    console_logger.warn('OnSelectionChange(): device.temperatureData ', device.temperatureData);
+    console_logger.warn('OnSelectionChange(): data0s ', data0s);
+    //chartData.datasets[1].data = structuredClone(device.generalData00);
+    data1s = structuredClone(device.generalData00);
+    console_logger.warn('OnSelectionChange(): device.generalData00 ', device.generalData00);
+    console_logger.warn('OnSelectionChange(): data1s ', data1s);
+    
+    //myLineChart.update();
+  }
+*/
 
   // When a web socket message arrives:
   // 1. Unpack it
@@ -647,7 +608,112 @@ const App = ({ signOut }) => {
       }
       console_logger.warn('onMessage(): After graph data. input loop:', ' loops ', loops, ' labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
     }
+ 
+/*
+    var separatorOfNotes = [];
+
+    for(let i = 0; i < numOfNotesTotal; ++i) {
+      if(i == 0) {
+        separatorOfNotes.push(0);
+        continue;
+      }
+      if(notesFromAPI[i].id !== notesFromAPI[i - 1].id) {
+        separatorOfNotes.push(i);
+      }
+    }
+
+    console_logger.warn('onMessage(): separatorOfNotes ', separatorOfNotes);
+    console_logger.warn('onMessage(): separatorOfNotes.length ', separatorOfNotes.length);
+
+    const numOfSeparator = separatorOfNotes.length
+    console_logger.warn('onMessage(): numOfSeparator ', numOfSeparator);
+    for(let i = 0; i < numOfSeparator; ++i) {
+      console_logger.warn('onMessage(): Loop of numOfSeparator for id  i ', i, ' separatorOfNotes[i] ', separatorOfNotes[i], 'notesFromAPI[separatorOfNotes[i]].id ', notesFromAPI[separatorOfNotes[i]].id);
+    }
+
+    var numOfNotes = [];
+    for(let i = 0; i < numOfSeparator; ++i) {
+      if(i == numOfSeparator - 1) {
+        numOfNotes.push(numOfNotesTotal - separatorOfNotes[i]);
+      }
+      else {
+        numOfNotes.push(separatorOfNotes[i + 1] - separatorOfNotes[i]);
+      }
+    }
+    console_logger.warn('onMessage(): numOfNotes.length ', numOfNotes.length);
+    console_logger.warn('onMessage(): numOfNotes ', numOfNotes);
+
+    console_logger.warn('onMessage(): Before numOfSeparator loop. trackedDevices ', trackedDevices);
+    for(let i = 0; i < numOfSeparator; ++i) {
+      if(i >= numOfCreatedDevices) {
+        var id = notesFromAPI[separatorOfNotes[i]].id;
+        const newDeviceData = new DeviceData(id);
+        trackedDevices.devices.push(newDeviceData);
+        console_logger.warn('onMessage(): After trackedDevices.devices.push(). newDeviceData ', newDeviceData);
+    
+        // add device to the UI list
+        const node = document.createElement('option');
+        const nodeText = document.createTextNode(id);
+        node.appendChild(nodeText);
+        listOfDevices.appendChild(node);
+
+        numOfCreatedDevices++;
+      }
+    }
+
+    let numDevices = trackedDevices.getDevicesCount();
+    console_logger.warn('onMessage(): numDevices ', numDevices);
+    
+    deviceCount.innerText = numDevices === 1 ? `${numDevices} device` : `${numDevices} devices`;
+    console_logger.warn('onMessage(): deviceCount.innerText ', deviceCount.innerText);
+    
+    let k = 0;
+    for(let i = 0; i < numOfSeparator; ++i) {     // Loop for Devices.
+      trackedDevices.devices[i].resetData();
+      g_devices[i] = trackedDevices.devices[i];
+      for(let j = 0; j < numOfNotes[i]; ++j) {    // Loop for Notes of each Device.
+        trackedDevices.devices[i].addData(notesFromAPI[k].date, notesFromAPI[k].temp, notesFromAPI[k].humi);
+        //console_logger.warn('onMessage(): Loop of k.  k ', k, ' id ', notesFromAPI[k].id, ' date ', notesFromAPI[k].date, ' temp ', notesFromAPI[k].temp, ' humi ', notesFromAPI[k].humi);
+        k++;
+      }
+      console_logger.warn('onMessage(): i Loop of numOfSeparator.  i ', i, ' trackedDevices.devices[i] ', trackedDevices.devices[i]);;
+    }
+    console_logger.warn('onMessage(): g_devices ', g_devices);
+*/
+
+    // if this is the first device being discovered, auto-select it
+/*
+    if(needsAutoSelect) {
+      needsAutoSelect = false;
+      listOfDevices.selectedIndex = 0;
+    }
+*/
+//    OnSelectionChange();
   };
+
+/*
+  //console_logger.warn('before App rutern. 0: chartOptions ', chartOptions, ' chartData ', chartData);
+  console_logger.warn('before App rutern. 0: trackedDevices ', trackedDevices);
+  console_logger.warn('before App rutern. 0: g_devices ', g_devices);
+
+  if(g_devices.length) {
+    let device2 = g_devices[0];
+    console_logger.warn('before App rutern. 0: device2 ', device2, ' needsAutoSelect ', needsAutoSelect, ' listOfDevices ', listOfDevices);
+    if(!needsAutoSelect) {
+//      device2 = g_devices[listOfDevices.selectedIndex];
+      console_logger.warn('before App rutern. 0: g_selectedIndex ', g_selectedIndex);
+      device2 = g_devices[g_selectedIndex];
+    }
+    console_logger.warn('before App rutern. 0b: device2 ', device2);
+  
+    labels = structuredClone(device2.timeData);
+    console_logger.warn('before App rutern. 0b: device2.timeData ', device2.timeData);
+    data0s = structuredClone(device2.temperatureData);
+    console_logger.warn('before App rutern. 0b: device2.temperatureData ', device2.temperatureData);
+    data1s = structuredClone(device2.generalData00);
+    console_logger.warn('before App rutern. 0b: device2.generalData00 ', device2.generalData00);
+  }
+*/
 
   console_logger.warn('App(): before rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
 
@@ -1023,13 +1089,6 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <View as="form" margin="0 0" onSubmit={(event) => writeCSV(event, 'test_output.csv')}>
-        <Flex direction="row" justifyContent="right">
-          <Button disabled={disableButtons} type="submit" variation="primary">
-            Output CSV
-          </Button>
-        </Flex>
-      </View>
       {/*<View margin="3rem 0">
         {notes.map((note) => (
           <Flex
