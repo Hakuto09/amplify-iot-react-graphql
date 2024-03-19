@@ -88,7 +88,6 @@ const csvOutput = generateCsv(csvConfig)(mockData);
 
 // This unpacks CsvOutput which turns it into a string before use
 const csvOutputWithNewLine = addNewLine(asString(csvOutput));
-console_logger.warn('After csvOutputWithNewLine = addNewLine():', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine);
 
 
 const loggerPrefix = 'amplify-logger'
@@ -162,6 +161,9 @@ let deviceNames = [];
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
+
+
+console_logger.warn('After csvOutputWithNewLine = addNewLine():', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine);
 
 console_logger.warn('Before App.');
 
