@@ -125,18 +125,6 @@ let deviceNames = [];
 
 //let sleep_cnt = 0;
 
-// All the devices in the list (those that have been sending telemetry)
-/*
-class TrackedDevices {
-  constructor() {
-    this.devices = [];
-  }
-
-  getDevicesCount() {
-    return this.devices.length;
-  }
-}
-*/
 
 //const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
