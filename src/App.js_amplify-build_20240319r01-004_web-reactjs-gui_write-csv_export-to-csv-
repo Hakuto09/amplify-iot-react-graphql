@@ -515,13 +515,11 @@ const App = ({ signOut }) => {
   }
   */
 
+  /*
   function writeCSV(event, filename) {
     setDisableButtons(true);
     event.preventDefault();
 
-    console_logger.warn("writeCSV() In:");
-
-    /*
     if(csvStr == "") {
       console_logger.warn("empty Text .")
       return 
@@ -541,11 +539,11 @@ const App = ({ signOut }) => {
     else {
       console_logger.warn("Please check! cannot write csvfile.")
     }
-    */
 
     setDisableButtons(false);
     event.target.reset();
   }
+  */
 
   async function sortNotes(event, downOrUp, columnName) {
     setDisableButtons(true);
