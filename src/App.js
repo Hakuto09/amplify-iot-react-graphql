@@ -59,6 +59,10 @@ import {
 //import { fse } from "fs-extra";
 
 import { mkConfig, generateCsv, asString } from "export-to-csv";
+//import { writeFile } from "node:fs";
+import { writeFile } from "fs";
+//import { Buffer } from "node:buffer";
+import { Buffer } from "buffer";
 
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
