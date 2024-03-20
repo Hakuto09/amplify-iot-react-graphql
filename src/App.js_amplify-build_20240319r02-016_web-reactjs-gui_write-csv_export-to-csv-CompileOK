@@ -104,16 +104,6 @@ writeFile(csvFilename, csvBuffer, (err) => {
 });
 */
 
-//const csv = arrayToCsv(data);
-const blob = new Blob([csv], {type: "text/csv"});
-const url = URL.createObjectURL(blob);
-const a = document.createElement("a");
-a.href = url;
-a.download = "data.csv";
-a.click();
-URL.revokeObjectURL(url);
-
-
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
 const username = 'amplify-user' //実際に利用するときは、未認証ユーザーにはUUID、認証済みユーザーにはusernameなどの識別子を入れてログを取ると良さそう
@@ -185,9 +175,7 @@ let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
 
-console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
-console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
-
+console_logger.warn('After csvOutputWithNewLine = addNewLine():', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 
 console_logger.warn('Before App.');
 
