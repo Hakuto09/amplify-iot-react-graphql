@@ -113,20 +113,6 @@ a.download = "data.csv";
 a.click();
 URL.revokeObjectURL(url);
 
-const opts = {
-  suggestedName: 'example',
-  types: [{
-    description: 'CSV file',
-    accept: {'text/csv': ['.csv']},
-  }],
-};
-const handle = await window.showSaveFilePicker(opts);
-const writable = await handle.createWritable();
-//await writable.write(csv.value);
-await writable.write(csv);
-await writable.close();
-
-
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
@@ -201,8 +187,6 @@ var g_selectedIndex = -1/*0*/;
 
 console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
-console_logger.warn('For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
-
 
 
 console_logger.warn('Before App.');
