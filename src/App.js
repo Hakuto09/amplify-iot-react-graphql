@@ -166,8 +166,6 @@ let deviceNames = [];
 
 //let sleep_cnt = 0;
 
-
-//const trackedDevices = new TrackedDevices();
 var numOfCreatedDevices = 0;
 let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
