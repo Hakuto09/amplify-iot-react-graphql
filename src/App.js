@@ -134,7 +134,6 @@ button.addEventListener('click', async () => {
 })
 
 
-
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
 const username = 'amplify-user' //実際に利用するときは、未認証ユーザーにはUUID、認証済みユーザーにはusernameなどの識別子を入れてログを取ると良さそう
