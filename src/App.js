@@ -126,6 +126,9 @@ button.addEventListener('click', async () => {
   };
   const handle = await window.showSaveFilePicker(opts);
   const writable = await handle.createWritable();
+
+  console_logger.warn('For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
+
   await writable.write(textarea.value);
   await writable.close();
 })
@@ -205,7 +208,6 @@ var g_selectedIndex = -1/*0*/;
 
 console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
-console_logger.warn('For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
 
 
 
