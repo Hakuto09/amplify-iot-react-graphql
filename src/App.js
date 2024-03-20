@@ -59,7 +59,7 @@ import {
 import { mkConfig, generateCsv, asString } from "export-to-csv";
 //import { writeFile } from "node:fs";
 //import { writeFile } from "fs";
-import { writeFile } from "fs-extra";
+//  import { writeFile } from "fs-extra";
 //import { Buffer } from "node:buffer";
 import { Buffer } from "buffer";
 
@@ -97,11 +97,12 @@ const csvFilename = `${csvConfig.filename}.csv`;
 const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
 
 // Write the csv file to disk
+/*
 writeFile(csvFilename, csvBuffer, (err) => {
   if (err) throw err;
   console.log("file saved: ", csvFilename);
 });
-
+*/
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
