@@ -113,18 +113,22 @@ a.download = "data.csv";
 a.click();
 URL.revokeObjectURL(url);
 
-const opts = {
-  suggestedName: 'example',
-  types: [{
-    description: 'CSV file',
-    accept: {'text/csv': ['.csv']},
-  }],
-};
-const handle = await window.showSaveFilePicker(opts);
-const writable = await handle.createWritable();
-//await writable.write(csv.value);
-await writable.write(csv);
-await writable.close();
+const button = document.querySelector('button')
+const textarea = document.querySelector('textarea')
+
+button.addEventListener('click', async () => {
+  const opts = {
+    suggestedName: 'example',
+    types: [{
+      description: 'Text file',
+      accept: {'text/plain': ['.txt']},
+    }],
+  };
+  const handle = await window.showSaveFilePicker(opts);
+  const writable = await handle.createWritable();
+  await writable.write(textarea.value);
+  await writable.close();
+})
 
 
 
