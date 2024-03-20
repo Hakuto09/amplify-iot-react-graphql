@@ -112,7 +112,7 @@ Amplify.configure({
   ...awsExports,
 })
 
-const LOG_LEVEL = 'INFO' //どのレベルのログまでロギングするか
+const LOG_LEVEL = 'INFO'  //どのレベルのログまでロギングするか
 
 //const logger = new Logger('TestLogger', LOG_LEVEL)
 //Amplify.register(logger)
