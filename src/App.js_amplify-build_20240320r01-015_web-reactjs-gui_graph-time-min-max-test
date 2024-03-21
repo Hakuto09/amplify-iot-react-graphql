@@ -161,7 +161,7 @@ var fetchById = true;
 var g_devices = [];
 var maxLenList = 1000;
 //var maxLenGraph = 50;
-var maxLenGraph = maxLenList;
+var maxLenGraph = 1000;
 //var labels = new Array(maxLenGraph);
 var labels = [];
 //var data0s = new Array(maxLenGraph);
@@ -175,7 +175,6 @@ let completeFetchReg = false;
 let completeFetchReg2 = false;
 let completeFetchData = false;
 let deviceNames = [];
-let graphRangeMode = 1;   // 0: By data existence, 1: By user setting
 
 //let sleep_cnt = 0;
 
@@ -260,7 +259,7 @@ const App = ({ signOut }) => {
   startDateTimeJstIso = startDateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
   console_logger.warn('App() After toISOString():', ' startDateTimeJstIso ', startDateTimeJstIso, ' startDateTimeJstTmp ', startDateTimeJstTmp);
 
-  const [endDateTime, setEndDateTime] = useState(tomorrow0);
+  const [endDateTime, setEndDateTime] = useState(tomorrow0)
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
   console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
   /* ISO形式かつ日本時間へ変換していく */
@@ -700,13 +699,6 @@ const App = ({ signOut }) => {
       }
     }
     else {
-      if(graphRangeMode == 1) {
-        // Set graph start datetime.
-        labels.push(startDateTimeJstIso.slice(0, 23));
-        data0s.push(null);
-        data1s.push(null);
-      }
-
       // add graph data.
       let loops = Math.min(numOfNotesTotal, maxLenGraph);
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
@@ -732,14 +724,10 @@ const App = ({ signOut }) => {
 //        data1s[i] = notesFromAPI[j].general_data00;
         data1s.push(notesFromAPI[j].general_data00);
       }
-
-      if(graphRangeMode == 1) {
-        // Set graph end datetime.
-        labels.push(endDateTimeJstIso.slice(0, 23));
-        data0s.push(null);
-        data1s.push(null);
-      }
-
+      // Just graph test.
+      labels.push(endDateTimeJstIso.slice(0, 23));
+      data0s.push(null);
+      data1s.push(null);
       console_logger.warn('onMessage(): After graph data. input loop:', ' loops ', loops, ' labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
     }
   };
