@@ -773,7 +773,7 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
 //            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
-//            unit: 'week',
+            unit: 'week',
 //            unit: 'day',
 ////            unit: 'minute',
 //            unit: 'min',
