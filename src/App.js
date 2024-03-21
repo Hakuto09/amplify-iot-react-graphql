@@ -1085,7 +1085,7 @@ const App = ({ signOut }) => {
           />
         </div>
       </form>
-      <form method="post" onSubmit={handleSubmit}>
+      <form method="post" margin="0 2rem" onChange={handleSubmit}>
         <label>
           データ数
           <select name="selectedFruit" defaultValue="orange">
