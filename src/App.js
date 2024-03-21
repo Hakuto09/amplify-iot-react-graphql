@@ -780,9 +780,9 @@ const App = ({ signOut }) => {
 //            unit: 'seconds',
 //            unit: 'second',
 //            unit: 'ss',
-//              unit: 'millisecond',
+//            unit: 'millisecond',
             displayFormats: {
-//              week: 'yyyy-MM-dd'
+              week: 'yyyy-MM-dd'
 //              day: 'yyyy-MM-DD'
 //              min: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
