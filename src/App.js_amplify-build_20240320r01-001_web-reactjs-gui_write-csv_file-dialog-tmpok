@@ -92,9 +92,9 @@ const csvOutput = generateCsv(csvConfig)(mockData);
 const csvOutputWithNewLine = addNewLine(asString(csvOutput));
 
 // Converts your Array<Object> to a CsvOutput string based on the configs
-//const csv = generateCsv(csvConfig)(mockData);
-//const csvFilename = `${csvConfig.filename}.csv`;
-//const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
+const csv = generateCsv(csvConfig)(mockData);
+const csvFilename = `${csvConfig.filename}.csv`;
+const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
 
 // Write the csv file to disk
 /*
@@ -105,15 +105,14 @@ writeFile(csvFilename, csvBuffer, (err) => {
 */
 
 //const csv = arrayToCsv(data);
-//const blob = new Blob([csv], {type: "text/csv"});
-//const url = URL.createObjectURL(blob);
-//const a = document.createElement("a");
-//a.href = url;
-//a.download = "data.csv";
-//a.click();
-//URL.revokeObjectURL(url);
+const blob = new Blob([csv], {type: "text/csv"});
+const url = URL.createObjectURL(blob);
+const a = document.createElement("a");
+a.href = url;
+a.download = "data.csv";
+a.click();
+URL.revokeObjectURL(url);
 
-/*
 const button = document.querySelector('button')
 const textarea = document.querySelector('textarea')
 
@@ -133,7 +132,7 @@ button.addEventListener('click', async () => {
   await writable.write(textarea.value);
   await writable.close();
 })
-*/
+
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
@@ -190,6 +189,8 @@ var data0s = [];
 //var data1s = new Array(maxLenGraph);
 var data1s = [];
 
+let csvStr = "";
+
 let numOfDevices = 0;
 let g_displayRegisters = true;
 let completeFetchReg = false;
@@ -204,8 +205,8 @@ let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
 
-//console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
-//console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
+console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
+console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
 
 
@@ -499,6 +500,25 @@ const App = ({ signOut }) => {
   }
 
   /*
+  const downloadCSV = (event, csv, filename) => {
+    setDisableButtons(true);
+    event.preventDefault();
+
+    const link = anchorRef.current
+    if (!link) return
+  
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', filename)
+    link.click()
+  
+    setDisableButtons(false);
+    event.target.reset();
+  }
+  */
+
+  /*
   const convertToCSV = () => {
     const key = User.key()
     const values = users.map((user) => user.value())
@@ -508,11 +528,11 @@ const App = ({ signOut }) => {
   }
   */
 
-  function convertJSONtoCSV(jsons) {
+  /*
+  function csvAddhederAndData(jsons) {
     let count = 0;
     let keys = [""];
     let values = [];
-    let csvStr = "";
 
     JSON.parse(jsons[0], (key) => {
       if(key) {
@@ -525,8 +545,6 @@ const App = ({ signOut }) => {
       if(i == count - 1)  { csvStr = csvStr.concat(keys[i],"\n"); }   // 行末の処理
       else                { csvStr = csvStr.concat(keys[i],", "); }
     }
-
-    console_logger.warn('convertJSONtoCSV() After convert keys: ', " csvStr ", csvStr);
 
     let j = 0;
     while(json[j] !== null) {
@@ -541,13 +559,10 @@ const App = ({ signOut }) => {
 
       j++;
     }
-
-    console_logger.warn('convertJSONtoCSV() After convert values: ', " csvStr ", csvStr);
-
-    return csvStr;
   }
+  */
 
-  async function writeCSV(event/*, filename*/) {
+  async function writeCSV(event, filename) {
     setDisableButtons(true);
     event.preventDefault();
 
@@ -562,11 +577,10 @@ const App = ({ signOut }) => {
     };
     const handle = await window.showSaveFilePicker(opts);
     const writable = await handle.createWritable();
-    const csv = convertJSONtoCSV(notes);
   
-    console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable, ' csv ', csv);
+    console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
   
-    await writable.write(csv);
+    await writable.write("test");
     await writable.close();
 
     /*
@@ -1097,7 +1111,7 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <View as="form" margin="0 0" onSubmit={(event) => writeCSV(event/*, 'test_output.csv'*/)}>
+      <View as="form" margin="0 0" onSubmit={(event) => writeCSV(event, 'test_output.csv')}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
             Output CSV
