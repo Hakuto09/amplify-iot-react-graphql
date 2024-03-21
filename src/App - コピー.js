@@ -559,7 +559,6 @@ const App = ({ signOut }) => {
     }
     */
 
-    /*
     notes.map((note) => (
       csvStr = csvStr.concat(note.id,", ");
       csvStr = csvStr.concat(note.date,", ");
@@ -568,16 +567,6 @@ const App = ({ signOut }) => {
       csvStr = csvStr.concat(note.temp,", ");
       csvStr = csvStr.concat(note.general_data00,"\n");
     ));
-    */
-
-    for(let i = 0; i < numOfColumns; i++) {
-      csvStr = csvStr.concat(notes[i].id,", ");
-      csvStr = csvStr.concat(notes[i].date,", ");
-      csvStr = csvStr.concat(notes[i].nickname,", ");
-      csvStr = csvStr.concat(notes[i].send_cnt,", ");
-      csvStr = csvStr.concat(notes[i].temp,", ");
-      csvStr = csvStr.concat(notes[i].general_data00,"\n");
-    }
 
     console_logger.warn('convertJSONtoCSV() After convert values: ', " csvStr ", csvStr);
 

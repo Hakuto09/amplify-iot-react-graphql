@@ -508,40 +508,30 @@ const App = ({ signOut }) => {
   }
   */
 
-  function convertJSONtoCSV(/*jsons*/) {
-    let numOfColumns = 6;
-    let numOfRows = notes.length;
-//    let keys = [""];
-    let keys = ["id", "date", "device_id", "send_cnt", "temp", "general_data00"];
+  function convertJSONtoCSV(jsons) {
+    let count = 0;
+    let keys = [""];
     let values = [];
     let csvStr = "";
 
-//    console_logger.warn('convertJSONtoCSV() In: '/*, " jsons ", jsons*/);
-    console_logger.warn('convertJSONtoCSV() In: ', ' numOfColumns ', numOfColumns, ' numOfRows ', numOfRows);
+    console_logger.warn('convertJSONtoCSV() In: ', " jsons ", jsons);
 
-    /*
     JSON.parse(jsons[0], (key) => {
       if(key) {
         keys.push(key);   // keyの取得
         count++;
       }
     })
-    */
   
     console_logger.warn('convertJSONtoCSV() Before convert keys: ', " keys ", keys);
 
-    for(let i = 0; i < numOfColumns; i++) {
-      if(i == numOfColumns - 1) {   // 行末の処理
-        csvStr = csvStr.concat(keys[i],"\n");
-      }
-      else {
-        csvStr = csvStr.concat(keys[i],", ");
-      }
+    for(let i = 0; i < count; i++) {
+      if(i == count - 1)  { csvStr = csvStr.concat(keys[i],"\n"); }   // 行末の処理
+      else                { csvStr = csvStr.concat(keys[i],", "); }
     }
 
     console_logger.warn('convertJSONtoCSV() After convert keys: ', " csvStr ", csvStr);
 
-    /*
     let j = 0;
     while(jsons[j] !== null) {
       JSON.parse(jsons[j], (key, value) => {
@@ -556,27 +546,6 @@ const App = ({ signOut }) => {
       }
 
       j++;
-    }
-    */
-
-    /*
-    notes.map((note) => (
-      csvStr = csvStr.concat(note.id,", ");
-      csvStr = csvStr.concat(note.date,", ");
-      csvStr = csvStr.concat(note.nickname,", ");
-      csvStr = csvStr.concat(note.send_cnt,", ");
-      csvStr = csvStr.concat(note.temp,", ");
-      csvStr = csvStr.concat(note.general_data00,"\n");
-    ));
-    */
-
-    for(let i = 0; i < numOfColumns; i++) {
-      csvStr = csvStr.concat(notes[i].id,", ");
-      csvStr = csvStr.concat(notes[i].date,", ");
-      csvStr = csvStr.concat(notes[i].nickname,", ");
-      csvStr = csvStr.concat(notes[i].send_cnt,", ");
-      csvStr = csvStr.concat(notes[i].temp,", ");
-      csvStr = csvStr.concat(notes[i].general_data00,"\n");
     }
 
     console_logger.warn('convertJSONtoCSV() After convert values: ', " csvStr ", csvStr);
@@ -599,7 +568,7 @@ const App = ({ signOut }) => {
     };
     const handle = await window.showSaveFilePicker(opts);
     const writable = await handle.createWritable();
-    const csv = convertJSONtoCSV(/*notes*/);
+    const csv = convertJSONtoCSV(notes);
   
     console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable, ' csv ', csv);
   
