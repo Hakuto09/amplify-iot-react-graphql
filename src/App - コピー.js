@@ -278,12 +278,11 @@ const App = ({ signOut }) => {
     e.preventDefault();
     // Read the form data
     const form = e.target;
-    console_logger.warn('handleSubmit() After form = e.target: ', ' e ', e, ' form ', form);
     const formData = new FormData(form);
     // You can pass formData as a fetch body directly:
     fetch('/some-api', { method: form.method, body: formData });
     // You can generate a URL out of it, as the browser does by default:
-    console_logger.warn('handleSubmit() After fetch(/some-api): ', ' new URLSearchParams(formData).toString() ', new URLSearchParams(formData).toString());
+    console_logger.warn('handleSubmit() After fetch(/some-api): ', new URLSearchParams(formData).toString());
     // You can work with it as a plain object.
     const formJson = Object.fromEntries(formData.entries());
     console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' formJson ', formJson); // (!) This doesn't include multiple select values
