@@ -774,8 +774,8 @@ const App = ({ signOut }) => {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
 //            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
 //            unit: 'week',
-//            unit: 'day',
-            unit: 'minute',
+            unit: 'day',
+////            unit: 'minute',
 //            unit: 'min',
 //            unit: 'seconds',
 //            unit: 'second',
@@ -783,9 +783,8 @@ const App = ({ signOut }) => {
 //            unit: 'millisecond',
             displayFormats: {
 //              week: 'yyyy-MM-dd'
-//              day: 'yyyy-MM-DD'
+              day: 'yyyy-MM-DD'
 //              min: 'YYYY-MM-DD HH:mm'
-              minute: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
 //              ss: 'YYYY-MM-DD HH:mm:ss'
