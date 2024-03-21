@@ -282,12 +282,12 @@ const App = ({ signOut }) => {
     // You can pass formData as a fetch body directly:
     fetch('/some-api', { method: form.method, body: formData });
     // You can generate a URL out of it, as the browser does by default:
-    console_logger.warn(new URLSearchParams(formData).toString());
+    console_logger.warn('handleSubmit() After fetch(/some-api): ', new URLSearchParams(formData).toString());
     // You can work with it as a plain object.
     const formJson = Object.fromEntries(formData.entries());
-    console_logger.warn(formJson); // (!) This doesn't include multiple select values
+    console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' formJson ', formJson); // (!) This doesn't include multiple select values
     // Or you can get an array of name-value pairs.
-    console_logger.warn([...formData.entries()]);
+    console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' [...formData.entries()] ', [...formData.entries()]);
   }
 
   function update(event) {
