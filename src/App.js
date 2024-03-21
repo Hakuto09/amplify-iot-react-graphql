@@ -559,18 +559,7 @@ const App = ({ signOut }) => {
     }
     */
 
-    /*
-    notes.map((note) => (
-      csvStr = csvStr.concat(note.id,", ");
-      csvStr = csvStr.concat(note.date,", ");
-      csvStr = csvStr.concat(note.nickname,", ");
-      csvStr = csvStr.concat(note.send_cnt,", ");
-      csvStr = csvStr.concat(note.temp,", ");
-      csvStr = csvStr.concat(note.general_data00,"\n");
-    ));
-    */
-
-    for(let i = 0; i < numOfColumns; i++) {
+    for(let i = 0; i < numOfRows; i++) {
       csvStr = csvStr.concat(notes[i].id,", ");
       csvStr = csvStr.concat(notes[i].date,", ");
       csvStr = csvStr.concat(notes[i].nickname,", ");
