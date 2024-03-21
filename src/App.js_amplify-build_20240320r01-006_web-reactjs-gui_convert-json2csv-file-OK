@@ -113,6 +113,27 @@ writeFile(csvFilename, csvBuffer, (err) => {
 //a.click();
 //URL.revokeObjectURL(url);
 
+/*
+const button = document.querySelector('button')
+const textarea = document.querySelector('textarea')
+
+button.addEventListener('click', async () => {
+  const opts = {
+    suggestedName: 'example',
+    types: [{
+      description: 'Text file',
+      accept: {'text/plain': ['.txt']},
+    }],
+  };
+  const handle = await window.showSaveFilePicker(opts);
+  const writable = await handle.createWritable();
+
+  console_logger.warn('For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
+
+  await writable.write(textarea.value);
+  await writable.close();
+})
+*/
 
 const loggerPrefix = 'amplify-logger'
 const appName = 'amplify-iot-react-graphql'
@@ -161,8 +182,7 @@ var fetchById = true;
 
 var g_devices = [];
 var maxLenList = 1000;
-//var maxLenGraph = 50;
-var maxLenGraph = 1000;
+var maxLenGraph = 50;
 //var labels = new Array(maxLenGraph);
 var labels = [];
 //var data0s = new Array(maxLenGraph);
