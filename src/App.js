@@ -273,6 +273,23 @@ const App = ({ signOut }) => {
   endDateTimeJstIso = endDateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
   console_logger.warn('App() After toISOString():', ' endDateTimeJstIso ', endDateTimeJstIso, ' endDateTimeJstTmp ', endDateTimeJstTmp);
 
+  function handleSubmit(e) {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+    // Read the form data
+    const form = e.target;
+    const formData = new FormData(form);
+    // You can pass formData as a fetch body directly:
+    fetch('/some-api', { method: form.method, body: formData });
+    // You can generate a URL out of it, as the browser does by default:
+    console_logger.warn(new URLSearchParams(formData).toString());
+    // You can work with it as a plain object.
+    const formJson = Object.fromEntries(formData.entries());
+    console_logger.warn(formJson); // (!) This doesn't include multiple select values
+    // Or you can get an array of name-value pairs.
+    console_logger.warn([...formData.entries()]);
+  }
+
   function update(event) {
     setDisableButtons(true);
     event.preventDefault();
@@ -1067,6 +1084,16 @@ const App = ({ signOut }) => {
             }}
           />
         </div>
+      </form>
+      <form method="post" onSubmit={handleSubmit}>
+        <label>
+          データ数
+          <select name="selectedFruit" defaultValue="orange">
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
+        </label>
       </form>
       <View as="form" margin="3rem 0" onSubmit={update}>
         <Flex direction="row" justifyContent="center">
