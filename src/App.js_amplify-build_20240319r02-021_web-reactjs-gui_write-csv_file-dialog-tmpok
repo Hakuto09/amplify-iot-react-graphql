@@ -562,26 +562,11 @@ const App = ({ signOut }) => {
   }
   */
 
-  async function writeCSV(event, filename) {
+  function writeCSV(event, filename) {
     setDisableButtons(true);
     event.preventDefault();
 
     console_logger.warn("writeCSV() In:");
-
-    const opts = {
-      suggestedName: 'example',
-      types: [{
-        description: 'CSV file',
-        accept: {'text/csv': ['.csv']},
-      }],
-    };
-    const handle = await window.showSaveFilePicker(opts);
-    const writable = await handle.createWritable();
-  
-    console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
-  
-    await writable.write("test");
-    await writable.close();
 
     /*
     if(csvStr == "") {
