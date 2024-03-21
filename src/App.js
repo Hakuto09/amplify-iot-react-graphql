@@ -514,6 +514,8 @@ const App = ({ signOut }) => {
     let values = [];
     let csvStr = "";
 
+    console_logger.warn('convertJSONtoCSV() In: ', " jsons ", jsons);
+
     JSON.parse(jsons[0], (key) => {
       if(key) {
         keys.push(key);   // keyの取得
@@ -521,6 +523,8 @@ const App = ({ signOut }) => {
       }
     })
   
+    console_logger.warn('convertJSONtoCSV() Before convert keys: ', " keys ", keys);
+
     for(let i = 0; i < count; i++) {
       if(i == count - 1)  { csvStr = csvStr.concat(keys[i],"\n"); }   // 行末の処理
       else                { csvStr = csvStr.concat(keys[i],", "); }
@@ -534,6 +538,8 @@ const App = ({ signOut }) => {
         if(key) { values.push(value); }
       })
   
+      console_logger.warn('convertJSONtoCSV() Before convert values: ', " values ", values);
+
       for(let i = 0; i < count; i++) {
         if(i == count - 1)  { csvStr = csvStr.concat(values[i],"\n"); }   // 行末の処理
         else                { csvStr = csvStr.concat(values[i],", "); }
