@@ -529,8 +529,8 @@ const App = ({ signOut }) => {
     console_logger.warn('convertJSONtoCSV() After convert keys: ', " csvStr ", csvStr);
 
     let j = 0;
-    while(json[j] !== null) {
-      JSON.parse(json[j], (key, value) => {
+    while(jsons[j] !== null) {
+      JSON.parse(jsons[j], (key, value) => {
         if(key) { values.push(value); }
       })
   
