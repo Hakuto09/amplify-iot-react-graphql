@@ -212,12 +212,9 @@ const App = ({ signOut }) => {
 
   const [notes, setNotes] = useState([]);
   console_logger.warn('App() After useState():', ' notes ', notes);
-
   const [disableButtons, setDisableButtons] = useState(false);
-  console_logger.warn('App() After useState():', ' disableButtons ', disableButtons);
 
   const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
-  console_logger.warn('App() After useState():', ' selectedValue1 ', selectedValue1);
 
   useEffect(() => {
     fetchNotes(true);
@@ -1116,8 +1113,8 @@ const App = ({ signOut }) => {
           </select>
         </label>
       /form>*/}
-      {/*<div style={{ width: "600px", margin: "50px" }}>*/}
-      <div style={{ width: "100px" }}>
+      {/* <divstyle={{ width: "600px", margin: "50px" }}>*/}
+      <div>
         <Select
           options={select_options1}
           defaultValue={selectedValue1}
