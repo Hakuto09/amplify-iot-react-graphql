@@ -223,7 +223,7 @@ const App = ({ signOut }) => {
     fetchNotes(true);
   }, []);
 
-//  const anchorRef = useRef<HTMLAnchorElement>(null);
+  const anchorRef = useRef<HTMLAnchorElement>(null);
 
 
   /** 開始日の設定 */
@@ -287,7 +287,6 @@ const App = ({ signOut }) => {
   endDateTimeJstIso = endDateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
   console_logger.warn('App() After toISOString():', ' endDateTimeJstIso ', endDateTimeJstIso, ' endDateTimeJstTmp ', endDateTimeJstTmp);
 
-  /*
   function handleSubmit(e) {
     // Prevent the browser from reloading the page
     e.preventDefault();
@@ -305,7 +304,6 @@ const App = ({ signOut }) => {
     // Or you can get an array of name-value pairs.
     console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' [...formData.entries()] ', [...formData.entries()]);
   }
-  */
 
   function update(event) {
     setDisableButtons(true);
@@ -1160,7 +1158,7 @@ const App = ({ signOut }) => {
       <br></br>
       {/*<div style={{ width: "600px", margin: "50px" }}>*/}
       <div style={{ width: "100px" }}>
-        <label>表示データ数 (Max)</label>
+        <label>表示データ数</label>
         <Select
           options={select_options1}
           defaultValue={selectedValue1}
