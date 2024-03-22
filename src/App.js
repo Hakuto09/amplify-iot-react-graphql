@@ -1112,7 +1112,8 @@ const App = ({ signOut }) => {
           options={select_options1}
           defaultValue={selectedValue1}
           onChange={(value) => {
-            value ? setSelectedValue1(value) : null;
+            setSelectedValue1(value)
+            /*value ? setSelectedValue1(value) : null;*/
           }}
         />
       </div>

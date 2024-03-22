@@ -63,6 +63,15 @@ import { mkConfig, generateCsv, asString } from "export-to-csv";
 //import { Buffer } from "node:buffer";
 import { Buffer } from "buffer";
 
+import Select from "react-select";
+
+
+const select_options1 = [
+  { value: 100, label: "100" },
+  { value: 500, label: "500" },
+  { value: 1000, label: "1000" },
+];
+
 /*
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
@@ -205,6 +214,8 @@ const App = ({ signOut }) => {
   console_logger.warn('App() After useState():', ' notes ', notes);
   const [disableButtons, setDisableButtons] = useState(false);
 
+  const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
+
   useEffect(() => {
     fetchNotes(true);
   }, []);
@@ -278,11 +289,12 @@ const App = ({ signOut }) => {
     e.preventDefault();
     // Read the form data
     const form = e.target;
+    console_logger.warn('handleSubmit() After form = e.target: ', ' e ', e, ' form ', form);
     const formData = new FormData(form);
     // You can pass formData as a fetch body directly:
     fetch('/some-api', { method: form.method, body: formData });
     // You can generate a URL out of it, as the browser does by default:
-    console_logger.warn('handleSubmit() After fetch(/some-api): ', new URLSearchParams(formData).toString());
+    console_logger.warn('handleSubmit() After fetch(/some-api): ', ' new URLSearchParams(formData).toString() ', new URLSearchParams(formData).toString());
     // You can work with it as a plain object.
     const formJson = Object.fromEntries(formData.entries());
     console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' formJson ', formJson); // (!) This doesn't include multiple select values
@@ -1085,7 +1097,7 @@ const App = ({ signOut }) => {
           />
         </div>
       </form>
-      <form method="post" margin="0 2rem" onChange={handleSubmit}>
+      {/*<form method="post" margin="0 2rem" onChange={handleSubmit}>
         <label>
           データ数
           <select name="selectedFruit" defaultValue="orange">
@@ -1094,7 +1106,16 @@ const App = ({ signOut }) => {
             <option value="1000">1000</option>
           </select>
         </label>
-      </form>
+      /form>*/}
+      <div style={{ width: "600px", margin: "50px" }}>
+        <Select
+          options={select_options1}
+          defaultValue={selectedValue1}
+          onChange={(value) => {
+            value ? setSelectedValue1(value) : null;
+          }}
+        />
+      </div>
       <View as="form" margin="3rem 0" onSubmit={update}>
         <Flex direction="row" justifyContent="center">
           <Button disabled={disableButtons} type="submit" variation="primary">
