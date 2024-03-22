@@ -853,7 +853,6 @@ const App = ({ signOut }) => {
         /** yright (y軸・右): Y軸が、複数あるので yleft と yright のように軸にIDを付ける */
         yright: {
           stacked: false,
-          position: "right",
 //          max: totalScoreMax,
 //          min: 0,
         },
@@ -865,7 +864,7 @@ const App = ({ signOut }) => {
     datasets: [
       {
         //fill: false,
-        label: 'Temperature (left)',
+        label: 'Temperature',
         //yAxisID: 'Temperature',
         borderColor: 'rgba(255, 204, 0, 1)',
         //pointBoarderColor: 'rgba(255, 204, 0, 1)',
@@ -879,7 +878,7 @@ const App = ({ signOut }) => {
       {
         //fill: false,
         // label: 'Humidity',
-        label: 'General data (right)',
+        label: 'General data',
         //yAxisID: 'Humidity',
         borderColor: 'rgba(24, 120, 240, 1)',
         //pointBoarderColor: 'rgba(24, 120, 240, 1)',
