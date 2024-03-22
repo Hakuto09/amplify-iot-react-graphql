@@ -394,10 +394,10 @@ const App = ({ signOut }) => {
       }
       */
       notesFromAPI.length = Math.min(notesFromAPI.length, maxLenList);
-      notesFromAPI.length = Math.min(notesFromAPI.length, selectedValue1);
+      notesFromAPI.length = Math.min(notesFromAPI.length, selectedValue1.value);
 
 //      if(!nextToken || notesFromAPI.length >= maxLenList) {
-      if(!nextToken || notesFromAPI.length >= Math.min(maxLenList, selectedValue1)) {
+      if(!nextToken || notesFromAPI.length >= Math.min(maxLenList, selectedValue1.value)) {
           break;
       }
     }
@@ -746,7 +746,7 @@ const App = ({ signOut }) => {
 
       // add graph data.
       let loops = Math.min(numOfNotesTotal, maxLenGraph);
-      loops = Math.min(loops, selectedValue1);
+      loops = Math.min(loops, selectedValue1.value);
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
@@ -1121,9 +1121,9 @@ const App = ({ signOut }) => {
         <Select
           options={select_options1}
           defaultValue={selectedValue1}
-          onChange={(value) => {
-            setSelectedValue1(value)
-            /*value ? setSelectedValue1(value) : null;*/
+          onChange={(selectedValue) => {
+            setSelectedValue1(selectedValue)
+            /*selectedValue ? setSelectedValue1(selectedValue) : null;*/
           }}
         />
       </div>
