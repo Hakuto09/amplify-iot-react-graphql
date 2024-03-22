@@ -844,19 +844,9 @@ const App = ({ signOut }) => {
 //              ss: 'YYYY-MM-DD HH:mm:ss'
             }
           },
-        },
-        yleft: {
-          stacked: false,
-//          max: totalScoreMax,
-//          min: 0,
-        },
-        /** yright (y軸・右): Y軸が、複数あるので yleft と yright のように軸にIDを付ける */
-        yright: {
-          stacked: false,
-//          max: totalScoreMax,
-//          min: 0,
-        },
+        }
       }
+//    }
   };
 
   const chartData = {
@@ -872,8 +862,7 @@ const App = ({ signOut }) => {
         //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
         //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
         //spanGaps: true,
-        yAxisID: "yleft",
-        data: data0s,
+        data: data0s
       },
       {
         //fill: false,
@@ -886,8 +875,7 @@ const App = ({ signOut }) => {
         //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
         //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
         //spanGaps: true,
-        yAxisID: "yright",
-        data: data1s,
+        data: data1s
       }
     ]
   };
