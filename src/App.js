@@ -63,6 +63,15 @@ import { mkConfig, generateCsv, asString } from "export-to-csv";
 //import { Buffer } from "node:buffer";
 import { Buffer } from "buffer";
 
+import Select from "react-select";
+
+
+const select_options = [
+  { value: 100, label: "100" },
+  { value: 500, label: "500" },
+  { value: 1000, label: "1000" },
+];
+
 /*
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
@@ -204,6 +213,8 @@ const App = ({ signOut }) => {
   const [notes, setNotes] = useState([]);
   console_logger.warn('App() After useState():', ' notes ', notes);
   const [disableButtons, setDisableButtons] = useState(false);
+
+  const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
 
   useEffect(() => {
     fetchNotes(true);
@@ -1086,7 +1097,7 @@ const App = ({ signOut }) => {
           />
         </div>
       </form>
-      <form method="post" margin="0 2rem" onChange={handleSubmit}>
+      {/*<form method="post" margin="0 2rem" onChange={handleSubmit}>
         <label>
           データ数
           <select name="selectedFruit" defaultValue="orange">
@@ -1095,7 +1106,16 @@ const App = ({ signOut }) => {
             <option value="1000">1000</option>
           </select>
         </label>
-      </form>
+      /form>*/}
+      <div style={{ width: "600px", margin: "50px" }}>
+        <Select
+          options={select_options1}
+          defaultValue={selectedValue1}
+          onChange={(value) => {
+            value ? setSelectedValue1(value) : null;
+          }}
+        />
+      </div>
       <View as="form" margin="3rem 0" onSubmit={update}>
         <Flex direction="row" justifyContent="center">
           <Button disabled={disableButtons} type="submit" variation="primary">
