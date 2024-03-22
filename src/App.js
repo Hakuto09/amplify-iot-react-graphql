@@ -66,7 +66,7 @@ import { Buffer } from "buffer";
 import Select from "react-select";
 
 
-const select_options = [
+const select_options1 = [
   { value: 100, label: "100" },
   { value: 500, label: "500" },
   { value: 1000, label: "1000" },
