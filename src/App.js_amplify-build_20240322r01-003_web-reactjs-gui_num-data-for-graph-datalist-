@@ -320,8 +320,8 @@ const App = ({ signOut }) => {
     let sortDirection = "";
     let filter = {};
     var nextToken = null;
-//    var limitForFetch = 200;
-    var limitForFetch = 1000;
+//    var limit = 200;
+    var limit = 1000;
 
     if(displayRegisters == true) {
       idForSort = "register";
@@ -362,16 +362,16 @@ const App = ({ signOut }) => {
     }
 
     while(1) {
-      console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limitForFetch ', limitForFetch);
+      console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limit ', limit);
       let apiData = [];
       let variables = {};
 
       if(fetchById == true) {
-//        variables = { id: idForSort, sortDirection: sortDirection, limit: limitForFetch, nextToken: nextToken };
-        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limitForFetch, nextToken: nextToken };
+//        variables = { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limit, nextToken: nextToken };
       }
       else {
-        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limitForFetch, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken };
       }
       console_logger.warn('fetchNotes(): Before graphql(listNotes):', ' variables ', variables);
 
@@ -385,17 +385,12 @@ const App = ({ signOut }) => {
 
       console_logger.warn('fetchNotes(): After graphql(listNotes) etc.:', ' displayRegisters ', displayRegisters, ' apiData ', apiData, ' notesFromAPI ', notesFromAPI, ' nextToken ', nextToken);
 
-      /*
       if(notesFromAPI.length > maxLenList) {
         notesFromAPI.length = maxLenList;
       }
-      */
-      notesFromAPI.length = Math.min(notesFromAPI.length, maxLenList);
-      notesFromAPI.length = Math.min(notesFromAPI.length, selectedValue1);
 
-//      if(!nextToken || notesFromAPI.length >= maxLenList) {
-      if(!nextToken || notesFromAPI.length >= Math.min(maxLenList, selectedValue1)) {
-          break;
+      if(!nextToken || notesFromAPI.length >= maxLenList) {
+        break;
       }
     }
 
@@ -743,7 +738,6 @@ const App = ({ signOut }) => {
 
       // add graph data.
       let loops = Math.min(numOfNotesTotal, maxLenGraph);
-      loops = Math.min(loops, selectedValue1);
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
@@ -1113,8 +1107,7 @@ const App = ({ signOut }) => {
           </select>
         </label>
       /form>*/}
-      {/* <divstyle={{ width: "600px", margin: "50px" }}>*/}
-      <div>
+      <div style={{ width: "600px", margin: "50px" }}>
         <Select
           options={select_options1}
           defaultValue={selectedValue1}
