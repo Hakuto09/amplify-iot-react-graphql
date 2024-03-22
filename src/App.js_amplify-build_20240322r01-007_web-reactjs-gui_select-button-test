@@ -1116,10 +1116,8 @@ const App = ({ signOut }) => {
           </select>
         </label>
       /form>*/}
-      <br></br>
       {/*<div style={{ width: "600px", margin: "50px" }}>*/}
       <div style={{ width: "100px" }}>
-        <label>表示データ数</label>
         <Select
           options={select_options1}
           defaultValue={selectedValue1}
