@@ -196,7 +196,8 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
-//let canvasContext = null;
+let canvasContext = null;
+let gotContextFlag = false;
 let chart = null;  // define chart variable outside of function
 
 console_logger.warn('Before App.');
@@ -229,12 +230,13 @@ const App = ({ signOut }) => {
   console_logger.warn('App() After useState():', ' loaded ', loaded);
 
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
-//  useEffect(()=>{
-//    const canvas = document.getElementById("canvas")
-//    /*const */canvasContext = canvas.getContext("2d")
-//    setContext(canvasContext)
-//    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' context ', context);
-//  },[])
+  useEffect(()=>{
+    const canvas = document.getElementById("canvas")
+    /*const */canvasContext = canvas.getContext("2d")
+    gotContextFlag = true;
+    setContext(canvasContext)
+    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' gotContextFlag ', gotContextFlag, ' context ', context);
+  },[])
 
   useEffect(() => {
     fetchNotes(true);
@@ -955,26 +957,32 @@ const App = ({ signOut }) => {
 //  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
 
   if(chart) {
-    chart.clear();
+//    chart.clear();
     chart.destroy();    // destroy before new chart.
   }
 
-  const canvas = document.getElementById("canvas")
-  const canvasContext = canvas.getContext("2d")
+//  const canvas = document.getElementById("canvas")
+//  const canvasContext = canvas.getContext("2d")
 
-//  if(canvasContext) {
-  chart = new ChartJS(/*ctx*//*context*/canvasContext, {
-    type: 'line',
-    data: {
+  if(canvasContext) {
+    chart = new ChartJS(/*ctx*//*context*/canvasContext, {
+      type: 'line',
+      data: {
       labels: labels,     // ラベルを設定
-      datasets: [
-        datasets0,
-        datasets1
-      ]
-    },
-    options: chartOptions
-  });
-//  }
+        datasets: [
+          datasets0,
+          datasets1
+        ]
+      },
+      options: chartOptions
+    });
+  }
+  else {
+    if(gotContextFlag) {
+      canvas = document.getElementById("canvas")
+      canvasContext = canvas.getContext("2d")
+    }
+  }
 
 //  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
