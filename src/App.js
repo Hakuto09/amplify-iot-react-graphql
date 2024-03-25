@@ -959,7 +959,7 @@ const App = ({ signOut }) => {
     chart.destroy();    // destroy before new chart.
   }
 
-  if(canvasContext) {}
+  if(canvasContext) {
   chart = new ChartJS(/*ctx*//*context*/canvasContext, {
     type: 'line',
     data: {
