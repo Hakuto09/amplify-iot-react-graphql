@@ -196,7 +196,7 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
-let canvasContext = null;
+//let canvasContext = null;
 let chart = null;  // define chart variable outside of function
 
 console_logger.warn('Before App.');
@@ -229,12 +229,12 @@ const App = ({ signOut }) => {
   console_logger.warn('App() After useState():', ' loaded ', loaded);
 
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
-  useEffect(()=>{
-    const canvas = document.getElementById("canvas")
-    /*const */canvasContext = canvas.getContext("2d")
-    setContext(canvasContext)
-    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' context ', context);
-  },[])
+//  useEffect(()=>{
+//    const canvas = document.getElementById("canvas")
+//    /*const */canvasContext = canvas.getContext("2d")
+//    setContext(canvasContext)
+//    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' context ', context);
+//  },[])
 
   useEffect(() => {
     fetchNotes(true);
@@ -959,7 +959,10 @@ const App = ({ signOut }) => {
     chart.destroy();    // destroy before new chart.
   }
 
-  if(canvasContext) {
+  const canvas = document.getElementById("canvas")
+  const canvasContext = canvas.getContext("2d")
+
+//  if(canvasContext) {
   chart = new ChartJS(/*ctx*//*context*/canvasContext, {
     type: 'line',
     data: {
@@ -971,7 +974,7 @@ const App = ({ signOut }) => {
     },
     options: chartOptions
   });
-  }
+//  }
 
 //  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
