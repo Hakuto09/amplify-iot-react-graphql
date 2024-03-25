@@ -63,8 +63,6 @@ import { mkConfig, generateCsv, asString } from "export-to-csv";
 //import { Buffer } from "node:buffer";
 import { Buffer } from "buffer";
 
-import 'chart.js/auto';
-
 import Select from "react-select";
 
 
