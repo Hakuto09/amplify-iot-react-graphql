@@ -196,6 +196,7 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
+let canvasContext;
 let chart = null;  // define chart variable outside of function
 
 console_logger.warn('Before App.');
@@ -230,7 +231,7 @@ const App = ({ signOut }) => {
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
   useEffect(()=>{
     const canvas = document.getElementById("canvas")
-    const canvasContext = canvas.getContext("2d")
+    /*const */canvasContext = canvas.getContext("2d")
     setContext(canvasContext)
     console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' context ', context);
   },[])
@@ -958,7 +959,7 @@ const App = ({ signOut }) => {
     chart.destroy();    // destroy before new chart.
   }
 
-  chart = new ChartJS(/*ctx*/context, {
+  chart = new ChartJS(/*ctx*//*context*/canvasContext, {
     type: 'line',
     data: {
       labels: labels,     // ラベルを設定
