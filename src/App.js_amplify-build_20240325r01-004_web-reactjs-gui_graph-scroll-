@@ -934,7 +934,7 @@ const App = ({ signOut }) => {
   this.refs.canvas.style.width = `${graph_width}px`;
   this.refs.canvas.style.height = '200px';      // 高さはお好みで設定
 
-  new ChartJS(ctx, {
+  new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,     // ラベルを設定
