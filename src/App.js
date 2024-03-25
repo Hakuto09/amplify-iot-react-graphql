@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Component } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
@@ -925,14 +925,15 @@ const App = ({ signOut }) => {
       datasets1
     ]
   };
-
-  const ctx = this.refs.canvas.getContext('2d');
+   
+//  const ctx = this.refs.canvas.getContext('2d');
+  const ctx = Component.refs.canvas.getContext('2d');
   const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
   const graph_width = labels.length * xAxisLabelMinWidth;     // グラフ全体の幅を計算
 
   // グラフのキャンバスに幅を設定
-  this.refs.canvas.style.width = `${graph_width}px`;
-  this.refs.canvas.style.height = '200px';      // 高さはお好みで設定
+  Component.refs.canvas.style.width = `${graph_width}px`;
+  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
 
   new ChartJS(ctx, {
     type: 'line',
