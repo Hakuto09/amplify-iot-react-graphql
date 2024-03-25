@@ -196,6 +196,7 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
+let canvas = null;
 let canvasContext = null;
 let gotContextFlag = false;
 let chart = null;  // define chart variable outside of function
@@ -231,7 +232,7 @@ const App = ({ signOut }) => {
 
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
   useEffect(()=>{
-    const canvas = document.getElementById("canvas")
+    /*const */canvas = document.getElementById("canvas")
     /*const */canvasContext = canvas.getContext("2d")
     gotContextFlag = true;
     setContext(canvasContext)
