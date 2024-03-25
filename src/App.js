@@ -219,6 +219,22 @@ const App = ({ signOut }) => {
   const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
   console_logger.warn('App() After useState():', ' selectedValue1 ', selectedValue1);
 
+  // contextを状態として持つ
+  const [context, setContext] = useState(null)
+  console_logger.warn('App() After useState():', ' context ', context);
+
+  // 画像読み込み完了トリガー
+  const [loaded, setLoaded] = useState(false)
+  console_logger.warn('App() After useState():', ' loaded ', loaded);
+  
+  // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
+  useEffect(()=>{
+    const canvas = document.getElementById("canvas")
+    const canvasContext = canvas.getContext("2d")
+    setContext(canvasContext)
+    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' context ', context);
+  },[])
+
   useEffect(() => {
     fetchNotes(true);
   }, []);
