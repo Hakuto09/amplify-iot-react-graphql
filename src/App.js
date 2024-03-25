@@ -196,7 +196,7 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
-let chart;  // define chart variable outside of function
+let chart = null;  // define chart variable outside of function
 
 console_logger.warn('Before App.');
 
@@ -954,6 +954,7 @@ const App = ({ signOut }) => {
 //  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
 
   if(chart) {
+    chart.clear();
     chart.destroy();    // destroy before new chart.
   }
 
