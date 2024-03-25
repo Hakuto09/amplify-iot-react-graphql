@@ -196,7 +196,7 @@ var g_selectedIndex = -1/*0*/;
 //console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
 //console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
-let canvasContext;
+let canvasContext = null;
 let chart = null;  // define chart variable outside of function
 
 console_logger.warn('Before App.');
@@ -959,6 +959,7 @@ const App = ({ signOut }) => {
     chart.destroy();    // destroy before new chart.
   }
 
+  if(canvasContext) {}
   chart = new ChartJS(/*ctx*//*context*/canvasContext, {
     type: 'line',
     data: {
@@ -970,6 +971,7 @@ const App = ({ signOut }) => {
     },
     options: chartOptions
   });
+  }
 
 //  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
