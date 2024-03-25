@@ -925,7 +925,8 @@ const App = ({ signOut }) => {
       datasets1
     ]
   };
-   
+
+  console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
 //  const ctx = this.refs.canvas.getContext('2d');
   const ctx = Component.refs.canvas.getContext('2d');
   const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
