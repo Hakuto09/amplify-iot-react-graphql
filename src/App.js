@@ -789,7 +789,8 @@ const App = ({ signOut }) => {
   const chartOptions = {
 //    options: {
 //      responsive: true,
-      spanGaps: true,   //点をつなげる場合
+    responsive: false,    // グラフのスクロール対応
+    spanGaps: true,   //点をつなげる場合
       /*
       plugins: {
         title: {
@@ -1177,7 +1178,9 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Line options={chartOptions} data={chartData}/>
+      <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
+        <Line options={chartOptions} data={chartData}/>
+      </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
       {/*<Heading level={1}>My Notes App</Heading>*/}
       {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
