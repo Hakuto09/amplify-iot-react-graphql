@@ -863,64 +863,88 @@ const App = ({ signOut }) => {
       }
   };
 
+  const datasets0 = {
+    //fill: false,
+    label: 'Temperature (left)',
+    //yAxisID: 'Temperature',
+    ////borderColor: 'rgba(255, 204, 0, 1)',
+    //pointBoarderColor: 'rgba(255, 204, 0, 1)',
+    ////backgroundColor: 'rgba(255, 204, 0, 0.4)',
+    //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
+    //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
+    //spanGaps: true,
+    yAxisID: "yleft",
+
+    fill: false,
+    backgroundColor: "#3A7AC9",
+    borderWidth: 2,
+    borderColor: "rgba(2,63,138,0.8)",
+    pointBorderColor: "#fff",
+    pointBackgroundColor: "rgba(2,63,138,0.8)",
+    pointBorderWidth: 2,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "#1D5191",
+    pointHoverBorderColor: "#fff",
+    pointHoverBorderWidth: 2,
+    tension: 0,
+    data: data0s,
+  };
+
+  const datasets1 = {
+    //fill: false,
+    // label: 'Humidity',
+    label: 'General data (right)',
+    //yAxisID: 'Humidity',
+    ////borderColor: 'rgba(24, 120, 240, 1)',
+    //pointBoarderColor: 'rgba(24, 120, 240, 1)',
+    ////backgroundColor: 'rgba(24, 120, 240, 0.4)',
+    //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
+    //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
+    //spanGaps: true,
+    yAxisID: "yright",
+
+    fill: false,
+    backgroundColor: "#DB514E",
+    borderWidth: 2,
+    borderColor: "rgba(201,60,58,0.8)",
+    pointBorderColor: "#fff",
+    pointBackgroundColor: "rgba(201,60,58,0.8)",
+    pointBorderWidth: 2,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "#9A1B19",
+    pointHoverBorderColor: "#fff",
+    pointHoverBorderWidth: 2,
+    tension: 0,
+    data: data1s,
+  };
+
   const chartData = {
     labels: labels,
     datasets: [
-      {
-        //fill: false,
-        label: 'Temperature (left)',
-        //yAxisID: 'Temperature',
-        ////borderColor: 'rgba(255, 204, 0, 1)',
-        //pointBoarderColor: 'rgba(255, 204, 0, 1)',
-        ////backgroundColor: 'rgba(255, 204, 0, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
-        //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
-        //spanGaps: true,
-        yAxisID: "yleft",
-
-        fill: false,
-        backgroundColor: "#3A7AC9",
-        borderWidth: 2,
-        borderColor: "rgba(2,63,138,0.8)",
-        pointBorderColor: "#fff",
-        pointBackgroundColor: "rgba(2,63,138,0.8)",
-        pointBorderWidth: 2,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "#1D5191",
-        pointHoverBorderColor: "#fff",
-        pointHoverBorderWidth: 2,
-        tension: 0,
-        data: data0s,
-      },
-      {
-        //fill: false,
-        // label: 'Humidity',
-        label: 'General data (right)',
-        //yAxisID: 'Humidity',
-        ////borderColor: 'rgba(24, 120, 240, 1)',
-        //pointBoarderColor: 'rgba(24, 120, 240, 1)',
-        ////backgroundColor: 'rgba(24, 120, 240, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
-        //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
-        //spanGaps: true,
-        yAxisID: "yright",
-
-        fill: false,
-        backgroundColor: "#DB514E",
-        borderWidth: 2,
-        borderColor: "rgba(201,60,58,0.8)",
-        pointBorderColor: "#fff",
-        pointBackgroundColor: "rgba(201,60,58,0.8)",
-        pointBorderWidth: 2,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: "#9A1B19",
-        pointHoverBorderColor: "#fff",
-        pointHoverBorderWidth: 2,
-        tension: 0,
-        data: data1s,
-      }
+      datasets0,
+      datasets1
     ]
   };
+
+  const ctx = this.refs.canvas.getContext('2d');
+  const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
+  const graph_width = labels.length * xAxisLabelMinWidth;     // グラフ全体の幅を計算
+
+  // グラフのキャンバスに幅を設定
+  this.refs.canvas.style.width = `${graph_width}px`;
+  this.refs.canvas.style.height = '200px';      // 高さはお好みで設定
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,     // ラベルを設定
+      datasets: [
+        datasets0,
+        datasets1
+      ]
+    },
+    options: chartOptions
+  });
 
 //  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
@@ -1180,7 +1204,8 @@ const App = ({ signOut }) => {
       </View>
       <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
         <div className="chartContainer" style={{ height: '200px' }}>
-          <Line options={chartOptions} data={chartData}/>
+          {/*<Line options={chartOptions} data={chartData}/>*/}
+          <canvas ref="canvas" style={{ position: 'absolute', left: 0, top: 0 }}></canvas>
         </div>
       </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
