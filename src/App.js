@@ -1179,7 +1179,9 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
-        <Line options={chartOptions} data={chartData}/>
+        <div className="chartContainer" style={{ height: '200px' }}>
+          <Line options={chartOptions} data={chartData}/>
+        </div>
       </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
       {/*<Heading level={1}>My Notes App</Heading>*/}
