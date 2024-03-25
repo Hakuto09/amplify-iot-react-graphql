@@ -928,7 +928,8 @@ const App = ({ signOut }) => {
 
   console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
 //  const ctx = this.refs.canvas.getContext('2d');
-  const ctx = Component.refs.canvas.getContext('2d');
+//  const ctx = Component.refs.canvas.getContext('2d');
+  const ctx = $("#myChart").get(0).getContext("2d");
   const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
   const graph_width = labels.length * xAxisLabelMinWidth;     // グラフ全体の幅を計算
 
@@ -1207,7 +1208,7 @@ const App = ({ signOut }) => {
       <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
         <div className="chartContainer" style={{ height: '200px' }}>
           {/*<Line options={chartOptions} data={chartData}/>*/}
-          <canvas ref="canvas" style={{ position: 'absolute', left: 0, top: 0 }}></canvas>
+          <canvas ref="myChart"{/*"canvas"*/} style={{ position: 'absolute', left: 0, top: 0 }}></canvas>
         </div>
       </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
