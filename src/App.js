@@ -226,7 +226,7 @@ const App = ({ signOut }) => {
   // 画像読み込み完了トリガー
   const [loaded, setLoaded] = useState(false)
   console_logger.warn('App() After useState():', ' loaded ', loaded);
-  
+
   // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
   useEffect(()=>{
     const canvas = document.getElementById("canvas")
@@ -942,18 +942,18 @@ const App = ({ signOut }) => {
     ]
   };
 
-  console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
+//  console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
 //  const ctx = this.refs.canvas.getContext('2d');
 //  const ctx = Component.refs.canvas.getContext('2d');
-  const ctx = $("#myChart").get(0).getContext("2d");
+//  const ctx = $("#myChart").get(0).getContext("2d");
   const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
   const graph_width = labels.length * xAxisLabelMinWidth;     // グラフ全体の幅を計算
 
   // グラフのキャンバスに幅を設定
-  Component.refs.canvas.style.width = `${graph_width}px`;
-  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
+//  Component.refs.canvas.style.width = `${graph_width}px`;
+//  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
 
-  new ChartJS(ctx, {
+  new ChartJS(/*ctx*/context, {
     type: 'line',
     data: {
       labels: labels,     // ラベルを設定
@@ -1224,7 +1224,8 @@ const App = ({ signOut }) => {
       <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
         <div className="chartContainer" style={{ height: '200px' }}>
           {/*<Line options={chartOptions} data={chartData}/>*/}
-          <canvas ref="myChart"/*"canvas"*/ style={{ position: 'absolute', left: 0, top: 0 }}></canvas>
+          {/*<canvas ref="myChart"/"canvas"/ style={{ position: 'absolute', left: 0, top: 0 }}></canvas>*/}
+          <canvas width="1280" height="720" id="canvas"></canvas>
         </div>
       </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
