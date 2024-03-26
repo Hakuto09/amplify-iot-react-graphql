@@ -1289,13 +1289,13 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event/*, 'test_output.csv'*/)}>
+      {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
             Output CSV
           </Button>
         </Flex>
-      </View>
+      </View>*/}
       {/*<View margin="3rem 0">
         {notes.map((note) => (
           <Flex
@@ -1323,6 +1323,13 @@ const App = ({ signOut }) => {
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
       <div>
+        <View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
+          <Flex direction="row" justifyContent="right">
+            <Button disabled={disableButtons} type="submit" variation="primary">
+              Output CSV
+            </Button>
+          </Flex>
+        </View>
         <table border="1" cellpadding="5" /*width="1000"*/>
           <thead className="table-dark">
             <tr>
