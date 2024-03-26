@@ -295,7 +295,7 @@ const App = ({ signOut }) => {
     //const startDT_plusLocal = new Date(startDateTime + startDT_diff)    // Thu Apr 23 2020 07:39:03 GMT+0900 (Japan Standard Time)
     // ISO形式に変換（UTCタイムゾーンで日本時間、というよくない状態）
     //startDateTime = startDT_plusLocal.toISOString()   // "2020-04-22T22:39:03.397Z"
-    let dateTimeJstIso = dateTimeJstTmp.toISOString();   // "2020-04-22T22:39:03.397Z"
+    dateTimeJstIso = dateTimeJstTmp.toISOString();   // "2020-04-22T22:39:03.397Z"
     // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
     dateTimeJstIso = dateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
 
@@ -360,13 +360,13 @@ const App = ({ signOut }) => {
     setDisableButtons(true);
     event.preventDefault();
 
-    const elemStartDateTime = document.getElementById('fpStartDateTime');
-    startDateTimeJstIso = dateTimeToISOString(elemStartDateTime.value);
-    console_logger.warn('update(): After setDateTimeToISOString:', ' elemStartDateTime ', elemStartDateTime, ' startDateTimeJstIso ', startDateTimeJstIso);
+    const gotStartDateTime = document.getElementById('fpStartDateTime');
+    startDateTimeJstIso = dateTimeToISOString(gotStartDateTime);
+    console_logger.warn('update(): After setDateTimeToISOString:', ' gotStartDateTime ', gotStartDateTime, ' startDateTimeJstIso ', startDateTimeJstIso);
 
-    const elemEndDateTime = document.getElementById('fpEndDateTime');
-    endDateTimeJstIso = dateTimeToISOString(elemEndDateTime.value);
-    console_logger.warn('update(): After setDateTimeToISOString:', ' elemEndDateTime ', elemEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
+    const gotEndDateTime = document.getElementById('fpEndDateTime');
+    endDateTimeJstIso = dateTimeToISOString(gotEndDateTime);
+    console_logger.warn('update(): After setDateTimeToISOString:', ' gotEndDateTime ', gotEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
 
     fetchNotes(false);
     
@@ -1233,9 +1233,9 @@ const App = ({ signOut }) => {
             id="fpStartDateTime"
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
-//            onChange/*onSelect*//*onChangeRaw*/={([date]) => {
-//              setStartDateTime(date)
-//            }}
+            /*onChange*//*onSelect*/onChangeRaw={([date]) => {
+              setStartDateTime(date)
+            }}
           />
         </div>
         <div>
@@ -1244,9 +1244,9 @@ const App = ({ signOut }) => {
             id="fpEndDateTime"
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
-//            onChange/*onSelect*//*onChangeRaw*/={([date]) => {
-//              setEndDateTime(date)
-//            }}
+            /*onChange*//*onSelect*/onChangeRaw={([date]) => {
+              setEndDateTime(date)
+            }}
           />
         </div>
       </form>
