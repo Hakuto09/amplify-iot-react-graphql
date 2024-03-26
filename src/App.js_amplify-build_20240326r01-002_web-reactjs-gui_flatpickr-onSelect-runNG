@@ -1200,7 +1200,7 @@ const App = ({ signOut }) => {
           <Flatpickr
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
-            /*onChange*//*onSelect*/onChangeRaw={([date]) => {
+            /*onChange*/onSelect={([date]) => {
               setStartDateTime(date)
             }}
           />
@@ -1210,7 +1210,7 @@ const App = ({ signOut }) => {
           <Flatpickr
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
-            /*onChange*//*onSelect*/onChangeRaw={([date]) => {
+            /*onChange*/onSelect={([date]) => {
               setEndDateTime(date)
             }}
           />
