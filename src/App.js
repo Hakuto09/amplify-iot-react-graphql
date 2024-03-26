@@ -1322,7 +1322,7 @@ const App = ({ signOut }) => {
         ))}
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
-      <div style="margin-right:3rem">
+      <div className="div_table1">
         <View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
           <Flex direction="row" justifyContent="right">
             <Button disabled={disableButtons} type="submit" variation="primary">
