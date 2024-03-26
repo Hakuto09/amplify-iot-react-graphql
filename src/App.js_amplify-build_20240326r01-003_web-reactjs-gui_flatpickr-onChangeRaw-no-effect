@@ -336,11 +336,6 @@ const App = ({ signOut }) => {
     setDisableButtons(true);
     event.preventDefault();
 
-    const gotStartDateTime = document.getElementById('fpStartDateTime');
-    console_logger.warn('update(): After getElementById:', ' gotStartDateTime ', gotStartDateTime);
-    const gotEndDateTime = document.getElementById('fpEndDateTime');
-    console_logger.warn('update(): After getElementById:', ' gotEndDateTime ', gotEndDateTime);
-
     fetchNotes(false);
     
     setDisableButtons(false);
@@ -1203,7 +1198,6 @@ const App = ({ signOut }) => {
         <div>
           <label>開始日時</label>
           <Flatpickr
-            id="fpStartDateTime"
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             /*onChange*//*onSelect*/onChangeRaw={([date]) => {
@@ -1214,7 +1208,6 @@ const App = ({ signOut }) => {
         <div>
           <label>終了日時</label>
           <Flatpickr
-            id="fpEndDateTime"
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
             /*onChange*//*onSelect*/onChangeRaw={([date]) => {
@@ -1223,6 +1216,16 @@ const App = ({ signOut }) => {
           />
         </div>
       </form>
+      {/*<form method="post" margin="0 2rem" onChange={handleSubmit}>
+        <label>
+          データ数
+          <select name="selectedFruit" defaultValue="orange">
+            <option value="100">100</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+          </select>
+        </label>
+      /form>*/}
       <br></br>
       {/*<div style={{ width: "600px", margin: "50px" }}>*/}
       <div style={{ width: "100px" }}>
@@ -1255,7 +1258,38 @@ const App = ({ signOut }) => {
       {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          <TextField name="device_id" placeholder="Device_id" label="Device_id" labelHidden variation="quiet" /*required*//>
+          {/*<TextField
+            name="id"
+            placeholder="Id"
+            label="Id"
+            labelHidden
+            variation="quiet"
+            //required
+          />*/}
+          {/*<TextField
+            name="date"
+            placeholder="Date"
+            label="Date"
+            labelHidden
+            variation="quiet"
+            //required
+          />*/}
+          {/*<TextField
+            name="nickname"
+            placeholder="Nickname"
+            label="Nickname"
+            labelHidden
+            variation="quiet"
+            //required
+          />*/}
+          <TextField
+            name="device_id"
+            placeholder="Device_id"
+            label="Device_id"
+            labelHidden
+            variation="quiet"
+            //required
+          />
           <Button type="submit" disabled={disableButtons} variation="primary">
            {/*Create Note*/}Register
           </Button>
