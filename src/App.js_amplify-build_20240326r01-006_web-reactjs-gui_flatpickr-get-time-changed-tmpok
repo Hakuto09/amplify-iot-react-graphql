@@ -362,11 +362,11 @@ const App = ({ signOut }) => {
 
     const elemStartDateTime = document.getElementById('fpStartDateTime');
     startDateTimeJstIso = dateTimeToISOString(elemStartDateTime.value);
-    console_logger.warn('update(): After dateTimeToISOString:', ' elemStartDateTime ', elemStartDateTime, ' startDateTimeJstIso ', startDateTimeJstIso);
+    console_logger.warn('update(): After setDateTimeToISOString:', ' elemStartDateTime ', elemStartDateTime, ' startDateTimeJstIso ', startDateTimeJstIso);
 
     const elemEndDateTime = document.getElementById('fpEndDateTime');
     endDateTimeJstIso = dateTimeToISOString(elemEndDateTime.value);
-    console_logger.warn('update(): After dateTimeToISOString:', ' elemEndDateTime ', elemEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
+    console_logger.warn('update(): After setDateTimeToISOString:', ' elemEndDateTime ', elemEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
 
     fetchNotes(false);
     
@@ -1289,7 +1289,7 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event/*, 'test_output.csv'*/)}>
+      <View as="form" margin="0 0" onSubmit={(event) => writeCSV(event/*, 'test_output.csv'*/)}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
             Output CSV
