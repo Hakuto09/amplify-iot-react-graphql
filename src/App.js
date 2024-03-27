@@ -68,7 +68,7 @@ import 'chart.js/auto';
 
 import Select from "react-select";
 
-import ExpandMoreIcon from "./expand_more.svg";
+import { ReactComponent as ExpandMoreIcon } from "./expand_more.svg";
 
 
 const select_options1 = [
