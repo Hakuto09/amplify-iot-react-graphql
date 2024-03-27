@@ -1340,26 +1340,24 @@ const App = ({ signOut }) => {
         }}
       >
         <div className={styles.item} ref={element}>
-          <label>パラメータ　</label>
+          <p>パラメータ</p>
           <Select
-            style={{ width: '100px' }}
             options={selFilterParamList}
             defaultValue={selectedFilterParam}
             onChange={(selectedValue) => {
               setSelectedFilterParam(selectedValue)
             }}
           />
-          <label>記号　</label>
+          <p>記号</p>
           <Select
-            style={{ width: '100px' }}
             options={selFilterSymbolList}
             defaultValue={selectedFilterSymbol}
             onChange={(selectedValue) => {
               setSelectedFilterSymbol(selectedValue)
             }}
           />
-          <label>値　</label>
-          <input type="test" style={{ width: '100px' }}/>
+          <p>値</p>
+          <input type="test"/>
         </div>
       </div>
       {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
