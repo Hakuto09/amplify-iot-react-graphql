@@ -255,7 +255,8 @@ const App = ({ signOut }) => {
 
 //  const anchorRef = useRef<HTMLAnchorElement>(null);
 
-  const element = useRef<HTMLDivElement>(null);
+//  const element = useRef<HTMLDivElement>(null);
+  const element = useRef(null);
   console_logger.warn('App() After useRef():', ' element ', element);
 
   const [showItem, setShowItem] = useState(false);
