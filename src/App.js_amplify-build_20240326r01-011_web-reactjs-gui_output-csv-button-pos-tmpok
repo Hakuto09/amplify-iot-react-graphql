@@ -24,7 +24,6 @@ import { Japanese } from 'flatpickr/dist/l10n/ja.js'
 import Flatpickr from 'react-flatpickr'
 
 import "./App.css";
-import styles from "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 //import { API } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
@@ -67,7 +66,6 @@ import { Buffer } from "buffer";
 import 'chart.js/auto';
 
 import Select from "react-select";
-
 
 
 const select_options1 = [
@@ -255,14 +253,6 @@ const App = ({ signOut }) => {
 
 //  const anchorRef = useRef<HTMLAnchorElement>(null);
 
-  const element = useRef<HTMLDivElement>(null);
-  const [showItem, setShowItem] = useState(false);
-
-  const handleClick = () => {
-    if(element.current) {
-      setShowItem(!showItem);
-    }
-  };
 
   /** 開始日の設定 */
   let today0 = new Date();
@@ -1299,20 +1289,6 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <div onClick={handleClick} className={styles.item}>
-        Menu1
-      </div>
-      <div
-        className={styles.animation}
-        style={{
-          height: showItem ? "50px" : "0px",
-          opacity: showItem ? 1 : 0,
-        }}
-      >
-        <div className={styles.item} ref={element}>
-          Menu2
-        </div>
-      </div>
       {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
