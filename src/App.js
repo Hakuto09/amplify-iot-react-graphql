@@ -1364,6 +1364,28 @@ const App = ({ signOut }) => {
           <label>値　</label>
           <input type="test" style={{ width: '100px' }}/>
           </div>
+          <pre>
+            <span className="birthday">
+              <p>生年月日</p>
+              <select size="1" name="sample">
+                <option value="sample">サンプル1</option>
+                <option value="sample">サンプル2</option>
+              </select>
+              <label htmlFor="select-01">年</label>
+              <select size="1" name="sample">
+                <option value="sample">サンプル1</option>
+                <option value="sample">サンプル2</option>
+                <option value="sample">サンプル3</option>
+              </select>
+              <label htmlFor="select-01">月</label>
+              <select size="1" name="sample">
+                <option value="sample">サンプル1</option>
+                <option value="sample">サンプル2</option>
+                <option value="sample">サンプル3</option>
+                <option value="sample">サンプル4</option>
+              </select>
+            </span>
+          </pre>
         </div>
       </div>
       {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
