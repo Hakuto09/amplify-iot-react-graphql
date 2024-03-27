@@ -1340,9 +1340,10 @@ const App = ({ signOut }) => {
         }}
       >
         <div className={styles.item} ref={element}>
-          <div style={{ width: '200px' }}>
+          <div>
           <label>パラメータ　</label>
           <Select
+            style={{ width: '100px' }}
             options={selFilterParamList}
             defaultValue={selectedFilterParam}
             onChange={(selectedValue) => {
@@ -1350,9 +1351,10 @@ const App = ({ signOut }) => {
             }}
           />
           </div>
-          <div style={{ width: '200px' }}>
+          <div>
           <label>記号　</label>
           <Select
+            style={{ width: '100px' }}
             options={selFilterSymbolList}
             defaultValue={selectedFilterSymbol}
             onChange={(selectedValue) => {
