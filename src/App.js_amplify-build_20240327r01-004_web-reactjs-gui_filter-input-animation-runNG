@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Component } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
@@ -24,6 +24,7 @@ import { Japanese } from 'flatpickr/dist/l10n/ja.js'
 import Flatpickr from 'react-flatpickr'
 
 import "./App.css";
+import styles from "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 //import { API } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
@@ -63,9 +64,23 @@ import { mkConfig, generateCsv, asString } from "export-to-csv";
 //import { Buffer } from "node:buffer";
 import { Buffer } from "buffer";
 
+import 'chart.js/auto';
+
+import Select from "react-select";
+
+import ExpandMoreIcon from "./expand_more.svg";
 
 
+const select_options1 = [
+  { value: 100, label: "100" },
+  { value: 200, label: "200" },
+  { value: 300, label: "300" },
+  { value: 500, label: "500" },
+  { value: 700, label: "700" },
+  { value: 1000, label: "1000" },
+];
 
+/*
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const addNewLine = (s) => s + "\n";
@@ -90,11 +105,12 @@ const csvOutput = generateCsv(csvConfig)(mockData);
 
 // This unpacks CsvOutput which turns it into a string before use
 const csvOutputWithNewLine = addNewLine(asString(csvOutput));
+*/
 
 // Converts your Array<Object> to a CsvOutput string based on the configs
-const csv = generateCsv(csvConfig)(mockData);
-const csvFilename = `${csvConfig.filename}.csv`;
-const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
+//const csv = generateCsv(csvConfig)(mockData);
+//const csvFilename = `${csvConfig.filename}.csv`;
+//const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
 
 // Write the csv file to disk
 /*
@@ -105,33 +121,13 @@ writeFile(csvFilename, csvBuffer, (err) => {
 */
 
 //const csv = arrayToCsv(data);
-const blob = new Blob([csv], {type: "text/csv"});
-const url = URL.createObjectURL(blob);
-const a = document.createElement("a");
-a.href = url;
-a.download = "data.csv";
-a.click();
-URL.revokeObjectURL(url);
-
-const button = document.querySelector('button')
-const textarea = document.querySelector('textarea')
-
-button.addEventListener('click', async () => {
-  const opts = {
-    suggestedName: 'example',
-    types: [{
-      description: 'Text file',
-      accept: {'text/plain': ['.txt']},
-    }],
-  };
-  const handle = await window.showSaveFilePicker(opts);
-  const writable = await handle.createWritable();
-
-  console_logger.warn('For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
-
-  await writable.write(textarea.value);
-  await writable.close();
-})
+//const blob = new Blob([csv], {type: "text/csv"});
+//const url = URL.createObjectURL(blob);
+//const a = document.createElement("a");
+//a.href = url;
+//a.download = "data.csv";
+//a.click();
+//URL.revokeObjectURL(url);
 
 
 const loggerPrefix = 'amplify-logger'
@@ -181,7 +177,8 @@ var fetchById = true;
 
 var g_devices = [];
 var maxLenList = 1000;
-var maxLenGraph = 50;
+//var maxLenGraph = 50;
+var maxLenGraph = maxLenList;
 //var labels = new Array(maxLenGraph);
 var labels = [];
 //var data0s = new Array(maxLenGraph);
@@ -189,14 +186,13 @@ var data0s = [];
 //var data1s = new Array(maxLenGraph);
 var data1s = [];
 
-let csvStr = "";
-
 let numOfDevices = 0;
 let g_displayRegisters = true;
 let completeFetchReg = false;
 let completeFetchReg2 = false;
 let completeFetchData = false;
 let deviceNames = [];
+let graphRangeMode = 1;   // 0: By data existence, 1: By user setting
 
 //let sleep_cnt = 0;
 
@@ -205,10 +201,16 @@ let needsAutoSelect = true;
 var g_selectedIndex = -1/*0*/;
 
 
-console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
-console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
+//console_logger.warn('For csv output: ', " csvOutput ", csvOutput, " csvOutputWithNewLine ", csvOutputWithNewLine, ' csv ', csv, ' csvFilename ', csvFilename, " csvBuffer ", csvBuffer);
+//console_logger.warn('For csv output: ', " blob ", blob, " url ", url, ' a ', a);
 
+let canvas = null;
+let canvasContext = null;
+let gotContextFlag = false;
+let chart = null;  // define chart variable outside of function
 
+let startDateTimeJstIso;
+let endDateTimeJstIso;
 
 console_logger.warn('Before App.');
 
@@ -224,14 +226,53 @@ const App = ({ signOut }) => {
 
   const [notes, setNotes] = useState([]);
   console_logger.warn('App() After useState():', ' notes ', notes);
+
   const [disableButtons, setDisableButtons] = useState(false);
+  console_logger.warn('App() After useState():', ' disableButtons ', disableButtons);
+
+  const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
+  console_logger.warn('App() After useState():', ' selectedValue1 ', selectedValue1);
+
+  // contextを状態として持つ
+  const [context, setContext] = useState(null)
+  console_logger.warn('App() After useState():', ' context ', context);
+
+  // 画像読み込み完了トリガー
+  const [loaded, setLoaded] = useState(false)
+  console_logger.warn('App() After useState():', ' loaded ', loaded);
+
+  // コンポーネントの初期化完了後コンポーネント状態にコンテキストを登録
+  useEffect(()=>{
+    /*const */canvas = document.getElementById("canvas")
+    /*const */canvasContext = canvas.getContext("2d")
+    gotContextFlag = true;
+    setContext(canvasContext)
+    console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' gotContextFlag ', gotContextFlag, ' context ', context);
+  },[])
 
   useEffect(() => {
     fetchNotes(true);
   }, []);
 
-  const anchorRef = useRef<HTMLAnchorElement>(null);
+//  const anchorRef = useRef<HTMLAnchorElement>(null);
 
+//  const element = useRef<HTMLDivElement>(null);
+  const element = useRef(null);
+  console_logger.warn('App() After useRef():', ' element ', element);
+
+  const [reverseIcon, setReverseIcon] = useState(false);
+  console_logger.warn('App() After useState():', ' reverseIcon ', reverseIcon);
+
+  const [showItem, setShowItem] = useState(false);
+  console_logger.warn('App() After useState():', ' showItem ', showItem);
+
+
+  const handleClick = () => {
+    setReverseIcon(!reverseIcon);
+    if(element.current) {
+      setShowItem(!showItem);
+    }
+  };
 
   /** 開始日の設定 */
   let today0 = new Date();
@@ -264,10 +305,28 @@ const App = ({ signOut }) => {
 //    timeFormat: "HH:mm",      
   }
 
+  function dateTimeToISOString(dateTime){
+    /* ISO形式かつ日本時間へ変換していく */
+    let dateTimeJstTmp = new Date(dateTime);
+    // UTCとローカルタイムゾーンとの差を取得し、分からミリ秒に変換
+    //const startDT_diff = startDateTime.getTimezoneOffset() * 60 * 1000    // -540 * 60 * 1000 = -32400000
+    // toISOString()で、UTC時間になってしまう（-9時間されてしまう）ので、あえて事前に日本時間に9時間足しておく！！
+    dateTimeJstTmp.setHours(dateTimeJstTmp.getHours() + 9);
+    //const startDT_plusLocal = new Date(startDateTime + startDT_diff)    // Thu Apr 23 2020 07:39:03 GMT+0900 (Japan Standard Time)
+    // ISO形式に変換（UTCタイムゾーンで日本時間、というよくない状態）
+    //startDateTime = startDT_plusLocal.toISOString()   // "2020-04-22T22:39:03.397Z"
+    let dateTimeJstIso = dateTimeJstTmp.toISOString();   // "2020-04-22T22:39:03.397Z"
+    // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
+    dateTimeJstIso = dateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
+
+    return dateTimeJstIso;
+  }
+
+  /*
   const [startDateTime, setStartDateTime] = useState(today0)
   console_logger.warn('App() After useState():', ' startDateTime ', startDateTime);
   console_logger.warn('App() After useState():', ' startDateTime.toISOString() ', startDateTime.toISOString());
-  /* ISO形式かつ日本時間へ変換していく */
+  // ISO形式かつ日本時間へ変換していく
   let startDateTimeJstTmp = new Date(startDateTime);
   // UTCとローカルタイムゾーンとの差を取得し、分からミリ秒に変換
   //const startDT_diff = startDateTime.getTimezoneOffset() * 60 * 1000    // -540 * 60 * 1000 = -32400000
@@ -280,11 +339,13 @@ const App = ({ signOut }) => {
   // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
   startDateTimeJstIso = startDateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
   console_logger.warn('App() After toISOString():', ' startDateTimeJstIso ', startDateTimeJstIso, ' startDateTimeJstTmp ', startDateTimeJstTmp);
+  */
 
-  const [endDateTime, setEndDateTime] = useState(tomorrow0)
+  /*
+  const [endDateTime, setEndDateTime] = useState(tomorrow0);
   console_logger.warn('App() After useState():', ' endDateTime ', endDateTime);
   console_logger.warn('App() After useState():', ' endDateTime.toISOString() ', endDateTime.toISOString());
-  /* ISO形式かつ日本時間へ変換していく */
+  // ISO形式かつ日本時間へ変換していく
   let endDateTimeJstTmp = new Date(endDateTime);
   // toISOString()で、UTC時間になってしまう（-9時間）ので、日本時間に9時間足しておく
   endDateTimeJstTmp.setHours(endDateTimeJstTmp.getHours() + 9);
@@ -293,10 +354,39 @@ const App = ({ signOut }) => {
   // UTCタイムゾーン部分は消して、日本のタイムゾーンの表記を足す
   endDateTimeJstIso = endDateTimeJstIso.slice(0, 23) + '+09:00'    // "2020-04-22T22:39:03+09:00"
   console_logger.warn('App() After toISOString():', ' endDateTimeJstIso ', endDateTimeJstIso, ' endDateTimeJstTmp ', endDateTimeJstTmp);
+  */
+
+  /*
+  function handleSubmit(e) {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+    // Read the form data
+    const form = e.target;
+    console_logger.warn('handleSubmit() After form = e.target: ', ' e ', e, ' form ', form);
+    const formData = new FormData(form);
+    // You can pass formData as a fetch body directly:
+    fetch('/some-api', { method: form.method, body: formData });
+    // You can generate a URL out of it, as the browser does by default:
+    console_logger.warn('handleSubmit() After fetch(/some-api): ', ' new URLSearchParams(formData).toString() ', new URLSearchParams(formData).toString());
+    // You can work with it as a plain object.
+    const formJson = Object.fromEntries(formData.entries());
+    console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' formJson ', formJson); // (!) This doesn't include multiple select values
+    // Or you can get an array of name-value pairs.
+    console_logger.warn('handleSubmit() After Object.fromEntries(): ', ' [...formData.entries()] ', [...formData.entries()]);
+  }
+  */
 
   function update(event) {
     setDisableButtons(true);
     event.preventDefault();
+
+    const elemStartDateTime = document.getElementById('fpStartDateTime');
+    startDateTimeJstIso = dateTimeToISOString(elemStartDateTime.value);
+    console_logger.warn('update(): After dateTimeToISOString:', ' elemStartDateTime ', elemStartDateTime, ' startDateTimeJstIso ', startDateTimeJstIso);
+
+    const elemEndDateTime = document.getElementById('fpEndDateTime');
+    endDateTimeJstIso = dateTimeToISOString(elemEndDateTime.value);
+    console_logger.warn('update(): After dateTimeToISOString:', ' elemEndDateTime ', elemEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
 
     fetchNotes(false);
     
@@ -312,8 +402,8 @@ const App = ({ signOut }) => {
     let sortDirection = "";
     let filter = {};
     var nextToken = null;
-//    var limit = 200;
-    var limit = 1000;
+//    var limitForFetch = 200;
+    var limitForFetch = 1000;
 
     if(displayRegisters == true) {
       idForSort = "register";
@@ -354,16 +444,16 @@ const App = ({ signOut }) => {
     }
 
     while(1) {
-      console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limit ', limit);
+      console_logger.warn('fetchNotes(): Before graphql(listNotes): ', ' displayRegisters ', displayRegisters, ' idForSort ', idForSort, ' sortDirection ', sortDirection, ' filter ', filter, ' nextToken ', nextToken, ' limitForFetch ', limitForFetch);
       let apiData = [];
       let variables = {};
 
       if(fetchById == true) {
-//        variables = { id: idForSort, sortDirection: sortDirection, limit: limit, nextToken: nextToken };
-        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limit, nextToken: nextToken };
+//        variables = { id: idForSort, sortDirection: sortDirection, limit: limitForFetch, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limitForFetch, nextToken: nextToken };
       }
       else {
-        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limit, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limitForFetch, nextToken: nextToken };
       }
       console_logger.warn('fetchNotes(): Before graphql(listNotes):', ' variables ', variables);
 
@@ -377,12 +467,17 @@ const App = ({ signOut }) => {
 
       console_logger.warn('fetchNotes(): After graphql(listNotes) etc.:', ' displayRegisters ', displayRegisters, ' apiData ', apiData, ' notesFromAPI ', notesFromAPI, ' nextToken ', nextToken);
 
+      /*
       if(notesFromAPI.length > maxLenList) {
         notesFromAPI.length = maxLenList;
       }
+      */
+      notesFromAPI.length = Math.min(notesFromAPI.length, maxLenList);
+      notesFromAPI.length = Math.min(notesFromAPI.length, selectedValue1.value);
 
-      if(!nextToken || notesFromAPI.length >= maxLenList) {
-        break;
+//      if(!nextToken || notesFromAPI.length >= maxLenList) {
+      if(!nextToken || notesFromAPI.length >= Math.min(maxLenList, selectedValue1.value)) {
+          break;
       }
     }
 
@@ -500,25 +595,6 @@ const App = ({ signOut }) => {
   }
 
   /*
-  const downloadCSV = (event, csv, filename) => {
-    setDisableButtons(true);
-    event.preventDefault();
-
-    const link = anchorRef.current
-    if (!link) return
-  
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    link.setAttribute('href', url)
-    link.setAttribute('download', filename)
-    link.click()
-  
-    setDisableButtons(false);
-    event.target.reset();
-  }
-  */
-
-  /*
   const convertToCSV = () => {
     const key = User.key()
     const values = users.map((user) => user.value())
@@ -528,30 +604,48 @@ const App = ({ signOut }) => {
   }
   */
 
-  /*
-  function csvAddhederAndData(jsons) {
-    let count = 0;
-    let keys = [""];
+  function convertJSONtoCSV(/*jsons*/) {
+    let numOfColumns = 6;
+    let numOfRows = notes.length;
+//    let keys = [""];
+    let keys = ["id", "date", "device_id", "send_cnt", "temp", "general_data00"];
     let values = [];
+    let csvStr = "";
 
+//    console_logger.warn('convertJSONtoCSV() In: '/*, " jsons ", jsons*/);
+    console_logger.warn('convertJSONtoCSV() In: ', ' numOfColumns ', numOfColumns, ' numOfRows ', numOfRows);
+
+    /*
     JSON.parse(jsons[0], (key) => {
       if(key) {
         keys.push(key);   // keyの取得
         count++;
       }
     })
+    */
   
-    for(let i = 0; i < count; i++) {
-      if(i == count - 1)  { csvStr = csvStr.concat(keys[i],"\n"); }   // 行末の処理
-      else                { csvStr = csvStr.concat(keys[i],", "); }
+    console_logger.warn('convertJSONtoCSV() Before convert keys: ', " keys ", keys);
+
+    for(let i = 0; i < numOfColumns; i++) {
+      if(i == numOfColumns - 1) {   // 行末の処理
+        csvStr = csvStr.concat(keys[i],"\n");
+      }
+      else {
+        csvStr = csvStr.concat(keys[i],", ");
+      }
     }
 
+    console_logger.warn('convertJSONtoCSV() After convert keys: ', " csvStr ", csvStr);
+
+    /*
     let j = 0;
-    while(json[j] !== null) {
-      JSON.parse(json[j], (key, value) => {
+    while(jsons[j] !== null) {
+      JSON.parse(jsons[j], (key, value) => {
         if(key) { values.push(value); }
       })
   
+      console_logger.warn('convertJSONtoCSV() Before convert values: ', " values ", values);
+
       for(let i = 0; i < count; i++) {
         if(i == count - 1)  { csvStr = csvStr.concat(values[i],"\n"); }   // 行末の処理
         else                { csvStr = csvStr.concat(values[i],", "); }
@@ -559,10 +653,23 @@ const App = ({ signOut }) => {
 
       j++;
     }
-  }
-  */
+    */
 
-  async function writeCSV(event, filename) {
+    for(let i = 0; i < numOfRows; i++) {
+      csvStr = csvStr.concat(notes[i].id,", ");
+      csvStr = csvStr.concat(notes[i].date,", ");
+      csvStr = csvStr.concat(notes[i].nickname,", ");
+      csvStr = csvStr.concat(notes[i].send_cnt,", ");
+      csvStr = csvStr.concat(notes[i].temp,", ");
+      csvStr = csvStr.concat(notes[i].general_data00,"\n");
+    }
+
+    console_logger.warn('convertJSONtoCSV() After convert values: ', " csvStr ", csvStr);
+
+    return csvStr;
+  }
+
+  async function writeCSV(event/*, filename*/) {
     setDisableButtons(true);
     event.preventDefault();
 
@@ -577,10 +684,11 @@ const App = ({ signOut }) => {
     };
     const handle = await window.showSaveFilePicker(opts);
     const writable = await handle.createWritable();
+    const csv = convertJSONtoCSV(/*notes*/);
   
-    console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable);
+    console_logger.warn('writeCSV() For csv output: ', " opts ", opts, " handle ", handle, ' writable ', writable, ' csv ', csv);
   
-    await writable.write("test");
+    await writable.write(csv);
     await writable.close();
 
     /*
@@ -708,8 +816,16 @@ const App = ({ signOut }) => {
       }
     }
     else {
+      if(graphRangeMode == 1) {
+        // Set graph start datetime.
+        labels.push(startDateTimeJstIso.slice(0, 23));
+        data0s.push(null);
+        data1s.push(null);
+      }
+
       // add graph data.
       let loops = Math.min(numOfNotesTotal, maxLenGraph);
+      loops = Math.min(loops, selectedValue1.value);
       console_logger.warn('onMessage(): Before graph data. input loop:', ' loops ', loops);
       for(let i = 0; i < loops; ++i) {
         let j = loops - i - 1;
@@ -733,6 +849,14 @@ const App = ({ signOut }) => {
 //        data1s[i] = notesFromAPI[j].general_data00;
         data1s.push(notesFromAPI[j].general_data00);
       }
+
+      if(graphRangeMode == 1) {
+        // Set graph end datetime.
+        labels.push(endDateTimeJstIso.slice(0, 23));
+        data0s.push(null);
+        data1s.push(null);
+      }
+
       console_logger.warn('onMessage(): After graph data. input loop:', ' loops ', loops, ' labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
     }
   };
@@ -742,7 +866,8 @@ const App = ({ signOut }) => {
   const chartOptions = {
 //    options: {
 //      responsive: true,
-      spanGaps: true,   //点をつなげる場合
+    responsive: false,    // グラフのスクロール対応
+    spanGaps: true,   //点をつなげる場合
       /*
       plugins: {
         title: {
@@ -788,51 +913,134 @@ const App = ({ signOut }) => {
 //            unit: 'seconds',
 //            unit: 'second',
 //            unit: 'ss',
-//              unit: 'millisecond',
+//            unit: 'millisecond',
             displayFormats: {
 //              week: 'yyyy-MM-dd'
 //              day: 'yyyy-MM-DD'
 //              min: 'YYYY-MM-DD HH:mm'
+              minute: 'YYYY-MM-DD HH:mm'
 //              seconds: 'YYYY-MM-DDTHH:mm:ss'
 //              second: 'h:mm:ss a'
 //              ss: 'YYYY-MM-DD HH:mm:ss'
             }
           },
-        }
+        },
+        yleft: {
+          stacked: false,
+//          max: totalScoreMax,
+//          min: 0,
+        },
+        /** yright (y軸・右): Y軸が、複数あるので yleft と yright のように軸にIDを付ける */
+        yright: {
+          stacked: false,
+          position: "right",
+//          max: totalScoreMax,
+//          min: 0,
+        },
       }
-//    }
+  };
+
+  const datasets0 = {
+    //fill: false,
+    label: 'Temperature (left)',
+    //yAxisID: 'Temperature',
+    ////borderColor: 'rgba(255, 204, 0, 1)',
+    //pointBoarderColor: 'rgba(255, 204, 0, 1)',
+    ////backgroundColor: 'rgba(255, 204, 0, 0.4)',
+    //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
+    //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
+    //spanGaps: true,
+    yAxisID: "yleft",
+
+    fill: false,
+    backgroundColor: "#3A7AC9",
+    borderWidth: 2,
+    borderColor: "rgba(2,63,138,0.8)",
+    pointBorderColor: "#fff",
+    pointBackgroundColor: "rgba(2,63,138,0.8)",
+    pointBorderWidth: 2,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "#1D5191",
+    pointHoverBorderColor: "#fff",
+    pointHoverBorderWidth: 2,
+    tension: 0,
+    data: data0s,
+  };
+
+  const datasets1 = {
+    //fill: false,
+    // label: 'Humidity',
+    label: 'General data (right)',
+    //yAxisID: 'Humidity',
+    ////borderColor: 'rgba(24, 120, 240, 1)',
+    //pointBoarderColor: 'rgba(24, 120, 240, 1)',
+    ////backgroundColor: 'rgba(24, 120, 240, 0.4)',
+    //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
+    //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
+    //spanGaps: true,
+    yAxisID: "yright",
+
+    fill: false,
+    backgroundColor: "#DB514E",
+    borderWidth: 2,
+    borderColor: "rgba(201,60,58,0.8)",
+    pointBorderColor: "#fff",
+    pointBackgroundColor: "rgba(201,60,58,0.8)",
+    pointBorderWidth: 2,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "#9A1B19",
+    pointHoverBorderColor: "#fff",
+    pointHoverBorderWidth: 2,
+    tension: 0,
+    data: data1s,
   };
 
   const chartData = {
     labels: labels,
     datasets: [
-      {
-        //fill: false,
-        label: 'Temperature',
-        //yAxisID: 'Temperature',
-        borderColor: 'rgba(255, 204, 0, 1)',
-        //pointBoarderColor: 'rgba(255, 204, 0, 1)',
-        backgroundColor: 'rgba(255, 204, 0, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(255, 204, 0, 1)',
-        //pointHoverBorderColor: 'rgba(255, 204, 0, 1)',
-        //spanGaps: true,
-        data: data0s
-      },
-      {
-        //fill: false,
-        // label: 'Humidity',
-        label: 'General data',
-        //yAxisID: 'Humidity',
-        borderColor: 'rgba(24, 120, 240, 1)',
-        //pointBoarderColor: 'rgba(24, 120, 240, 1)',
-        backgroundColor: 'rgba(24, 120, 240, 0.4)',
-        //pointHoverBackgroundColor: 'rgba(24, 120, 240, 1)',
-        //pointHoverBorderColor: 'rgba(24, 120, 240, 1)',
-        //spanGaps: true,
-        data: data1s
-      }
+      datasets0,
+      datasets1
     ]
   };
+
+//  console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
+//  const ctx = this.refs.canvas.getContext('2d');
+//  const ctx = Component.refs.canvas.getContext('2d');
+//  const ctx = $("#myChart").get(0).getContext("2d");
+  const xAxisLabelMinWidth = 15;      // データ当たりの幅を設定
+  const graph_width = labels.length * xAxisLabelMinWidth;     // グラフ全体の幅を計算
+
+  // グラフのキャンバスに幅を設定
+//  Component.refs.canvas.style.width = `${graph_width}px`;
+//  Component.refs.canvas.style.height = '200px';      // 高さはお好みで設定
+
+  if(chart) {
+//    chart.clear();
+    chart.destroy();    // destroy before new chart.
+  }
+
+//  const canvas = document.getElementById("canvas")
+//  const canvasContext = canvas.getContext("2d")
+
+  if(canvasContext) {
+    chart = new ChartJS(/*ctx*//*context*/canvasContext, {
+      type: 'line',
+      data: {
+      labels: labels,     // ラベルを設定
+        datasets: [
+          datasets0,
+          datasets1
+        ]
+      },
+      options: chartOptions
+    });
+  }
+  else {
+    if(gotContextFlag) {
+      canvas = document.getElementById("canvas")
+      canvasContext = canvas.getContext("2d")
+    }
+  }
 
 //  const moment = new Moment();
 //  console_logger.warn('App(): before rutern. 1:', ' moment1 ', moment("2010-10-20 4:30 +0000", "YYYY-MM-DD HH:mm Z"));
@@ -1042,24 +1250,39 @@ const App = ({ signOut }) => {
         <div>
           <label>開始日時</label>
           <Flatpickr
+            id="fpStartDateTime"
             options={start_option}
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
-            onChange={([date]) => {
-              setStartDateTime(date)
-            }}
+//            onChange/*onSelect*//*onChangeRaw*/={([date]) => {
+//              setStartDateTime(date)
+//            }}
           />
         </div>
         <div>
           <label>終了日時</label>
           <Flatpickr
+            id="fpEndDateTime"
             className="bg-white border border-gray-300 block w-full p-2.5 shadow;"
             options={end_option}
-            onChange={([date]) => {
-              setEndDateTime(date)
-            }}
+//            onChange/*onSelect*//*onChangeRaw*/={([date]) => {
+//              setEndDateTime(date)
+//            }}
           />
         </div>
       </form>
+      <br></br>
+      {/*<div style={{ width: "600px", margin: "50px" }}>*/}
+      <div style={{ width: "100px" }}>
+        <label>表示データ数 (Max)</label>
+        <Select
+          options={select_options1}
+          defaultValue={selectedValue1}
+          onChange={(selectedValue) => {
+            setSelectedValue1(selectedValue)
+            /*selectedValue ? setSelectedValue1(selectedValue) : null;*/
+          }}
+        />
+      </div>
       <View as="form" margin="3rem 0" onSubmit={update}>
         <Flex direction="row" justifyContent="center">
           <Button disabled={disableButtons} type="submit" variation="primary">
@@ -1067,57 +1290,49 @@ const App = ({ signOut }) => {
           </Button>
         </Flex>
       </View>
-      <Line options={chartOptions} data={chartData}/>
+      <div className="chartWrapper" style={{ position: 'relative', overflowX: 'scroll' }}>
+        <div className="chartContainer" style={{ height: /*'200px'*/'720px' }}>
+          {/*<Line options={chartOptions} data={chartData}/>*/}
+          {/*<canvas ref="myChart"/"canvas"/ style={{ position: 'absolute', left: 0, top: 0 }}></canvas>*/}
+          <canvas width="1280" height="720" id="canvas"></canvas>
+        </div>
+      </div>
       {/*<Line options={chartOptions2} data={chartData2}/>*/}
       {/*<Heading level={1}>My Notes App</Heading>*/}
       {/*<input type="text" name="datepicker" id="js-datepicker"></input>*/}
       <View as="form" margin="3rem 0" onSubmit={createNote}>
         <Flex direction="row" justifyContent="center">
-          {/*<TextField
-            name="id"
-            placeholder="Id"
-            label="Id"
-            labelHidden
-            variation="quiet"
-            //required
-          />*/}
-          {/*<TextField
-            name="date"
-            placeholder="Date"
-            label="Date"
-            labelHidden
-            variation="quiet"
-            //required
-          />*/}
-          {/*<TextField
-            name="nickname"
-            placeholder="Nickname"
-            label="Nickname"
-            labelHidden
-            variation="quiet"
-            //required
-          />*/}
-          <TextField
-            name="device_id"
-            placeholder="Device_id"
-            label="Device_id"
-            labelHidden
-            variation="quiet"
-            //required
-          />
+          <TextField name="device_id" placeholder="Device_id" label="Device_id" labelHidden variation="quiet" /*required*//>
           <Button type="submit" disabled={disableButtons} variation="primary">
            {/*Create Note*/}Register
           </Button>
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <View as="form" margin="0 0" onSubmit={(event) => writeCSV(event, 'test_output.csv')}>
+      <div onClick={handleClick} className={styles.item}>
+        フィルター
+        <div className={`${styles.icon} ${reverseIcon && styles.reverse}`}>
+          <ExpandMoreIcon width={24} height={24} />
+        </div>
+      </div>
+      <div
+        className={styles.animation}
+        style={{
+          height: showItem ? "50px" : "0px",
+          opacity: showItem ? 1 : 0,
+        }}
+      >
+        <div className={styles.item} ref={element}>
+          Menu2
+        </div>
+      </div>
+      {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
             Output CSV
           </Button>
         </Flex>
-      </View>
+      </View>*/}
       {/*<View margin="3rem 0">
         {notes.map((note) => (
           <Flex
@@ -1144,7 +1359,14 @@ const App = ({ signOut }) => {
         ))}
       </View>*/}
       {/*<h1>テーブルを作る ０</h1>*/}
-      <div>
+      <div /*className="div_table1"*/>
+        <View as="form" margin="0 3rem" onSubmit={(event) => writeCSV(event)}>
+          <Flex direction="row" justifyContent="right">
+            <Button disabled={disableButtons} type="submit" variation="primary">
+              Output CSV
+            </Button>
+          </Flex>
+        </View>
         <table border="1" cellpadding="5" /*width="1000"*/>
           <thead className="table-dark">
             <tr>

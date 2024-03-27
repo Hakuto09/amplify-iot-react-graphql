@@ -43,3 +43,9 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# backup
+src/_backup
+public/_backup
+amplify/backend/api/amplifyiotreactgraph/_backup
+
