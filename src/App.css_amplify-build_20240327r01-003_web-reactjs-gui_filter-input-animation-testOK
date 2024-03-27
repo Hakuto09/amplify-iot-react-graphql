@@ -61,18 +61,3 @@ canvas {margin-left:auto;margin-right:auto;}
 
   overflow: hidden; /* heightをはみ出す子要素を表示させないようにすることで、上から徐々に子要素が表示されるアニメーションを実現 */
 }
-
-.icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  transition: transform 0.3s; /* transformに動きをつける */
-}
-
-/* ローカルState(reverseIcon)がtrueの時、以下のCSSが付与される(= アイコンが回転する) */
-.reverse {
-  transform: rotate(-180deg) translateY(50%);
-}

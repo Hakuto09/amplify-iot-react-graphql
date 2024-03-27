@@ -68,7 +68,6 @@ import 'chart.js/auto';
 
 import Select from "react-select";
 
-import ExpandMoreIcon from "./expand_more.svg";
 
 
 const select_options1 = [
@@ -260,15 +259,10 @@ const App = ({ signOut }) => {
   const element = useRef(null);
   console_logger.warn('App() After useRef():', ' element ', element);
 
-  const [reverseIcon, setReverseIcon] = useState(false);
-  console_logger.warn('App() After useState():', ' reverseIcon ', reverseIcon);
-
   const [showItem, setShowItem] = useState(false);
   console_logger.warn('App() After useState():', ' showItem ', showItem);
 
-
   const handleClick = () => {
-    setReverseIcon(!reverseIcon);
     if(element.current) {
       setShowItem(!showItem);
     }
@@ -1310,10 +1304,7 @@ const App = ({ signOut }) => {
       </View>
       <Heading level={2}>Current Data</Heading>
       <div onClick={handleClick} className={styles.item}>
-        フィルター
-        <div className={`${styles.icon} ${reverseIcon && styles.reverse}`}>
-          <ExpandMoreIcon width={24} height={24} />
-        </div>
+        Menu1
       </div>
       <div
         className={styles.animation}
