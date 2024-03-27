@@ -80,17 +80,6 @@ const select_options1 = [
   { value: 1000, label: "1000" },
 ];
 
-const selFilterParamList= [
-  { name: "temp", label: "temp" },
-  { name: "general_data00", label: "general_data00" },
-];
-
-const selFilterSymbolList= [
-  { symbol: "=", label: "=" },
-  { symbol: ">", label: ">" },
-  { symbol: "<", label: "<" },
-];
-
 /*
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
@@ -243,12 +232,6 @@ const App = ({ signOut }) => {
 
   const [selectedValue1, setSelectedValue1] = useState(select_options1[0]);
   console_logger.warn('App() After useState():', ' selectedValue1 ', selectedValue1);
-
-  const [selectedFilterParam, setSelectedFilterParam] = useState(selFilterParamList[0]);
-  console_logger.warn('App() After useState():', ' selectedFilterParam ', selectedFilterParam);
-
-  const [selectedFilterSymbol, setSelectedFilterSymbol] = useState(selFilterSymbolList[0]);
-  console_logger.warn('App() After useState():', ' selectedFilterSymbol ', selectedFilterSymbol);
 
   // contextを状態として持つ
   const [context, setContext] = useState(null)
@@ -1326,7 +1309,7 @@ const App = ({ signOut }) => {
         </Flex>
       </View>
       <Heading level={2}>Current Data</Heading>
-      <div onClick={handleClick} className={styles.item} margin="1rem 0" >
+      <div onClick={handleClick} className={styles.item}>
         フィルター
         <div className={`${styles.icon} ${reverseIcon && styles.reverse}`}>
           <ExpandMoreIcon width={24} height={24} />
@@ -1340,24 +1323,7 @@ const App = ({ signOut }) => {
         }}
       >
         <div className={styles.item} ref={element}>
-          <p>パラメータ</p>
-          <Select
-            options={selFilterParamList}
-            defaultValue={selectedFilterParam}
-            onChange={(selectedValue) => {
-              setSelectedFilterParam(selectedValue)
-            }}
-          />
-          <p>記号</p>
-          <Select
-            options={selFilterSymbolList}
-            defaultValue={selectedFilterSymbol}
-            onChange={(selectedValue) => {
-              setSelectedFilterSymbol(selectedValue)
-            }}
-          />
-          <p>値</p>
-          <input type="test"/>
+          Menu2
         </div>
       </div>
       {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
