@@ -1339,7 +1339,8 @@ const App = ({ signOut }) => {
           opacity: showItem ? 1 : 0,
         }}
       >
-        {/*<div className={styles.item} ref={element}>*/}
+        <div className={styles.item} ref={element}>
+          <div>
           <label>パラメータ　</label>
           <Select
             style={{ width: '100px' }}
@@ -1349,6 +1350,8 @@ const App = ({ signOut }) => {
               setSelectedFilterParam(selectedValue)
             }}
           />
+          </div>
+          <div>
           <label>記号　</label>
           <Select
             style={{ width: '100px' }}
@@ -1358,10 +1361,13 @@ const App = ({ signOut }) => {
               setSelectedFilterSymbol(selectedValue)
             }}
           />
+          </div>
+          <div>
           <label>値　</label>
           <input type="test" style={{ width: '100px' }}/>
+          </div>
         </div>
-      {/*</div>*/}
+      </div>
       {/*<View as="form" margin="3rem 0" onSubmit={(event) => writeCSV(event)}>
         <Flex direction="row" justifyContent="right">
           <Button disabled={disableButtons} type="submit" variation="primary">
