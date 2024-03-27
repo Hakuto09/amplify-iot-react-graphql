@@ -46,7 +46,8 @@ canvas {margin-left:auto;margin-right:auto;}
 }
 
 .item {
-  width: 200px;
+  /*width: 200px;*/
+  width: 1000px;
   height: 50px;
   border: 1px solid;
   padding: 10px 20px;
