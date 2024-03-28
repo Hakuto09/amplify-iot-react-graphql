@@ -280,8 +280,8 @@ const App = ({ signOut }) => {
 //  const anchorRef = useRef<HTMLAnchorElement>(null);
 
 //  const element = useRef<HTMLDivElement>(null);
-  const refFilter = useRef(null);
-  console_logger.warn('App() After useRef():', ' elemFilter ', refFilter);
+  const element = useRef(null);
+  console_logger.warn('App() After useRef():', ' element ', element);
 
   const [reverseIcon, setReverseIcon] = useState(false);
   console_logger.warn('App() After useState():', ' reverseIcon ', reverseIcon);
@@ -289,23 +289,13 @@ const App = ({ signOut }) => {
   const [showItem, setShowItem] = useState(false);
   console_logger.warn('App() After useState():', ' showItem ', showItem);
 
+
   const handleClick = () => {
     setReverseIcon(!reverseIcon);
-    if(refFilter.current) {
+    if(element.current) {
       setShowItem(!showItem);
     }
   };
-
-  const refFilterInput = useRef(null);
-
-  const handleFocus = () => {
-    // 入力要素へのアクセス
-    let elemFilterInput = refFilterInput.current;
-
-    // DOM要素を変更
-    elemFilterInput.focus();
-  };
-
 
   /** 開始日の設定 */
   let today0 = new Date();
@@ -1355,7 +1345,7 @@ const App = ({ signOut }) => {
           opacity: showItem ? 1 : 0,
         }}
       >
-        <div className={styles.item} ref={refFilter}>
+        <div className={styles.item} ref={element}>
           {/*<div style={{ width: '200px' }}>
           <label>パラメータ　</label>
           <Select
@@ -1403,8 +1393,7 @@ const App = ({ signOut }) => {
                 <option value="<">＜</option>*/}
                 {selFilterSymbolList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
-              <input /*type="test"*/ ref={refFilterInput}/>
-              <button onClick={handleFocus}>Focus Input</button>
+              <input type="test"/>
             </span>
           </pre>
         </div>
