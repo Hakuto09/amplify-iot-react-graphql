@@ -197,8 +197,6 @@ var data0s = [];
 //var data1s = new Array(maxLenGraph);
 var data1s = [];
 
-let notesOrg = [];
-
 let numOfDevices = 0;
 let g_displayRegisters = true;
 let completeFetchReg = false;
@@ -523,9 +521,6 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
 
-    await copyNotesToOrg();
-    console_logger.warn('fetchNotes(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
-
     onMessage(notesFromAPI, displayRegisters);
 
     if(displayRegisters == true) {
@@ -620,9 +615,6 @@ const App = ({ signOut }) => {
     setNotes(newNotes3);
     console_logger.warn('deleteNote(): After setNotes():', ' id ', id, ' date ', date, ' notes ', notes);
 
-    await copyNotesToOrg();
-    console_logger.warn('deleteNote(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
-
     //    await API.graphql({
     const apiDataDelete = await client.graphql({
       query: deleteNoteMutation,
@@ -646,12 +638,6 @@ const App = ({ signOut }) => {
     return array.map((a) => a.join(',')).join('\n')
   }
   */
-
-  async function copyNotesToOrg() {
-    notesOrg = [];
-
-    Array.prototype.push.apply(notes, notesOrg);
-  }
 
   function convertJSONtoCSV(/*jsons*/) {
     let numOfColumns = 6;
@@ -800,9 +786,6 @@ const App = ({ signOut }) => {
     setNotes(notesSorted);
     console_logger.warn('sortNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
 
-    await copyNotesToOrg();
-    console_logger.warn('sortNotes(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
-
     setDisableButtons(false);
 //    event.target.reset();
   }
@@ -820,19 +803,19 @@ const App = ({ signOut }) => {
 
 //    Array.prototype.push.apply(notesFiltered, notes);
     
-    console_logger.warn('filterNotes(): Before filter():', ' notesOrg ', notesOrg, ' notes ', notes, ' notesFiltered ', notesFiltered, ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' elemFilterInput ', elemFilterInput);
+    console_logger.warn('filterNotes(): Before filter():', ' notes ', notes, ' notesFiltered ', notesFiltered, ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' elemFilterInput ', elemFilterInput);
 
     switch(selectedFilterParam.value) {
       case 'temp' :
         if(selectedFilterSymbol.value == '=')       {
-          notesFiltered = notesOrg.filter((note) => (note.temp == Number(elemFilterInput.value)));
+          notesFiltered = notes.filter((note) => (note.temp == Number(elemFilterInput.value)));
 //          result2 = words.filter((word) => word.length > 6);
 //          console.log('filterNotes(): in switch console.log: result2 ', result2);
 //          console_logger.warn('filterNotes(): in switch: result2 ', result2);
           console_logger.warn('filterNotes(): in switch: case temp: symbol =:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
 }
         else if(selectedFilterSymbol.value == '>')  {
-          notesFiltered = notesOrg.filter((note) => (note.temp > Number(elemFilterInput.value)));
+          notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
           console_logger.warn('filterNotes(): in switch: case temp: symbol \'>\':', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
         }
 //        else if(selectedFilterSymbol.value == ">")  {
@@ -840,20 +823,20 @@ const App = ({ signOut }) => {
 //          console_logger.warn('filterNotes(): in switch: case temp: symbol ">":', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
 //        }
         else                                        {
-          notesFiltered = notesOrg.filter((note) => (note.temp < Number(elemFilterInput.value)));
+          notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value)));
           console_logger.warn('filterNotes(): in switch: case temp: symbol <:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
         }
         break;
       case 'general_data00' :
-        if(selectedFilterSymbol.value == '=')       { notesFiltered = notesOrg.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
-        else if(selectedFilterSymbol.value == '>')  { notesFiltered = notesOrg.filter((note) => (note.general_data00 > Number(elemFilterInput.value))); }
-        else                                        { notesFiltered = notesOrg.filter((note) => (note.general_data00 < Number(elemFilterInput.value))); }
+        if(selectedFilterSymbol.value == '=')       { notesFiltered = notes.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
+        else if(selectedFilterSymbol.value == '>')  { notesFiltered = notes.filter((note) => (note.general_data00 > Number(elemFilterInput.value))); }
+        else                                        { notesFiltered = notes.filter((note) => (note.general_data00 < Number(elemFilterInput.value))); }
         break;
     }
-    console_logger.warn('filterNotes(): After filter():', ' notesOrg ', notesOrg, ' notes ', notes, ' notesFiltered ', notesFiltered);
+    console_logger.warn('filterNotes(): After filter():', /*' result ', result,*/ ' notes ', notes, ' notesFiltered ', notesFiltered);
 
     setNotes(notesFiltered);
-    console_logger.warn('filterNotes(): After filter():', ' notesOrg ', notesOrg, ' notes ', notes, ' notesFiltered ', notesFiltered);
+    console_logger.warn('filterNotes(): After filter():', /*' result ', result,*/ ' notes ', notes, ' notesFiltered ', notesFiltered);
 
     setDisableButtons(false);
 //    event.target.reset();
