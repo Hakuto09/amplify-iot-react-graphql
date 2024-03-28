@@ -800,18 +800,16 @@ const App = ({ signOut }) => {
 
     Array.prototype.push.apply(notes, notesFiltered);
     
-    console_logger.warn('filterNotes(): Before filter():', ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' notes ', notes, ' notesFiltered ', notesFiltered);
-
     switch(selectedFilterParam) {
       case 'temp' :
-        if(selectedFilterSymbol == '=')       { result = notesFiltered.filter((note) => (note.temp == elemFilterInput)); }
-        else if(selectedFilterSymbol == '>')  { result = notesFiltered.filter((note) => (note.temp > elemFilterInput)); }
-        else                                  { result = notesFiltered.filter((note) => (note.temp < elemFilterInput)); }
+        if(selectedFilterSymbol = '=')      { result = notesFiltered.filter((note) => (note.temp == elemFilterInput)); }
+        else if(selectedFilterSymbol = '>') { result = notesFiltered.filter((note) => (note.temp > elemFilterInput)); }
+        else                                { result = notesFiltered.filter((note) => (note.temp < elemFilterInput)); }
         break;
       case 'general_data00' :
-        if(selectedFilterSymbol == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput)); }
-        else if(selectedFilterSymbol == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput)); }
-        else                                  { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput)); }
+        if(selectedFilterSymbol = '=')      { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput)); }
+        else if(selectedFilterSymbol = '>') { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput)); }
+        else                                { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput)); }
         break;
     }
     console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
