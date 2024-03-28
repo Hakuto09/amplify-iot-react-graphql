@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, Component } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
-import { Auth } from 'aws-amplify';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 import 'chartjs-adapter-moment';
 import moment from "moment";
@@ -228,7 +228,7 @@ let startDateTimeJstIso;
 let endDateTimeJstIso;
 
 
-const user = await Auth.currentAuthenticatedUser()
+const user = await getCurrentUser()
 console_logger.warn('App(): After Auth.currentAuthenticatedUser():', ' user ', user);
 
 
