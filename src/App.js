@@ -804,8 +804,8 @@ const App = ({ signOut }) => {
     setNotes(notesSorted);
     console_logger.warn('sortNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
 
-    await setNotesOrg(/*notes*/notesSorted);
-    console_logger.warn('sortNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
+//    await setNotesOrg(/*notes*/notesSorted);
+//    console_logger.warn('sortNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     setDisableButtons(false);
 //    event.target.reset();
