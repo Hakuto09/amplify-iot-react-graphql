@@ -798,21 +798,13 @@ const App = ({ signOut }) => {
     let notesFiltered = [];
     let result;
 
-    const words = ['spray', 'elite', 'exuberant', 'destruction', 'present'];
-    let result2;
-
     Array.prototype.push.apply(notesFiltered, notes);
     
     console_logger.warn('filterNotes(): Before filter():', ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' notes ', notes, ' notesFiltered ', notesFiltered);
 
     switch(selectedFilterParam) {
       case 'temp' :
-        if(selectedFilterSymbol == '=')       {
-          result = notesFiltered.filter((note) => (note.temp == elemFilterInput));
-          result2 = words.filter((word) => word.length > 6);
-          console.log(result2);
-          console_logger.warn(result2);
-        }
+        if(selectedFilterSymbol == '=')       { result = notesFiltered.filter((note) => (note.temp == elemFilterInput)); }
         else if(selectedFilterSymbol == '>')  { result = notesFiltered.filter((note) => (note.temp > elemFilterInput)); }
         else                                  { result = notesFiltered.filter((note) => (note.temp < elemFilterInput)); }
         break;
