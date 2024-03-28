@@ -803,23 +803,23 @@ const App = ({ signOut }) => {
 
     Array.prototype.push.apply(notesFiltered, notes);
     
-    console_logger.warn('filterNotes(): Before filter():', ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' notes ', notes, ' notesFiltered ', notesFiltered);
+    console_logger.warn('filterNotes(): Before filter():', ' notes ', notes, ' notesFiltered ', notesFiltered, ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' elemFilterInput ', elemFilterInput);
 
     switch(selectedFilterParam.value) {
       case 'temp' :
         if(selectedFilterSymbol.value == '=')       {
-          result = notesFiltered.filter((note) => (note.temp == elemFilterInput));
+          result = notesFiltered.filter((note) => (note.temp == elemFilterInput.value));
           result2 = words.filter((word) => word.length > 6);
           console.log('filterNotes(): in switch console.log: result2 ', result2);
           console_logger.warn('filterNotes(): in switch: result2 ', result2);
         }
-        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.temp > elemFilterInput)); }
-        else                                        { result = notesFiltered.filter((note) => (note.temp < elemFilterInput)); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.temp > elemFilterInput.value)); }
+        else                                        { result = notesFiltered.filter((note) => (note.temp < elemFilterInput.value)); }
         break;
       case 'general_data00' :
-        if(selectedFilterSymbol.value == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput)); }
-        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput)); }
-        else                                        { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput)); }
+        if(selectedFilterSymbol.value == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput.value)); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput.value)); }
+        else                                        { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput.value)); }
         break;
     }
     console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
@@ -1447,7 +1447,7 @@ const App = ({ signOut }) => {
                 <option value="<">＜</option>*/}
                 {selFilterSymbolList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
-              <input /*type="test"*/ ref={refFilterInput}/>
+              <input type="text" ref={refFilterInput}/>
               <button onClick={filterNotes}>実行</button>
             </span>
           </pre>
