@@ -523,7 +523,7 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
 
-    await setNotesOrg(notes/*notesFromAPI*/);
+    await setNotesOrg(/*notes*/notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     onMessage(notesFromAPI, displayRegisters);
@@ -620,7 +620,7 @@ const App = ({ signOut }) => {
     setNotes(newNotes3);
     console_logger.warn('deleteNote(): After setNotes():', ' id ', id, ' date ', date, ' notes ', notes);
 
-    await setNotesOrg(notes/*newNotes3*/);
+    await setNotesOrg(/*notes*/newNotes3);
     console_logger.warn('deleteNote(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     //    await API.graphql({
@@ -804,7 +804,7 @@ const App = ({ signOut }) => {
     setNotes(notesSorted);
     console_logger.warn('sortNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
 
-    await setNotesOrg(notes/*notesSorted*/);
+    await setNotesOrg(/*notes*/notesSorted);
     console_logger.warn('sortNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     setDisableButtons(false);
