@@ -812,9 +812,16 @@ const App = ({ signOut }) => {
 //          result2 = words.filter((word) => word.length > 6);
 //          console.log('filterNotes(): in switch console.log: result2 ', result2);
 //          console_logger.warn('filterNotes(): in switch: result2 ', result2);
+          console_logger.warn('filterNotes(): in switch: case temp: symbol =:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
+}
+        else if(selectedFilterSymbol.value == '>')  {
+          notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
+          console_logger.warn('filterNotes(): in switch: case temp: symbol >:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
         }
-        else if(selectedFilterSymbol.value == '>')  { notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value))); }
-        else                                        { notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value))); }
+        else                                        {
+          notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value)));
+          console_logger.warn('filterNotes(): in switch: case temp: symbol <:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
+        }
         break;
       case 'general_data00' :
         if(selectedFilterSymbol.value == '=')       { notesFiltered = notes.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
