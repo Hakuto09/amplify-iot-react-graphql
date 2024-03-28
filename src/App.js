@@ -81,14 +81,14 @@ const select_options1 = [
 ];
 
 const selFilterParamList= [
-  { name: "temp", label: "temp" },
-  { name: "general_data00", label: "general_data00" },
+  { value: "temp", label: "temp" },
+  { value: "general_data00", label: "general_data00" },
 ];
 
 const selFilterSymbolList= [
-  { symbol: "=", label: "=" },
-  { symbol: ">", label: ">" },
-  { symbol: "<", label: "<" },
+  { value: "=", label: "=" },
+  { value: ">", label: ">" },
+  { value: "<", label: "<" },
 ];
 
 /*
@@ -1370,18 +1370,20 @@ const App = ({ signOut }) => {
               <label>記号</label>
               <label>値</label>
               <br></br>
-              <select size="1" /*name="sample"*/ onChange={(selectedValue) => {
-                setSelectedFilterParam(selectedValue)
+              <select size="1" /*name="sample"*/ onChange={(selected) => {
+                setSelectedFilterParam(selected.value)
               }}>
-                <option value="temp">temp</option>
-                <option value="general_data00">general_data00</option>
+                {/*<option value="temp">temp</option>
+                <option value="general_data00">general_data00</option>*/}
+                {selFilterParamList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
-              <select size="1" /*name="sample"*/ onChange={(selectedValue) => {
-                setSelectedFilterSymbol(selectedValue)
+              <select size="1" /*name="sample"*/ onChange={(selected) => {
+                setSelectedFilterSymbol(selected.value)
               }}>
-                <option value="=">＝</option>
+                {/*<option value="=">＝</option>
                 <option value=">">＞</option>
-                <option value="<">＜</option>
+                <option value="<">＜</option>*/}
+                {selFilterSymbolList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
               <input type="test"/>
             </span>
