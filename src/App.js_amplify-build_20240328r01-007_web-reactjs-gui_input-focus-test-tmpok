@@ -298,7 +298,6 @@ const App = ({ signOut }) => {
 
   const refFilterInput = useRef(null);
 
-  /*
   const handleFocus = () => {
     // 入力要素へのアクセス
     let elemFilterInput = refFilterInput.current;
@@ -306,7 +305,6 @@ const App = ({ signOut }) => {
     // DOM要素を変更
     elemFilterInput.focus();
   };
-  */
 
 
   /** 開始日の設定 */
@@ -780,46 +778,15 @@ const App = ({ signOut }) => {
         notes.sort((c1, c2) => (c1.general_data00 < c2.general_data00) ? ifC2Bigger : (c1.general_data00 > c2.general_data00) ? ifC1Bigger : 0);
         break;
     }
-    console_logger.warn('sortNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes, ' columnName ', columnName);
+    console_logger.warn('fetchNotes(): After sort():', ' g_displayRegisters ', g_displayRegisters, ' notes ', notes, ' columnName ', columnName);
 
     Array.prototype.push.apply(notesSorted, notes);
     setNotes(notesSorted);
-    console_logger.warn('sortNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
+    console_logger.warn('fetchNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
 
     setDisableButtons(false);
 //    event.target.reset();
   }
-
-  async function filterNotes(event) {
-    setDisableButtons(true);
-    event.preventDefault();
-
-    let elemFilterInput = refFilterInput.current;
-    let notesFiltered = [];
-
-    Array.prototype.push.apply(notes, notesFiltered);
-    
-    switch(selectedFilterParam) {
-      case 'temp' :
-        if(selectedFilterSymbol = '=')      { result = notesFiltered.filter((note) => (note.temp == elemFilterInput)); }
-        else if(selectedFilterSymbol = '>') { result = notesFiltered.filter((note) => (note.temp > elemFilterInput)); }
-        else                                { result = notesFiltered.filter((note) => (note.temp < elemFilterInput)); }
-        break;
-      case 'general_data00' :
-        if(selectedFilterSymbol = '=')      { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput)); }
-        else if(selectedFilterSymbol = '>') { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput)); }
-        else                                { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput)); }
-        break;
-    }
-    console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
-
-    setNotes(notesFiltered);
-    console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
-
-    setDisableButtons(false);
-//    event.target.reset();
-  }
-
 
   ChartJS.register(
     CategoryScale,
@@ -1437,7 +1404,7 @@ const App = ({ signOut }) => {
                 {selFilterSymbolList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
               <input /*type="test"*/ ref={refFilterInput}/>
-              <button onClick={filterNotes}>実行</button>
+              <button onClick={handleFocus}>Focus Input</button>
             </span>
           </pre>
         </div>
