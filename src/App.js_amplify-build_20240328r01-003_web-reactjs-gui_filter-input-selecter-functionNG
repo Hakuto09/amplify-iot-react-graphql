@@ -247,14 +247,8 @@ const App = ({ signOut }) => {
   const [selectedFilterParam, setSelectedFilterParam] = useState(selFilterParamList[0]);
   console_logger.warn('App() After useState():', ' selectedFilterParam ', selectedFilterParam);
 
-  const elemFilterParam = document.getElementById("filterparam")
-  console_logger.warn('App() After getElementById():', ' elemFilterParam ', elemFilterParam);
-
   const [selectedFilterSymbol, setSelectedFilterSymbol] = useState(selFilterSymbolList[0]);
   console_logger.warn('App() After useState():', ' selectedFilterSymbol ', selectedFilterSymbol);
-
-  const elemFilterSymbol = document.getElementById("filtersymbol")
-  console_logger.warn('App() After getElementById():', ' elemFilterSymbol ', elemFilterSymbol);
 
   // contextを状態として持つ
   const [context, setContext] = useState(null)
@@ -1376,14 +1370,14 @@ const App = ({ signOut }) => {
               <label>記号</label>
               <label>値</label>
               <br></br>
-              <select id="filterparam" /*size="1" name="sample"*/ onChange={(selected) => {
+              <select size="1" /*name="sample"*/ onChange={(selected) => {
                 setSelectedFilterParam(selected.value)
               }}>
                 {/*<option value="temp">temp</option>
                 <option value="general_data00">general_data00</option>*/}
                 {selFilterParamList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
-              <select id="filtersymbol" /*size="1" name="sample"*/ onChange={(selected) => {
+              <select size="1" /*name="sample"*/ onChange={(selected) => {
                 setSelectedFilterSymbol(selected.value)
               }}>
                 {/*<option value="=">＝</option>
