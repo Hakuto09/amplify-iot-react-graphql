@@ -798,7 +798,7 @@ const App = ({ signOut }) => {
     let notesFiltered = [];
     let result;
 
-    Array.prototype.push.apply(notesFiltered, notes);
+    Array.prototype.push.apply(notes, notesFiltered);
     
     console_logger.warn('filterNotes(): Before filter():', ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' notes ', notes, ' notesFiltered ', notesFiltered);
 
