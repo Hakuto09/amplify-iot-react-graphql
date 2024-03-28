@@ -796,36 +796,36 @@ const App = ({ signOut }) => {
 
     let elemFilterInput = refFilterInput.current;
     let notesFiltered = [];
-//    let result;
+    let result;
 
-//    const words = ['spray', 'elite', 'exuberant', 'destruction', 'present'];
-//    let result2;
+    const words = ['spray', 'elite', 'exuberant', 'destruction', 'present'];
+    let result2;
 
-//    Array.prototype.push.apply(notesFiltered, notes);
+    Array.prototype.push.apply(notesFiltered, notes);
     
     console_logger.warn('filterNotes(): Before filter():', ' notes ', notes, ' notesFiltered ', notesFiltered, ' selectedFilterParam ', selectedFilterParam, ' selectedFilterSymbol ', selectedFilterSymbol, ' elemFilterInput ', elemFilterInput);
 
     switch(selectedFilterParam.value) {
       case 'temp' :
         if(selectedFilterSymbol.value == '=')       {
-          notesFiltered = notes.filter((note) => (note.temp == Number(elemFilterInput.value)));
-//          result2 = words.filter((word) => word.length > 6);
-//          console.log('filterNotes(): in switch console.log: result2 ', result2);
-//          console_logger.warn('filterNotes(): in switch: result2 ', result2);
+          result = notesFiltered.filter((note) => (note.temp == Number(elemFilterInput.value)));
+          result2 = words.filter((word) => word.length > 6);
+          console.log('filterNotes(): in switch console.log: result2 ', result2);
+          console_logger.warn('filterNotes(): in switch: result2 ', result2);
         }
-        else if(selectedFilterSymbol.value == '>')  { notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value))); }
-        else                                        { notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value))); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.temp > Number(elemFilterInput.value))); }
+        else                                        { result = notesFiltered.filter((note) => (note.temp < Number(elemFilterInput.value))); }
         break;
       case 'general_data00' :
-        if(selectedFilterSymbol.value == '=')       { notesFiltered = notes.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
-        else if(selectedFilterSymbol.value == '>')  { notesFiltered = notes.filter((note) => (note.general_data00 > Number(elemFilterInput.value))); }
-        else                                        { notesFiltered = notes.filter((note) => (note.general_data00 < Number(elemFilterInput.value))); }
+        if(selectedFilterSymbol.value == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > Number(elemFilterInput.value))); }
+        else                                        { result = notesFiltered.filter((note) => (note.general_data00 < Number(elemFilterInput.value))); }
         break;
     }
-    console_logger.warn('filterNotes(): After filter():', /*' result ', result,*/ ' notes ', notes, ' notesFiltered ', notesFiltered);
+    console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
 
     setNotes(notesFiltered);
-    console_logger.warn('filterNotes(): After filter():', /*' result ', result,*/ ' notes ', notes, ' notesFiltered ', notesFiltered);
+    console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
 
     setDisableButtons(false);
 //    event.target.reset();
