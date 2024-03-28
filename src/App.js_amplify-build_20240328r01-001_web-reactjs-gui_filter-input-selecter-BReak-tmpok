@@ -1370,18 +1370,18 @@ const App = ({ signOut }) => {
               <label>記号</label>
               <label>値</label>
               <br></br>
-              <select size="1" /*name="sample"*/ onChange={(selectedValue) => {
-                setSelectedFilterParam(selectedValue)
-              }}>
-                <option value="temp">temp</option>
-                <option value="general_data00">general_data00</option>
-              </select>
-              <select size="1" /*name="sample"*/ onChange={(selectedValue) => {
+              <select /*size="1" name="sample"*/ onChange={(selectedValue) => {
                 setSelectedFilterSymbol(selectedValue)
               }}>
-                <option value="=">＝</option>
-                <option value=">">＞</option>
-                <option value="<">＜</option>
+                <option value="sample">サンプル1</option>
+                <option value="sample">サンプル2</option>
+              </select>
+              <select /*size="1" name="sample"*/ onChange={(selectedValue) => {
+                setSelectedFilterParam(selectedValue)
+              }}>
+                <option value="sample">サンプル1</option>
+                <option value="sample">サンプル2</option>
+                <option value="sample">サンプル3</option>
               </select>
               <input type="test"/>
             </span>
