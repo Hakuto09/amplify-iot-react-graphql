@@ -816,7 +816,11 @@ const App = ({ signOut }) => {
 }
         else if(selectedFilterSymbol.value == '>')  {
           notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
-          console_logger.warn('filterNotes(): in switch: case temp: symbol >:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
+          console_logger.warn('filterNotes(): in switch: case temp: symbol \'>\':', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
+        }
+        else if(selectedFilterSymbol.value == ">")  {
+          notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
+          console_logger.warn('filterNotes(): in switch: case temp: symbol ">":', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
         }
         else                                        {
           notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value)));
