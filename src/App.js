@@ -808,18 +808,18 @@ const App = ({ signOut }) => {
     switch(selectedFilterParam.value) {
       case 'temp' :
         if(selectedFilterSymbol.value == '=')       {
-          result = notesFiltered.filter((note) => (note.temp == elemFilterInput.value.Number()));
+          result = notesFiltered.filter((note) => (note.temp == Number(elemFilterInput.value)));
           result2 = words.filter((word) => word.length > 6);
           console.log('filterNotes(): in switch console.log: result2 ', result2);
           console_logger.warn('filterNotes(): in switch: result2 ', result2);
         }
-        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.temp > elemFilterInput.value.Number())); }
-        else                                        { result = notesFiltered.filter((note) => (note.temp < elemFilterInput.value.Number())); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.temp > Number(elemFilterInput.value))); }
+        else                                        { result = notesFiltered.filter((note) => (note.temp < Number(elemFilterInput.value))); }
         break;
       case 'general_data00' :
-        if(selectedFilterSymbol.value == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == elemFilterInput.value.Number())); }
-        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > elemFilterInput.value.Number())); }
-        else                                        { result = notesFiltered.filter((note) => (note.general_data00 < elemFilterInput.value.Number())); }
+        if(selectedFilterSymbol.value == '=')       { result = notesFiltered.filter((note) => (note.general_data00 == Number(elemFilterInput.value))); }
+        else if(selectedFilterSymbol.value == '>')  { result = notesFiltered.filter((note) => (note.general_data00 > Number(elemFilterInput.value))); }
+        else                                        { result = notesFiltered.filter((note) => (note.general_data00 < Number(elemFilterInput.value))); }
         break;
     }
     console_logger.warn('filterNotes(): After filter():', ' result ', result, ' notes ', notes, ' notesFiltered ', notesFiltered);
