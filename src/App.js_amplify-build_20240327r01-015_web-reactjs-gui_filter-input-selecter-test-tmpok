@@ -1335,12 +1335,12 @@ const App = ({ signOut }) => {
       <div
         className={styles.animation}
         style={{
-          height: showItem ? "100px" : "0px",
+          height: showItem ? "50px" : "0px",
           opacity: showItem ? 1 : 0,
         }}
       >
         <div className={styles.item} ref={element}>
-          {/*<div style={{ width: '200px' }}>
+          <div style={{ width: '200px' }}>
           <label>パラメータ　</label>
           <Select
             options={selFilterParamList}
@@ -1363,26 +1363,21 @@ const App = ({ signOut }) => {
           <div>
           <label>値　</label>
           <input type="test" style={{ width: '100px' }}/>
-          </div>*/}
+          </div>
           <pre>
-            <span className="filter">
-              <label>パラメータ</label>
-              <label>記号</label>
-              <label>値</label>
-              <br></br>
-              <select /*size="1" name="sample"*/ onChange={(selectedValue) => {
-                setSelectedFilterSymbol(selectedValue)
-              }}>
+            <span className="birthday">
+              <p>生年月日</p>
+              <select size="1" name="sample">
                 <option value="sample">サンプル1</option>
                 <option value="sample">サンプル2</option>
               </select>
-              <select /*size="1" name="sample"*/ onChange={(selectedValue) => {
-                setSelectedFilterParam(selectedValue)
-              }}>
+              <label htmlFor="select-01">年</label>
+              <select size="1" name="sample">
                 <option value="sample">サンプル1</option>
                 <option value="sample">サンプル2</option>
                 <option value="sample">サンプル3</option>
               </select>
+              <label>値</label>
               <input type="test"/>
             </span>
           </pre>

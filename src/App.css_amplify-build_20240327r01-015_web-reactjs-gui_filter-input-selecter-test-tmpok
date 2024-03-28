@@ -1,0 +1,118 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+div {text-align:center;margin-left:auto;margin-right:auto;}
+table {margin-left:auto;margin-right:auto;}
+canvas {margin-left:auto;margin-right:auto;}
+
+.div_table1 {
+  margin-right: 100px;
+}
+
+.item {
+  /*width: 200px;*/
+  width: 1000px;
+  height: 50px;
+  border: 1px solid;
+  padding: 10px 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.animation {
+  transition: height 0.2s linear, opacity 0.2s ease-in;
+
+  overflow: hidden; /* heightをはみ出す子要素を表示させないようにすることで、上から徐々に子要素が表示されるアニメーションを実現 */
+}
+
+.icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s; /* transformに動きをつける */
+}
+
+/* ローカルState(reverseIcon)がtrueの時、以下のCSSが付与される(= アイコンが回転する) */
+.reverse {
+  transform: rotate(-180deg) translateY(50%);
+}
+
+span.birthday {
+  width: 200px;
+  padding:0;
+  font-size:0px;
+}
+
+span.birthday label {
+  width:200px;
+  height: 50px;
+  margin:10px;
+  border:1px solid black;
+  display: inline-block;
+  text-align: center;
+  font-size:16px;
+  background-color:#fff;
+}
+
+span.birthday select {
+  width:200px;
+  height: 50px;
+  margin:10px;
+  border:1px solid black;
+  display: inline-block;
+  text-align: center;
+  font-size:16px;
+  background-color:#fff;
+}
+
+span.birthday input {
+  width:200px;
+  height: 50px;
+  margin:10px;
+  border:1px solid black;
+  display: inline-block;
+  text-align: center;
+  font-size:16px;
+  background-color:#fff;
+}
