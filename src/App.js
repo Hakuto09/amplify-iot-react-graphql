@@ -1378,7 +1378,7 @@ const App = ({ signOut }) => {
               <br></br>
               <select id="filterparam" /*size="1" name="sample"*/ onChange={(selected) => {
                 console_logger.warn('App return: After onChange() before setSelectedFilterParam():', ' selected ', selected);
-                setSelectedFilterParam(selected.value)
+                setSelectedFilterParam(selected.target.value)
               }}>
                 {/*<option value="temp">temp</option>
                 <option value="general_data00">general_data00</option>*/}
@@ -1386,7 +1386,7 @@ const App = ({ signOut }) => {
               </select>
               <select id="filtersymbol" /*size="1" name="sample"*/ onChange={(selected) => {
                 console_logger.warn('App return: After onChange() before setSelectedFilterSymbol():', ' selected ', selected);
-                setSelectedFilterSymbol(selected.value)
+                setSelectedFilterSymbol(selected.target.value)
               }}>
                 {/*<option value="=">＝</option>
                 <option value=">">＞</option>
