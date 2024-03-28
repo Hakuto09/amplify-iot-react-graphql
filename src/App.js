@@ -796,6 +796,7 @@ const App = ({ signOut }) => {
 
     let elemFilterInput = refFilterInput.current;
     let notesFiltered = [];
+    let result;
 
     Array.prototype.push.apply(notes, notesFiltered);
     
