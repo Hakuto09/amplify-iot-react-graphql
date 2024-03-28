@@ -1377,6 +1377,7 @@ const App = ({ signOut }) => {
               <label>値</label>
               <br></br>
               <select id="filterparam" /*size="1" name="sample"*/ onChange={(selected) => {
+                console_logger.warn('App return: After onChange() before setSelectedFilterParam():', ' selected ', selected);
                 setSelectedFilterParam(selected.value)
               }}>
                 {/*<option value="temp">temp</option>
@@ -1384,6 +1385,7 @@ const App = ({ signOut }) => {
                 {selFilterParamList.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
               </select>
               <select id="filtersymbol" /*size="1" name="sample"*/ onChange={(selected) => {
+                console_logger.warn('App return: After onChange() before setSelectedFilterSymbol():', ' selected ', selected);
                 setSelectedFilterSymbol(selected.value)
               }}>
                 {/*<option value="=">＝</option>
