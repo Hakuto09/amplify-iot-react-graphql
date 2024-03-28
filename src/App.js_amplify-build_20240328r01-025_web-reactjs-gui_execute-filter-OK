@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef, Component } from "react";
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 //import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from 'react-table';
 
-import { Auth } from 'aws-amplify';
-
 import 'chartjs-adapter-moment';
 import moment from "moment";
 
@@ -226,11 +224,6 @@ let chart = null;  // define chart variable outside of function
 
 let startDateTimeJstIso;
 let endDateTimeJstIso;
-
-
-const user = await Auth.currentAuthenticatedUser()
-console_logger.warn('App(): After Auth.currentAuthenticatedUser():', ' user ', user);
-
 
 console_logger.warn('Before App.');
 
