@@ -818,10 +818,10 @@ const App = ({ signOut }) => {
           notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
           console_logger.warn('filterNotes(): in switch: case temp: symbol \'>\':', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
         }
-        else if(selectedFilterSymbol.value == ">")  {
-          notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
-          console_logger.warn('filterNotes(): in switch: case temp: symbol ">":', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
-        }
+//        else if(selectedFilterSymbol.value == ">")  {
+//          notesFiltered = notes.filter((note) => (note.temp > Number(elemFilterInput.value)));
+//          console_logger.warn('filterNotes(): in switch: case temp: symbol ">":', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
+//        }
         else                                        {
           notesFiltered = notes.filter((note) => (note.temp < Number(elemFilterInput.value)));
           console_logger.warn('filterNotes(): in switch: case temp: symbol <:', ' Number(elemFilterInput.value) ', Number(elemFilterInput.value));
@@ -1443,7 +1443,7 @@ const App = ({ signOut }) => {
               <br></br>
               <select id="filterparam" /*size="1" name="sample"*/ onChange={(selected) => {
                 console_logger.warn('App return: After onChange() before setSelectedFilterParam():', ' selected ', selected);
-                setSelectedFilterParam(selected.target.value)
+                setSelectedFilterParam(selected.target)
               }}>
                 {/*<option value="temp">temp</option>
                 <option value="general_data00">general_data00</option>*/}
@@ -1451,7 +1451,7 @@ const App = ({ signOut }) => {
               </select>
               <select id="filtersymbol" /*size="1" name="sample"*/ onChange={(selected) => {
                 console_logger.warn('App return: After onChange() before setSelectedFilterSymbol():', ' selected ', selected);
-                setSelectedFilterSymbol(selected.target.value)
+                setSelectedFilterSymbol(selected.target)
               }}>
                 {/*<option value="=">＝</option>
                 <option value=">">＞</option>
