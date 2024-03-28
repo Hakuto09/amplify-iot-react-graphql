@@ -523,8 +523,8 @@ const App = ({ signOut }) => {
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
 
-    await copyNotesToOrg();
-    console_logger.warn('fetchNotes(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
+    await setNotesOrg(notesFromAPI);
+    console_logger.warn('fetchNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     onMessage(notesFromAPI, displayRegisters);
 
@@ -620,8 +620,8 @@ const App = ({ signOut }) => {
     setNotes(newNotes3);
     console_logger.warn('deleteNote(): After setNotes():', ' id ', id, ' date ', date, ' notes ', notes);
 
-    await copyNotesToOrg();
-    console_logger.warn('deleteNote(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
+    await setNotesOrg(newNotes3);
+    console_logger.warn('deleteNote(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     //    await API.graphql({
     const apiDataDelete = await client.graphql({
@@ -647,10 +647,10 @@ const App = ({ signOut }) => {
   }
   */
 
-  async function copyNotesToOrg() {
+  async function setNotesOrg(notesToBeReplicated) {
     notesOrg = [];
 
-    Array.prototype.push.apply(notes, notesOrg);
+    Array.prototype.push.apply(notesToBeReplicated, notesOrg);
   }
 
   function convertJSONtoCSV(/*jsons*/) {
@@ -800,8 +800,8 @@ const App = ({ signOut }) => {
     setNotes(notesSorted);
     console_logger.warn('sortNotes(): After sort() and setNotes():', ' downOrUp ', downOrUp, ' notesSorted ', notesSorted);
 
-    await copyNotesToOrg();
-    console_logger.warn('sortNotes(): After copyNotesToOrg():', ' copyNotesToOrg ', notesOrg);
+    await setNotesOrg(notesSorted);
+    console_logger.warn('sortNotes(): After setNotesOrg():', ' notesOrg ', notesOrg);
 
     setDisableButtons(false);
 //    event.target.reset();
