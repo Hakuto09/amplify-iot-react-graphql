@@ -249,15 +249,15 @@ const App = ({ signOut }) => {
 
   async function currentAuthenticatedUser() {
     console_logger.warn('currentAuthenticatedUser(): In:');
-    
+
     try {
       const { username, userId, signInDetails } = await getCurrentUser();
-      console.log(`The username: ${username}`);
-      console.log(`The userId: ${userId}`);
-      console.log(`The signInDetails: ${signInDetails}`);
+      console_logger.warn(`The username: ${username}`);
+      console_logger.warn(`The userId: ${userId}`);
+      console_logger.warn(`The signInDetails: ${signInDetails}`);
     }
     catch (err) {
-      console.log(err);
+      console_logger.warn(err);
     }
   }
 
