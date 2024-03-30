@@ -228,8 +228,9 @@ let startDateTimeJstIso;
 let endDateTimeJstIso;
 
 
+console_logger.warn('App(): Before getCurrentUser():');
 const user = await getCurrentUser()
-console_logger.warn('App(): After Auth.currentAuthenticatedUser():', ' user ', user);
+console_logger.warn('App(): After getCurrentUser():', ' user ', user);
 
 
 console_logger.warn('Before App.');
