@@ -500,7 +500,8 @@ const App = ({ signOut }) => {
     var limitForFetch = 1000;
 
     if(displayRegisters == true) {
-      idForSort = "register";
+//      idForSort = "register";
+      idForSort = "register" + g_appendedUserId;
       sortDirection = "ASC";
     }
     else {
@@ -622,7 +623,8 @@ const App = ({ signOut }) => {
       console_logger.warn('createNote(): After newDateForResister:', ' d ', d, ' newDateForResister ', newDateForResister);
       const data = {
 //        id: form.get("id"),
-        id: "register",
+//        id: "register",
+        id: "register" + g_appendedUserId,
 //        date: form.get("date"),
         date: newDateForResister, 
 //        nickname: nickname,/
@@ -922,24 +924,6 @@ const App = ({ signOut }) => {
 //    event.target.reset();
   }
 
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-    TimeScale
-  );
-
-  // When a web socket message arrives:
-  // 1. Unpack it
-  // 2. Validate it has date/time and temperature
-  // 3. Find or create a cached device to hold the telemetry data
-  // 4. Append the telemetry data
-  // 5. Update the chart UI
   async function onMessage(notesFromAPI, displayRegisters) {
 
     console_logger.warn('onMessage(): In:', ' displayRegisters ', displayRegisters);
@@ -971,7 +955,7 @@ const App = ({ signOut }) => {
       // add device name to the UI list.
       for(let i = 0; i < numOfDevices; ++i) {
 //        var deviceName = notesFromAPI[i].nickname;
-        var deviceName = notesFromAPI[i].nickname.replace('g_appendedUserId', '');
+        var deviceName = notesFromAPI[i].nickname.replace(g_appendedUserId, '');
 
         const device = document.createElement('option');
         const deviceText = document.createTextNode(deviceName);
@@ -1032,6 +1016,17 @@ const App = ({ signOut }) => {
   };
 
   console_logger.warn('App(): before rutern. 0b: labels ', labels, ' data0s ', data0s, ' data1s ', data1s);
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    TimeScale
+  );
 
   const chartOptions = {
 //    options: {
@@ -1657,7 +1652,7 @@ const App = ({ signOut }) => {
                 <th scope="row">{note.id}</th>
                 <td>{note.date}</td>
                 {/*<td>{note.nickname}</td>*/}
-                <td>{note.nickname.replace('g_appendedUserId', '')}</td>
+                <td>{note.nickname.replace(g_appendedUserId, '')}</td>
                 <td>{note.send_cnt}</td>
                 <td>{note.temp}</td>
                 <td>{note.general_data00}</td>
