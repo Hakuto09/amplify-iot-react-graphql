@@ -227,11 +227,6 @@ let chart = null;  // define chart variable outside of function
 let startDateTimeJstIso;
 let endDateTimeJstIso;
 
-let g_username = null;
-let g_userId = null;
-let g_signInDetails = null;
-let g_appendedUserId = null;
-
 
 //console_logger.warn('App(): Before getCurrentUser():');
 ////const user = await getCurrentUser()
@@ -264,29 +259,21 @@ const App = ({ signOut }) => {
   async function currentAuthenticatedUser() {
     try {
       const { username, userId, signInDetails } = await getCurrentUser();
-//      console_logger.warn(`The username: ${username}`);
-      g_username = username;
-      console_logger.warn('currentAuthenticatedUser():', ' g_username ', g_username);
-//      console_logger.warn(`The userId: ${userId}`);
-      g_userId = userId;
-      console_logger.warn('currentAuthenticatedUser():', ' g_userId ', g_userId);
-//      console_logger.warn(`The signInDetails: ${signInDetails}`);
-      g_signInDetails = signInDetails;
-      console_logger.warn('currentAuthenticatedUser():', ' g_signInDetails ', g_signInDetails);
-
-      g_appendedUserId = '_' + g_userId.slice(0, 8);
-      console_logger.warn('currentAuthenticatedUser():', ' g_appendedUserId ', g_appendedUserId);
+      console_logger.warn(`The username: ${username}`);
+      console_logger.warn('currentAuthenticatedUser():', ' username ', username);
+      console_logger.warn(`The userId: ${userId}`);
+      console_logger.warn('currentAuthenticatedUser():', ' userId ', userId);
+      console_logger.warn(`The signInDetails: ${signInDetails}`);
+      console_logger.warn('currentAuthenticatedUser():', ' signInDetails ', signInDetails);
     }
     catch (err) {
       console_logger.warn(err);
     }
   }
 
-  if(userId == null) {
-    console_logger.warn('App(): Before currentAuthenticatedUser(): In:');
-    currentAuthenticatedUser();
-    console_logger.warn('App(): After currentAuthenticatedUser(): In:');
-  }
+  console_logger.warn('App(): Before currentAuthenticatedUser(): In:');
+  currentAuthenticatedUser();
+  console_logger.warn('App(): After currentAuthenticatedUser(): In:');
 
   const deviceCount = document.getElementById('deviceCount');
   console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
@@ -532,10 +519,9 @@ const App = ({ signOut }) => {
       }
       else {
         idForSort = "multi001";
-        filterDeviceName = deviceNames[g_selectedIndex];
-        filter = { nickname: { eq: filterDeviceName } };
+        filter = { nickname: { eq: deviceNames[g_selectedIndex] } };
       }
-      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' g_selectedIndex ', g_selectedIndex, ' displayRegisters ', displayRegisters);
+      console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' deviceNames[g_selectedIndex] ', deviceNames[g_selectedIndex], ' g_selectedIndex ', g_selectedIndex, ' displayRegisters ', displayRegisters);
     }
 
     while(1) {
@@ -606,7 +592,6 @@ const App = ({ signOut }) => {
     else {
       deviceid = form.get("nickname");
     }
-    deviceid = deviceid + g_appendedUserId;
     const deviceid_split = deviceid.split("_");
     const num_in_deviceid = Number(deviceid_split[1]);
 
@@ -970,8 +955,7 @@ const App = ({ signOut }) => {
 
       // add device name to the UI list.
       for(let i = 0; i < numOfDevices; ++i) {
-//        var deviceName = notesFromAPI[i].nickname;
-        var deviceName = notesFromAPI[i].nickname.replace('g_appendedUserId', '');
+        var deviceName = notesFromAPI[i].nickname;
 
         const device = document.createElement('option');
         const deviceText = document.createTextNode(deviceName);
@@ -980,8 +964,7 @@ const App = ({ signOut }) => {
         console_logger.warn('onMessage(): After listOfDevices.appendChild(device):');
 
         // add device name to array.
-//        deviceNames.push(deviceName);
-        deviceNames.push(notesFromAPI[i].nickname);
+        deviceNames.push(deviceName);
         console_logger.warn('onMessage(): After deviceNames.push():', ' i ', i, ' deviceName ', deviceName, ' deviceText ', deviceText, ' deviceNames ', deviceNames);
       }
     }
@@ -1656,8 +1639,7 @@ const App = ({ signOut }) => {
               <tr>
                 <th scope="row">{note.id}</th>
                 <td>{note.date}</td>
-                {/*<td>{note.nickname}</td>*/}
-                <td>{note.nickname.replace('g_appendedUserId', '')}</td>
+                <td>{note.nickname}</td>
                 <td>{note.send_cnt}</td>
                 <td>{note.temp}</td>
                 <td>{note.general_data00}</td>
