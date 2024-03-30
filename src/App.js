@@ -244,7 +244,7 @@ const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
 
-  const [appendedUserId, setAppendedUserId] = useState([]);
+  const [appendedUserId, setAppendedUserId] = useState('_xxxxxxxx');
   console_logger.warn('App() After useState():', ' appendedUserId ', appendedUserId);
 
   /*
