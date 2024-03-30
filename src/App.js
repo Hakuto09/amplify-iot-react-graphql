@@ -247,6 +247,22 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): After getCurrentUser():', ' user.userId ', user.userId);
   console_logger.warn('App(): After getCurrentUser():', ' user.username ', user.username);
 
+  async function currentAuthenticatedUser() {
+    console_logger.warn('currentAuthenticatedUser(): In:');
+    
+    try {
+      const { username, userId, signInDetails } = await getCurrentUser();
+      console.log(`The username: ${username}`);
+      console.log(`The userId: ${userId}`);
+      console.log(`The signInDetails: ${signInDetails}`);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  currentAuthenticatedUser();
+
   const deviceCount = document.getElementById('deviceCount');
   console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
 
