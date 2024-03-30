@@ -282,7 +282,7 @@ const App = ({ signOut }) => {
     }
   }
 
-  if(g_userId == null) {
+  if(userId == null) {
     console_logger.warn('App(): Before currentAuthenticatedUser(): In:');
     currentAuthenticatedUser();
     console_logger.warn('App(): After currentAuthenticatedUser(): In:');
@@ -532,7 +532,7 @@ const App = ({ signOut }) => {
       }
       else {
         idForSort = "multi001";
-        const filterDeviceName = deviceNames[g_selectedIndex];
+        filterDeviceName = deviceNames[g_selectedIndex];
         filter = { nickname: { eq: filterDeviceName } };
       }
       console_logger.warn('fetchNotes(): After filter input:', ' flter ', filter, ' g_selectedIndex ', g_selectedIndex, ' displayRegisters ', displayRegisters);
