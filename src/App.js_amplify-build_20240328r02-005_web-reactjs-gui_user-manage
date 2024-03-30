@@ -243,9 +243,6 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): Before getCurrentUser():');
   const user = getCurrentUser()
   console_logger.warn('App(): After getCurrentUser():', ' user ', user);
-  console_logger.warn('App(): After getCurrentUser():', ' user.signInDetails ', user.signInDetails);
-  console_logger.warn('App(): After getCurrentUser():', ' user.userId ', user.userId);
-  console_logger.warn('App(): After getCurrentUser():', ' user.username ', user.username);
 
   const deviceCount = document.getElementById('deviceCount');
   console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
