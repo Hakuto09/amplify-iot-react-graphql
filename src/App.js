@@ -246,10 +246,13 @@ const App = ({ signOut }) => {
 //  console_logger.warn('App(): After getCurrentUser():', ' user ', user);
 //  console_logger.warn('App(): After getCurrentUser():', ' user.username ', user.username);
   console_logger.warn('App(): After getCurrentUser():', ' username ', username);
+  console_logger.warn(`App(): After getCurrentUser(): The username: ${username}`);
 //  console_logger.warn('App(): After getCurrentUser():', ' user.userId ', user.userId);
   console_logger.warn('App(): After getCurrentUser():', ' userId ', userId);
+  console_logger.warn(`App(): After getCurrentUser(): The userId: ${userId}`);
 //  console_logger.warn('App(): After getCurrentUser():', ' user.signInDetails ', user.signInDetails);
   console_logger.warn('App(): After getCurrentUser():', ' signInDetails ', signInDetails);
+  console_logger.warn(`App(): After getCurrentUser(): The signInDetails: ${signInDetails}`);
 
   /*
   async function currentAuthenticatedUser() {
