@@ -240,6 +240,7 @@ const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
 
+  /*
   console_logger.warn('App(): Before getCurrentUser():');
 //  const user = getCurrentUser()
   const { username, userId, signInDetails } = getCurrentUser();
@@ -253,24 +254,26 @@ const App = ({ signOut }) => {
 //  console_logger.warn('App(): After getCurrentUser():', ' user.signInDetails ', user.signInDetails);
   console_logger.warn('App(): After getCurrentUser():', ' signInDetails ', signInDetails);
   console_logger.warn(`App(): After getCurrentUser(): The signInDetails: ${signInDetails}`);
+  */
 
-  /*
   async function currentAuthenticatedUser() {
-    console_logger.warn('currentAuthenticatedUser(): In:');
-
     try {
       const { username, userId, signInDetails } = await getCurrentUser();
       console_logger.warn(`The username: ${username}`);
+      console_logger.warn('currentAuthenticatedUser():', ' username ', username);
       console_logger.warn(`The userId: ${userId}`);
+      console_logger.warn('currentAuthenticatedUser():', ' userId ', userId);
       console_logger.warn(`The signInDetails: ${signInDetails}`);
+      console_logger.warn('currentAuthenticatedUser():', ' signInDetails ', signInDetails);
     }
     catch (err) {
       console_logger.warn(err);
     }
   }
 
+  console_logger.warn('App(): Before currentAuthenticatedUser(): In:');
   currentAuthenticatedUser();
-  */
+  console_logger.warn('App(): After currentAuthenticatedUser(): In:');
 
   const deviceCount = document.getElementById('deviceCount');
   console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
