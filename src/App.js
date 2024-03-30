@@ -228,10 +228,10 @@ let startDateTimeJstIso;
 let endDateTimeJstIso;
 
 
-console_logger.warn('App(): Before getCurrentUser():');
-//const user = await getCurrentUser()
-const user = getCurrentUser()
-console_logger.warn('App(): After getCurrentUser():', ' user ', user);
+//console_logger.warn('App(): Before getCurrentUser():');
+////const user = await getCurrentUser()
+//const user = getCurrentUser()
+//console_logger.warn('App(): After getCurrentUser():', ' user ', user);
 
 
 console_logger.warn('Before App.');
@@ -239,6 +239,10 @@ console_logger.warn('Before App.');
 const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
+
+  console_logger.warn('App(): Before getCurrentUser():');
+  const user = getCurrentUser()
+  console_logger.warn('App(): After getCurrentUser():', ' user ', user);
 
   const deviceCount = document.getElementById('deviceCount');
   console_logger.warn('App(): After document.getElementById(\'deviceCount\'):', ' deviceCount ', deviceCount);
