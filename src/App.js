@@ -204,8 +204,8 @@ let notesOrg = [];
 let numOfDevices = 0;
 let g_displayRegisters = true;
 let completeFetchReg = false;
-let completeFetchReg2 = false;
-let completeFetchData = false;
+//let completeFetchReg2 = false;
+//let completeFetchData = false;
 let deviceNames = [];
 let graphRangeMode = 1;   // 0: By data existence, 1: By user setting
 
@@ -247,7 +247,7 @@ const App = ({ signOut }) => {
   const [appendedUserId, setAppendedUserId] = useState();
   console_logger.warn('App() After useState():', ' appendedUserId ', appendedUserId);
 
-  if(appendedUserId) {
+  if(!completeFetchReg && appendedUserId) {
     fetchNotes(true);
   }
 
@@ -597,10 +597,10 @@ const App = ({ signOut }) => {
 
     if(displayRegisters == true) {
       completeFetchReg = true;
-      completeFetchReg2 = true;
+//      completeFetchReg2 = true;
     }
     else {
-      completeFetchData = true;
+//      completeFetchData = true;
     }
   }
 
