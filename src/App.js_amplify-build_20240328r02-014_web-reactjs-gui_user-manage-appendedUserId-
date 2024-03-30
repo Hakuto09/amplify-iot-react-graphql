@@ -1649,11 +1649,10 @@ const App = ({ signOut }) => {
           <tbody>
             {notes.map((note) => (
               <tr>
-                {/*<th scope="row">{note.id}</th>*/}
-                <th scope="row">{(note.id) ? note.id.replace(g_appendedUserId, '') : note.id}</th>
+                <th scope="row">{note.id}</th>
                 <td>{note.date}</td>
                 {/*<td>{note.nickname}</td>*/}
-                <td>{(note.nickname) ? note.nickname.replace(g_appendedUserId, '') : note.nickname}</td>
+                <td>{note.nickname.replace(g_appendedUserId, '')}</td>
                 <td>{note.send_cnt}</td>
                 <td>{note.temp}</td>
                 <td>{note.general_data00}</td>
