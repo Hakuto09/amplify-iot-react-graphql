@@ -244,8 +244,12 @@ const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
 
-  const [appendedUserId, setAppendedUserId] = useState('_xxxxxxxx');
+  const [appendedUserId, setAppendedUserId] = useState();
   console_logger.warn('App() After useState():', ' appendedUserId ', appendedUserId);
+
+  if(appendedUserId) {
+    fetchNotes(true);
+  }
 
   /*
   console_logger.warn('App(): Before getCurrentUser():');
@@ -335,9 +339,9 @@ const App = ({ signOut }) => {
     console_logger.warn('App() End of useEffect():', ' canvas ', canvas, ' canvasContext ', canvasContext, ' gotContextFlag ', gotContextFlag, ' context ', context);
   },[])
 
-  useEffect(() => {
-    fetchNotes(true);
-  }, []);
+//  useEffect(() => {
+//    fetchNotes(true);
+//  }, []);
 
 //  const anchorRef = useRef<HTMLAnchorElement>(null);
 
@@ -485,7 +489,8 @@ const App = ({ signOut }) => {
     endDateTimeJstIso = dateTimeToISOString(elemEndDateTime.value);
     console_logger.warn('update(): After dateTimeToISOString:', ' elemEndDateTime ', elemEndDateTime, ' endDateTimeJstIso ', endDateTimeJstIso);
 
-    fetchNotes(false);
+    g_displayRegisters = false;
+    fetchNotes(g_displayRegisters);
     
     setDisableButtons(false);
     event.target.reset();
