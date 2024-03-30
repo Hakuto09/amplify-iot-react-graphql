@@ -230,7 +230,6 @@ let endDateTimeJstIso;
 let g_username = null;
 let g_userId = null;
 let g_signInDetails = null;
-let g_appendedUserId = null;
 
 
 //console_logger.warn('App(): Before getCurrentUser():');
@@ -244,6 +243,9 @@ console_logger.warn('Before App.');
 const App = ({ signOut }) => {
 //const App = async ({ signOut }) => {
   console_logger.warn('App() In');
+
+  const [appendedUserId, setAppendedUserId] = useState([]);
+  console_logger.warn('App() After useState():', ' appendedUserId ', appendedUserId);
 
   /*
   console_logger.warn('App(): Before getCurrentUser():');
@@ -274,8 +276,9 @@ const App = ({ signOut }) => {
       g_signInDetails = signInDetails;
       console_logger.warn('currentAuthenticatedUser():', ' g_signInDetails ', g_signInDetails);
 
-      g_appendedUserId = '_' + g_userId.slice(0, 8);
-      console_logger.warn('currentAuthenticatedUser():', ' g_appendedUserId ', g_appendedUserId);
+//      appendedUserId = '_' + g_userId.slice(0, 8);
+      setAppendedUserId('_' + g_userId.slice(0, 8));
+//      console_logger.warn('currentAuthenticatedUser():', ' appendedUserId ', appendedUserId);
     }
     catch (err) {
       console_logger.warn(err);
@@ -501,7 +504,7 @@ const App = ({ signOut }) => {
 
     if(displayRegisters == true) {
 //      idForSort = "register";
-      idForSort = "register" + g_appendedUserId;
+      idForSort = "register" + appendedUserId;
       sortDirection = "ASC";
     }
     else {
@@ -607,7 +610,7 @@ const App = ({ signOut }) => {
     else {
       deviceid = form.get("nickname");
     }
-    deviceid = deviceid + g_appendedUserId;
+    deviceid = deviceid + appendedUserId;
     const deviceid_split = deviceid.split("_");
     const num_in_deviceid = Number(deviceid_split[1]);
 
@@ -624,7 +627,7 @@ const App = ({ signOut }) => {
       const data = {
 //        id: form.get("id"),
 //        id: "register",
-        id: "register" + g_appendedUserId,
+        id: "register" + appendedUserId,
 //        date: form.get("date"),
         date: newDateForResister, 
 //        nickname: nickname,/
@@ -955,7 +958,7 @@ const App = ({ signOut }) => {
       // add device name to the UI list.
       for(let i = 0; i < numOfDevices; ++i) {
 //        var deviceName = notesFromAPI[i].nickname;
-        var deviceName = notesFromAPI[i].nickname.replace(g_appendedUserId, '');
+        var deviceName = notesFromAPI[i].nickname.replace(appendedUserId, '');
 
         const device = document.createElement('option');
         const deviceText = document.createTextNode(deviceName);
@@ -1650,10 +1653,10 @@ const App = ({ signOut }) => {
             {notes.map((note) => (
               <tr>
                 {/*<th scope="row">{note.id}</th>*/}
-                <th scope="row">{(note.id) ? note.id.replace(g_appendedUserId, '') : note.id}</th>
+                <th scope="row">{(note.id) ? note.id.replace(appendedUserId, '') : note.id}</th>
                 <td>{note.date}</td>
                 {/*<td>{note.nickname}</td>*/}
-                <td>{(note.nickname) ? note.nickname.replace(g_appendedUserId, '') : note.nickname}</td>
+                <td>{(note.nickname) ? note.nickname.replace(appendedUserId, '') : note.nickname}</td>
                 <td>{note.send_cnt}</td>
                 <td>{note.temp}</td>
                 <td>{note.general_data00}</td>
