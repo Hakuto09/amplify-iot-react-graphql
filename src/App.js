@@ -1075,12 +1075,12 @@ const App = ({ signOut }) => {
       scales: {
         x: {
           type: 'time',
+          scaleLabel: {   // 軸ラベル
+            display: true,
+            labelString: "日付時刻",
+          },
           time: {
-            scaleLabel: {   // 軸ラベル
-              display: true,
-              labelString: "日付時刻",
-            },
-  //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
+//            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
 //            parser: 'YYYY-MM-DD HH:mm:ss.SSS',
 //            unit: 'week',
@@ -1180,6 +1180,7 @@ const App = ({ signOut }) => {
     data: data1s,
   };
 
+  /*
   const chartData = {
     labels: labels,
     datasets: [
@@ -1187,6 +1188,7 @@ const App = ({ signOut }) => {
       datasets1
     ]
   };
+  */
 
 //  console_logger.warn('App(): before const ctx = Component.refs.canvas.getContext(\'2d\') :', ' Component ', Component);
 //  const ctx = this.refs.canvas.getContext('2d');
@@ -1245,7 +1247,7 @@ const App = ({ signOut }) => {
   console_logger.warn('App(): before rutern. 1:', ' moment m3_output ', m3_output); // => 2015年01月01日 00:00:00 Thursday 
 
 
-  console_logger.warn('App(): before rutern. 1:', ' chartOptions ', chartOptions, ' chartData ', chartData);
+  console_logger.warn('App(): before rutern. 1:', ' chartOptions ', chartOptions/*, ' chartData ', chartData*/);
 
   /*
   const chartOptions2 = {
