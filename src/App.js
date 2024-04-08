@@ -1077,7 +1077,8 @@ const App = ({ signOut }) => {
           type: 'time',
           time: {
             scaleLabel: {   // 軸ラベル
-              labelString: "日付時刻"
+              display: true,
+              labelString: "日付時刻",
             },
   //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
@@ -1104,7 +1105,8 @@ const App = ({ signOut }) => {
         yleft: {
           stacked: false,
           scaleLabel: {   // 軸ラベル
-            labelString: "温度"
+            display: true,
+            labelString: "温度",
           },
 //          max: totalScoreMax,
 //          min: 0,
@@ -1114,7 +1116,8 @@ const App = ({ signOut }) => {
           stacked: false,
           position: "right",
           scaleLabel: {   // 軸ラベル
-            labelString: "湿度"
+            display: true,
+            labelString: "湿度",
           },
 //          max: totalScoreMax,
 //          min: 0,
