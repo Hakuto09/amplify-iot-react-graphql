@@ -552,13 +552,13 @@ const App = ({ signOut }) => {
       let apiData = [];
       let variables = {};
 
-//      if(fetchById == true) {
-////        variables = { id: idForSort, sortDirection: sortDirection, limit: limitForFetch, nextToken: nextToken };
-//        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limitForFetch, nextToken: nextToken };
-//      }
-//      else {
+      if(fetchById == true) {
+//        variables = { id: idForSort, sortDirection: sortDirection, limit: limitForFetch, nextToken: nextToken };
+        variables = { id: idForSort, sortDirection: sortDirection, filter: filter, imit: limitForFetch, nextToken: nextToken };
+      }
+      else {
         variables = { id: idForSort, sortDirection: sortDirection, filter: filter, limit: limitForFetch, nextToken: nextToken };
-//      }
+      }
       console_logger.warn('fetchNotes(): Before graphql(listNotes):', ' variables ', variables);
 
       apiData = await client.graphql({
@@ -586,22 +586,6 @@ const App = ({ signOut }) => {
     }
 
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
-
-    // listNotesLimit5 test from here.
-    console_logger.warn('fetchNotes(): Before graphql(listNotesLimit5): ');
-    let apiDataLimit5 = [];
-    let variablesLimit5 = {};
-
-    variablesLimit5 = { id: idForSort, sortDirection: sortDirection, filter: filter, nextToken: nextToken };
-    console_logger.warn('fetchNotes(): Before graphql(listNotesLimit5):', ' variablesLimit5 ', variablesLimit5);
-
-    apiDataLimit5 = await client.graphql({
-      query: listNotesLimit5,
-      variables: variablesLimit5,
-    });
-
-    console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotesLimit5):', ' apiDataLimit5 ', apiDataLimit5)
-    // listNotesLimit5 test to here.
 
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
@@ -1591,8 +1575,8 @@ const App = ({ signOut }) => {
           </div>*/}
           <pre>
             <span className="filter">
-              <label>パラメータ　</label>
-              <label>記号　</label>
+              <label>パラメータ</label>
+              <label>記号</label>
               <label>値</label>
               <br></br>
               <select id="filterparam" /*size="1" name="sample"*/ onChange={(selected) => {
