@@ -1075,19 +1075,23 @@ const App = ({ signOut }) => {
       scales: {
         x: {
           type: 'time',
-          scaleLabel: {   // 軸ラベル
+          title: {                   // タイトルの設定  軸ラベル ChartJS ver 4
+            display: true,             // ★必須　表示設定 省略時は false
+            position: "bottom",        // 表示位置 省略時は top、他に left, right が指定できる
+//            fontSize: 14,              // フォントサイズ 省略時は 12
+//            fontColor: "black",        // 文字の色 省略時は "#666"
+//            fontStyle: "bold",         // フォントタイプ 省略時は "bold"
+//            fontFamily: "sans-serif",  // フォントファミリ 省略時は "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+            text: '日付時刻'           // ★必須　タイトルの文字列
+          },
+          /*
+          scaleLabel: {   // 軸ラベル ChartJS ver 2
             display: true,
             labelString: "日付時刻",
             fontColor: "red",             // 文字の色
             fontSize: 16                  // フォントサイズ
           },
-          gridLines: {                   // 補助線
-            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
-          },
-          ticks: {                      // 目盛り
-            fontColor: "red",             // 目盛りの色
-            fontSize: 14                  // フォントサイズ
-          },
+          */
           time: {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSS',
@@ -1113,19 +1117,23 @@ const App = ({ signOut }) => {
         },
         yleft: {
           stacked: false,
-          scaleLabel: {   // 軸ラベル
+          title: {                   // タイトルの設定  軸ラベル ChartJS ver 4
+            display: true,             // ★必須　表示設定 省略時は false
+            position: "left",        // 表示位置 省略時は top、他に left, right が指定できる
+//            fontSize: 14,              // フォントサイズ 省略時は 12
+//            fontColor: "black",        // 文字の色 省略時は "#666"
+//            fontStyle: "bold",         // フォントタイプ 省略時は "bold"
+//            fontFamily: "sans-serif",  // フォントファミリ 省略時は "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+            text: '温度'           // ★必須　タイトルの文字列
+          },
+          /*
+          scaleLabel: {   // 軸ラベル ChartJS ver 2
             display: true,
             labelString: "温度",
             fontColor: "red",             // 文字の色
             fontSize: 16                  // フォントサイズ
           },
-          gridLines: {                   // 補助線
-            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
-          },
-          ticks: {                      // 目盛り
-            fontColor: "red",             // 目盛りの色
-            fontSize: 14                  // フォントサイズ
-          },
+          */
 //          max: totalScoreMax,
 //          min: 0,
         },
@@ -1133,19 +1141,23 @@ const App = ({ signOut }) => {
         yright: {
           stacked: false,
           position: "right",
-          scaleLabel: {   // 軸ラベル
+          title: {                   // タイトルの設定  軸ラベル ChartJS ver 4
+            display: true,             // ★必須　表示設定 省略時は false
+            position: "right",        // 表示位置 省略時は top、他に left, right が指定できる
+//            fontSize: 14,              // フォントサイズ 省略時は 12
+//            fontColor: "black",        // 文字の色 省略時は "#666"
+//            fontStyle: "bold",         // フォントタイプ 省略時は "bold"
+//            fontFamily: "sans-serif",  // フォントファミリ 省略時は "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
+            text: '湿度'           // ★必須　タイトルの文字列
+          },
+          /*
+          scaleLabel: {   // 軸ラベル ChartJS ver 2
             display: true,
             labelString: "湿度",
             fontColor: "red",             // 文字の色
             fontSize: 16                  // フォントサイズ
           },
-          gridLines: {                   // 補助線
-            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
-          },
-          ticks: {                      // 目盛り
-            fontColor: "red",             // 目盛りの色
-            fontSize: 14                  // フォントサイズ
-          },
+          */
 //          max: totalScoreMax,
 //          min: 0,
         },
