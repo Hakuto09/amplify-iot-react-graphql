@@ -1078,6 +1078,15 @@ const App = ({ signOut }) => {
           scaleLabel: {   // 軸ラベル
             display: true,
             labelString: "日付時刻",
+            fontColor: "red",             // 文字の色
+            fontSize: 16                  // フォントサイズ
+          },
+          gridLines: {                   // 補助線
+            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+          },
+          ticks: {                      // 目盛り
+            fontColor: "red",             // 目盛りの色
+            fontSize: 14                  // フォントサイズ
           },
           time: {
 //            parser: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
@@ -1107,6 +1116,15 @@ const App = ({ signOut }) => {
           scaleLabel: {   // 軸ラベル
             display: true,
             labelString: "温度",
+            fontColor: "red",             // 文字の色
+            fontSize: 16                  // フォントサイズ
+          },
+          gridLines: {                   // 補助線
+            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+          },
+          ticks: {                      // 目盛り
+            fontColor: "red",             // 目盛りの色
+            fontSize: 14                  // フォントサイズ
           },
 //          max: totalScoreMax,
 //          min: 0,
@@ -1118,6 +1136,15 @@ const App = ({ signOut }) => {
           scaleLabel: {   // 軸ラベル
             display: true,
             labelString: "湿度",
+            fontColor: "red",             // 文字の色
+            fontSize: 16                  // フォントサイズ
+          },
+          gridLines: {                   // 補助線
+            color: "rgba(255, 0, 0, 0.2)", // 補助線の色
+          },
+          ticks: {                      // 目盛り
+            fontColor: "red",             // 目盛りの色
+            fontSize: 14                  // フォントサイズ
           },
 //          max: totalScoreMax,
 //          min: 0,
