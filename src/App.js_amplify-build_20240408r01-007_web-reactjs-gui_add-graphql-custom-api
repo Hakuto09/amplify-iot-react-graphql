@@ -587,7 +587,6 @@ const App = ({ signOut }) => {
 
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotes):', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI)
 
-    /*
     // listNotesLimit5 test from here.
     console_logger.warn('fetchNotes(): Before graphql(listNotesLimit5): ');
     let apiDataLimit5 = [];
@@ -603,7 +602,6 @@ const App = ({ signOut }) => {
 
     console_logger.warn('fetchNotes(): After while loop of client.graphql(listNotesLimit5):', ' apiDataLimit5 ', apiDataLimit5)
     // listNotesLimit5 test to here.
-    */
 
     setNotes(notesFromAPI);
     console_logger.warn('fetchNotes(): After setNotes():', ' displayRegisters ', displayRegisters, ' notesFromAPI ', notesFromAPI);
